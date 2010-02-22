@@ -1,0 +1,32 @@
+<h1>Editing document</h1>
+
+<% form_for(@document) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :uuid %><br />
+    <%= f.text_field :uuid %>
+  </p>
+  <p>
+    <%= f.label :group %><br />
+    <%= f.text_field :group %>
+  </p>
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :publishing_date %><br />
+    <%= f.text_field :publishing_date %>
+  </p>
+  <p>
+    <%= f.label :publishing_url %><br />
+    <%= f.text_field :publishing_url %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @document %> |
+<%= link_to 'Back', documents_path %>

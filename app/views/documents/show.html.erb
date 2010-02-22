@@ -1,0 +1,28 @@
+<p>
+  <b>Uuid:</b>
+  <%=h @document.uuid %>
+</p>
+
+<p>
+  <b>Group:</b>
+  <%=h @document.group %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%=h @document.name %>
+</p>
+
+<p>
+  <b>Publishing date:</b>
+  <%=h @document.publishing_date %>
+</p>
+
+<p>
+  <b>Publishing url:</b>
+  <%=h @document.publishing_url %>
+</p>
+
+
+<%= link_to 'Edit', edit_document_path(@document) %> |
+<%= link_to 'Back', documents_path %>
