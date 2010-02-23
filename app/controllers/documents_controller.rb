@@ -13,12 +13,18 @@ class DocumentsController < ApplicationController
   # GET /documents/1
   # GET /documents/1.xml
   def show
-    @document = Document.find(params[:id])
+    
+    #puts params[:id]
+    
+    document = Document.find(:first, :conditions => {:uuid => params[:id]})
+    redirect_to document.publishing_url + "/index.html"
+    
+    #@document = Document.find(params[:id])
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @document }
-    end
+    #respond_to do |format|
+    #  format.html # show.html.erb
+    #  format.xml  { render :xml => @document }
+    #end
   end
 
   # GET /documents/new
@@ -54,14 +60,21 @@ class DocumentsController < ApplicationController
     end
   end
   
+  def view
+    
+    
+    
+  end
+  
   #POST /documents/publish
   def publish
     
-    uuid = request.headers["Document-UUID"]
+    document_uuid = request.headers["Document-UUID"]
+    publishing_uuid = request.headers["Document-UUID"]
     name = request.headers["Document-Name"]
     group_name = request.headers["Document-GroupName"]
-       
-    Document.publish(uuid, name, group_name, request.body)
+
+    Document.publish(document_uuid, publishing_uuid, name, group_name, request.body)
     
     respond_to do |format|
       format.html { head :ok }
