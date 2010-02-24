@@ -42,6 +42,12 @@
             }
             
             $(document).ready(function() {
+              
+              if(window.uniboard){
+                appHistory.list = loadPref("historyList", "").split(",");
+                appHistory.index = parseInt(loadPref("historyIndex", "-1"));
+              }
+              
               $(window).resize();
               
               $("#url").change(function(){
@@ -50,6 +56,9 @@
                   wikiReq($("#url").val());
                 }
               });
+              
+              $("#url").val(appHistory.list[appHistory.index]);
+              if($("#url").val().length > 0)$("#url").change();
               
               $("#toolbar-button-back").click(function(){
                 browsing = true;
@@ -99,11 +108,11 @@
           	    appHistory.list = appHistory.list.slice(0, appHistory.index+1);
           	    appHistory.list[appHistory.index+1] = $("#url").val();
           	    appHistory.index = appHistory.list.length-1;
-          	    console.log(appHistory.list);
-          	    console.log(appHistory.index);
         	    }
-          	  if(window.uniboard){
-          	    
+        	    
+        	    if(window.uniboard){
+          	    savePref("historyList", appHistory.list.toString());
+          	    savePref("historyIndex", appHistory.index)
           	  }
           	}
           	
@@ -145,6 +154,20 @@
               textout = textout.join('\n');
               return textout;
             }
+            
+            function loadPref(name, defaultValue){
+        			var pref = defaultValue;
+
+        			if (uniboard.datastore.document.getItem(name) !== "") {
+        				pref = uniboard.datastore.document.getItem(name);
+        			};
+
+        			return pref;
+        		};
+
+        		function savePref(name, value){
+        			uniboard.datastore.document.setItem(name, String(value));
+        		};
 
         </script>
     </head>
