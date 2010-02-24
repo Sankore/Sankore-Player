@@ -15,7 +15,7 @@ class WikibotController < ActionController::Base
       @fixImgLinks = page.body.gsub('<a href="/wiki', @reqUrl);
       @wikibuttons = '<img src="http://' + @lang + '.m.wikipedia.org/skins-1.5/common/images/';
       @fixButtons = @fixImgLinks.gsub('<img src="/skins-1.5/common/images/', @wikibuttons);
-      @fixButtons.insert(@fixButtons.index("</head>"), '<link href="/widgets/wikipedia/wikipedia/stylesheets/wiki.css" media="all" rel="Stylesheet" type="text/css" />');
+      @fixButtons.insert(@fixButtons.index("</head>"), '<link href="/widgets/newWikipedia/wikipedia/stylesheets/wiki.css" media="all" rel="Stylesheet" type="text/css" />');
     elsif @mode == 'wiktionary'
       @surl = "http://" + @lang +".wiktionary.org/wiki/Special:Search/" + @input;
       page = agent.get(@surl)

@@ -1,6 +1,7 @@
 body{
   font-family:helvetica, arial, sans-serif;
   font-size:12px;
+  border:1px solid #cccccc;
 }
 
 .on-the-right{
