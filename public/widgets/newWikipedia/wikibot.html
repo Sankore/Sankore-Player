@@ -18,26 +18,16 @@
         <script type="text/javascript">
             var mode = 'wiki';
         	  var lang = 'en';
-          	var inc = 0;
-          	var browsing = false;
-          	var historic = new Array() ;
-            //
             var internalChange = false;
             var toolbar = {
-              state:""
+              state:"",
+              loading:false
             };
             
             $(document).ready(function() {
               $(window).resize();
               
               $("#url").change(function(){
-                /*var lastCompleteUrl = $("#url").val().makeUrl();
-
-                if(urls.last !== lastCompleteUrl){
-                  urls.last = lastCompleteUrl;
-                  widget.preferences.setValue('lastUrl', urls.last);
-                  $("#web-browser").attr("src", urls.last);
-                }*/
                 wikiReq($("#url").val());
               });
               
@@ -50,9 +40,6 @@
               });
               
               $("#toolbar-button-home").click(function(){
-                widget.preferences.setValue('lastUrl', urls.home);
-                $("#url").val(urls.home);
-                $("#web-browser").attr("src", urls.home);
               });
             });
             
@@ -88,16 +75,13 @@
             });
             
             function wikiReq(kword){
+              var textBoxInput = "";
 
              	if ($(window).height() < 350){
              			window.resizeTo($(window).width(),400);
           		};
 
-          		oldInc = inc; 
-
-          		var textBoxInput = kword.replace(/ /g,'_');	
-
-              textBoxInput = remacc(textBoxInput);
+          		textBoxInput = remacc(kword.replace(/ /g,'_'));	
 
               if(mode=='wiki'){
                 textBoxInput = textBoxInput.replace(textBoxInput.charAt(0),textBoxInput.charAt(0).toUpperCase());
@@ -106,28 +90,17 @@
           		}
 
           		$('#web-browser').attr('src',"/widgets/wikibot/search?input=" + textBoxInput + "&lang="+ lang + '&mode=' + mode); 
-
               $('#url').val(kword);
-
-          		if (!browsing){
-          			currentSearchId = inc;
-          			historic[inc] = kword;
-          			//alert("input:"+kword+"  [ARRAY] :  id:"+inc+"  value:"+historic[inc]);
-          			inc += 1;
-
-          			if(window.uniboard){
-          				window.uniboard.setPreference('historic', historic.toString());
-          			};
-          		};
-
+              $('#toolbar-button-search').css("background-image", "url(./wikipedia/images/toolbarLoading.gif)");
+              toolbar.loading = true;
+              
           		if(window.uniboard){
-          			//alert("Current search ID sent: " + currentSearchId);
-          			window.uniboard.setPreference('currentSearchId',currentSearchId);	
           		};
           	}
           	
           	function hideLoading(){
-          	  
+              $('#toolbar-button-search').css("background-image", "url(./wikipedia/images/toolbarButtonSearch.png)");
+          	  toolbar.loading = false;
           	}
           	
           	String.prototype.accnt = function(){
@@ -193,8 +166,8 @@
             <div id="left-field">
               <div id="toolbar-button-back" class="button" alt="back button"></div>
               <div id="toolbar-button-forward" class="button" alt="forward button"></div>
-              <div id="toolbar-button-home" class="button" alt="home button"></div>
             </div>
+            Wikipedia
             <div id="right-field">
               <div id="toolbar-button-refresh" class="button" alt="refresh button"></div>
             </div>

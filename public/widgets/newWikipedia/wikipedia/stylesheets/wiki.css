@@ -2,11 +2,11 @@
   display:none;
 }
 
-#ghost{
+#footmenu{
   display:none;
 }
 
-#ghost2{
+#ghost{
   display:none;
 }
 
@@ -16,8 +16,4 @@
 
 .message.notice{
   display:none;
-}
-
-body{
-  font-family:helvetica;
 }
