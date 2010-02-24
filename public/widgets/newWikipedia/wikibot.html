@@ -16,6 +16,7 @@
         <script type="text/javascript" src="./wikipedia/scripts/common.js"></script>
         
         <script type="text/javascript">
+            var browsing = false;
             var mode = 'wiki';
         	  var lang = 'en';
             var internalChange = false;
@@ -23,20 +24,41 @@
               state:"",
               loading:false
             };
+            var appHistory = {
+              list:[],
+              back:function(){
+                if(typeof(appHistory.list[appHistory.index-1]) !== "undefined"){
+                  appHistory.index--;
+                  wikiReq(appHistory.list[appHistory.index]);
+                }
+              },
+              forward:function(){
+                if(typeof(appHistory.list[appHistory.index+1]) !== "undefined"){
+                  appHistory.index++;
+                  wikiReq(appHistory.list[appHistory.index]);
+                }
+              },
+              index:-1
+            }
             
             $(document).ready(function() {
               $(window).resize();
               
               $("#url").change(function(){
-                wikiReq($("#url").val());
+                if(!toolbar.loading){
+                  browsing = false;
+                  wikiReq($("#url").val());
+                }
               });
               
               $("#toolbar-button-back").click(function(){
-                history.back();
+                browsing = true;
+                appHistory.back();
               });
               
               $("#toolbar-button-forward").click(function(){
-                history.forward();
+                browsing = true;
+                appHistory.forward();
               });
               
               $("#toolbar-button-home").click(function(){
@@ -44,34 +66,7 @@
             });
             
             $(window).resize(function(){
-              var miniToolbarThreshod = 500;
-              
-              if($(window).width() < miniToolbarThreshod && toolbar.state !== "min"){
-                //minify
-                $("#center-field").removeClass("full");
-                $("#center-field").addClass("min");
-                
-                $("#left-field").appendTo($("#toolbar-down"));
-                $("#right-field").appendTo($("#toolbar-down"));
-                
-                $("#toolbar-down").parent("div").show();
-                
-                toolbar.state = "min"
-              }else if($(window).width() >= miniToolbarThreshod && toolbar.state !== "full"){
-                //fullify
-                $("#center-field").addClass("full");
-                $("#center-field").removeClass("min");
-                
-                $("#left-field").prependTo($("#toolbar-up"));
-                $("#right-field").appendTo($("#toolbar-up"));
-                
-                $("#toolbar-down").parent("div").hide();
-                
-                toolbar.state = "full";
-              }
-              
               $("#web-browser").height($(window).height() - $("#toolbar").height());
-              
             });
             
             function wikiReq(kword){
@@ -93,14 +88,23 @@
               $('#url').val(kword);
               $('#toolbar-button-search').css("background-image", "url(./wikipedia/images/toolbarLoading.gif)");
               toolbar.loading = true;
-              
-          		if(window.uniboard){
-          		};
           	}
           	
           	function hideLoading(){
               $('#toolbar-button-search').css("background-image", "url(./wikipedia/images/toolbarButtonSearch.png)");
           	  toolbar.loading = false;
+          	  
+          	  // History
+          	  if(appHistory.list[appHistory.index] !== $("#url").val() && !browsing && $("#url").val().length > 0){
+          	    appHistory.list = appHistory.list.slice(0, appHistory.index+1);
+          	    appHistory.list[appHistory.index+1] = $("#url").val();
+          	    appHistory.index = appHistory.list.length-1;
+          	    console.log(appHistory.list);
+          	    console.log(appHistory.index);
+        	    }
+          	  if(window.uniboard){
+          	    
+          	  }
           	}
           	
           	String.prototype.accnt = function(){
@@ -147,33 +151,36 @@
     <body style="overflow:hidden; margin: 0px; width:100%; height:100%; position:absolute; background:#ffffff">
       
       <div id="toolbar">
+        
         <div class="toolbar-body">
           
-          <div id="toolbar-up" class="toolbar">
-            <div id="center-field">
-              <input type="text" id="url" alt="url">
-              <div class="on-the-right">
-                <div id="toolbar-button-search"></div>
-              </div>
-            </div> <!--center-field-->
-          </div> <!--toolbar-up-->
+          <div id="toolbar-down" class="toolbar">
+            Wikipedia
+          </div> <!--toolbar-down-->
           
         </div> <!--toolbar-body-->
         
         <div class="toolbar-body">
           
-          <div id="toolbar-down" class="toolbar">
+          <div id="toolbar-up" class="toolbar">
             <div id="left-field">
               <div id="toolbar-button-back" class="button" alt="back button"></div>
               <div id="toolbar-button-forward" class="button" alt="forward button"></div>
             </div>
-            Wikipedia
+            <div id="center-field" class="full">
+              <input type="text" id="url" alt="url">
+              <div class="on-the-right">
+                <div id="toolbar-button-search"></div>
+              </div>
+            </div> <!--center-field-->
             <div id="right-field">
               <div id="toolbar-button-refresh" class="button" alt="refresh button"></div>
             </div>
-          </div> <!--toolbar-down-->
+          </div> <!--toolbar-up-->
           
         </div> <!--toolbar-body-->
+        
+        
       </div> <!--toolbar-->
       <iframe id="web-browser" name="web-browser" src="" onload="hideLoading()"></iframe>
     </body>
