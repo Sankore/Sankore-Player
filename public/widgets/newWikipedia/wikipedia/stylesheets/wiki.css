@@ -1,0 +1,23 @@
+#header{
+  display:none;
+}
+
+#ghost{
+  display:none;
+}
+
+#ghost2{
+  display:none;
+}
+
+.thumb{
+  font-size:10px;
+}
+
+.message.notice{
+  display:none;
+}
+
+body{
+  font-family:helvetica;
+}

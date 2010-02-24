@@ -1,0 +1,207 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+        <title>Wikipedia</title>
+        
+        <style type="text/css" media="screen, projection">
+
+            /* App */
+            @import url('./wikipedia/stylesheets/master.css');
+
+        </style>           
+        
+        <!-- jQuery -->
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+        <script type="text/javascript" src="./wikipedia/scripts/common.js"></script>
+        
+        <script type="text/javascript">
+            var mode = 'wiki';
+        	  var lang = 'en';
+          	var inc = 0;
+          	var browsing = false;
+          	var historic = new Array() ;
+            //
+            var internalChange = false;
+            var toolbar = {
+              state:""
+            };
+            
+            $(document).ready(function() {
+              $(window).resize();
+              
+              $("#url").change(function(){
+                /*var lastCompleteUrl = $("#url").val().makeUrl();
+
+                if(urls.last !== lastCompleteUrl){
+                  urls.last = lastCompleteUrl;
+                  widget.preferences.setValue('lastUrl', urls.last);
+                  $("#web-browser").attr("src", urls.last);
+                }*/
+                wikiReq($("#url").val());
+              });
+              
+              $("#toolbar-button-back").click(function(){
+                history.back();
+              });
+              
+              $("#toolbar-button-forward").click(function(){
+                history.forward();
+              });
+              
+              $("#toolbar-button-home").click(function(){
+                widget.preferences.setValue('lastUrl', urls.home);
+                $("#url").val(urls.home);
+                $("#web-browser").attr("src", urls.home);
+              });
+            });
+            
+            $(window).resize(function(){
+              var miniToolbarThreshod = 500;
+              
+              if($(window).width() < miniToolbarThreshod && toolbar.state !== "min"){
+                //minify
+                $("#center-field").removeClass("full");
+                $("#center-field").addClass("min");
+                
+                $("#left-field").appendTo($("#toolbar-down"));
+                $("#right-field").appendTo($("#toolbar-down"));
+                
+                $("#toolbar-down").parent("div").show();
+                
+                toolbar.state = "min"
+              }else if($(window).width() >= miniToolbarThreshod && toolbar.state !== "full"){
+                //fullify
+                $("#center-field").addClass("full");
+                $("#center-field").removeClass("min");
+                
+                $("#left-field").prependTo($("#toolbar-up"));
+                $("#right-field").appendTo($("#toolbar-up"));
+                
+                $("#toolbar-down").parent("div").hide();
+                
+                toolbar.state = "full";
+              }
+              
+              $("#web-browser").height($(window).height() - $("#toolbar").height());
+              
+            });
+            
+            function wikiReq(kword){
+
+             	if ($('window').height() < 350){
+             			window.resizeTo($('window').width(),680);
+          		};
+
+          		oldInc = inc; 
+
+          		var textBoxInput = kword.replace(/ /g,'_');	
+
+              textBoxInput = remacc(textBoxInput);
+
+              if(mode=='wiki'){
+                textBoxInput = textBoxInput.replace(textBoxInput.charAt(0),textBoxInput.charAt(0).toUpperCase());
+             	}else if (mode=='wiktionary') {
+             	  textBoxInput = textBoxInput.replace(textBoxInput.charAt(0),textBoxInput.charAt(0).toLowerCase());
+          		}
+
+          		$('#web-browser').attr('src',"/widgets/wikibot/search?input=" + textBoxInput + "&lang="+ lang + '&mode=' + mode); 
+
+              $('#url').val(kword);
+
+          		if (!browsing){
+          			currentSearchId = inc;
+          			historic[inc] = kword;
+          			//alert("input:"+kword+"  [ARRAY] :  id:"+inc+"  value:"+historic[inc]);
+          			inc += 1;
+
+          			if(window.uniboard){
+          				window.uniboard.setPreference('historic', historic.toString());
+          			};
+          		};
+
+          		if(window.uniboard){
+          			//alert("Current search ID sent: " + currentSearchId);
+          			window.uniboard.setPreference('currentSearchId',currentSearchId);	
+          		};
+          	}
+          	
+          	function hideLoading(){
+          	  
+          	}
+          	
+          	String.prototype.accnt = function(){
+              var cnt = 0;
+              var acnt = this;
+              acnt = acnt.split('');
+              acntlen = acnt.length;
+              var sec = 'ÀÁÂÃÄÅàáâãäåÒÓÔÕÕÖØòóôõöøÈÉÊËèéêëðÇçÐÌÍÎÏìíîïÙÚÛÜùúûüÑñŠšŸÿýŽž';
+              var rep = ['A','A','A','A','A','A','a','a','a','a','a','a','O','O','O','O','O','O','O','o','o','o','o','o','o','E','E','E','E','e','e','e','e','e','C','c','D','I','I','I','I','i','i','i','i','U','U','U','U','u','u','u','u','N','n','S','s','Y','y','y','Z','z'];
+              for (var y = 0; y < acntlen; y++){
+              if (sec.indexOf(acnt[y]) != -1)  cnt++;}
+              return cnt;}
+              String.prototype.renlacc = function(){
+              var torem = this;
+              torem = torem.split('');
+              toremout = new Array();
+              toremlen = torem.length;
+              var sec = 'ÀÁÂÃÄÅàáâãäåÒÓÔÕÕÖØòóôõöøÈÉÊËèéêëðÇçÐÌÍÎÏìíîïÙÚÛÜùúûüÑñŠšŸÿýŽž';
+              var rep = ['A','A','A','A','A','A','a','a','a','a','a','a','O','O','O','O','O','O','O','o','o','o','o','o','o','E','E','E','E','e','e','e','e','e','C','c','D','I','I','I','I','i','i','i','i','U','U','U','U','u','u','u','u','N','n','S','s','Y','y','y','Z','z'];
+              for (var y = 0; y < toremlen; y++){
+              if (sec.indexOf(torem[y]) != -1) {toremout[y] = rep[sec.indexOf(torem[y])];} else toremout[y] = torem[y];}
+              toascout = toremout.join('');
+              document.title = toascout;
+              return toascout;
+            }
+
+            function remacc(kword){
+              var countarr = new Array();
+              var c = '';
+              var text=kword;
+              var textout = new Array();
+              text = text.replace(/\r/g,'');
+              text = text.split('\n');
+              var linecnt = text.length;
+              for (var x = 0; x < linecnt; x++){
+              countarr[x] = Math.abs(text[x].accnt());
+              textout[x] = text[x].renlacc();}
+              textout = textout.join('\n');
+              return textout;
+            }
+
+        </script>
+    </head>
+    <body style="overflow:hidden; margin: 0px; width:100%; height:100%; position:absolute; background:#ffffff">
+      
+      <div id="toolbar">
+        <div class="toolbar-body">
+          
+          <div id="toolbar-up" class="toolbar">
+            <div id="center-field">
+              <input type="text" id="url" alt="url">
+              <div class="on-the-right">
+                <div id="toolbar-button-search"></div>
+              </div>
+            </div> <!--center-field-->
+          </div> <!--toolbar-up-->
+          
+        </div> <!--toolbar-body-->
+        
+        <div class="toolbar-body">
+          
+          <div id="toolbar-down" class="toolbar">
+            <div id="left-field">
+              <div id="toolbar-button-back" class="button" alt="back button"></div>
+              <div id="toolbar-button-forward" class="button" alt="forward button"></div>
+              <div id="toolbar-button-home" class="button" alt="home button"></div>
+            </div>
+            <div id="right-field">
+              <div id="toolbar-button-refresh" class="button" alt="refresh button"></div>
+            </div>
+          </div> <!--toolbar-down-->
+          
+        </div> <!--toolbar-body-->
+      </div> <!--toolbar-->
+      <iframe id="web-browser" name="web-browser" src="" onload="hideLoading()"></iframe>
+    </body>
+</html>
