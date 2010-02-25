@@ -44,17 +44,13 @@
             
             $(document).ready(function() {
               var ubHistoryList = "";
-              var ubHistoryIndex = -1;
+              var ubHistoryIndex = "";
               
               if(window.uniboard){
                 ubHistoryList = loadPref("historyList", "");
                 ubHistoryIndex = loadPref("historyIndex", "-1");
                 window.resizeTo(350, 450);
               }
-              
-              lang = navigator.userAgent.split(";");
-          		lang = lang[3].replace(/\s/g, "").substr(0, 2);
-          		$("#current-language").text(lang.charAt(0).toUpperCase() + lang.substr(1));
               
               if(ubHistoryList.length > 0){
                 appHistory.list = ubHistoryList.split(",");
@@ -63,6 +59,10 @@
               }else{
                 wikiReq("");
               }
+              
+              lang = navigator.userAgent.split(";");
+          		lang = lang[3].replace(/\s/g, "").substr(0, 2);
+          		$("#current-language").text(lang.charAt(0).toUpperCase() + lang.substr(1));
               
               $(window).resize();
               
@@ -209,7 +209,6 @@
         		function languagesHandler(language){
           		switch(language){
           			case "Deutsch":
-          			alert("DE");
           				lang = 'de'
           			break;
           			case "English":
@@ -241,13 +240,6 @@
           			break;
           		}
           	};
-          	
-          	$().mousedown(function(){		
-          		if(myDropdownButton.find(".ubw-button-canvas").data("open") &&
-          		myDropdownButton.find(".ubw-button-canvas").data("locked") == false){
-          			myDropdownButton.find(".ubw-button-canvas").trigger("click");
-          		}
-          	});
 
         </script>
     </head>
