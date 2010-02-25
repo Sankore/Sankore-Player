@@ -16,6 +16,7 @@ body{
   padding-left:4px;
   border:1px solid #cccccc;
   border-bottom:1px solid #ffffff;
+  position:relative;
 }
 
 .toolbar>div>.button{
@@ -23,7 +24,7 @@ body{
   height:24px;
   float:left;
   margin-right:4px;
-  margin-top:1px;
+  margin-top:0px;
   cursor:pointer;
 }
 
@@ -63,12 +64,20 @@ body{
 
 #center-field.full{
   margin-right:78px;
-  margin-left:68px;
+  margin-left:65px;
+}
+
+#web-canevas { 
+	width:100%;
+	height:100%;
+	position:relative;
 }
 
 #web-browser { 
-	width:100%;
 	border:1px solid #cccccc;
+	position:relative;
+	width:100%;
+	height:100%;
 }
 
 .toolbar-body {
@@ -107,6 +116,6 @@ body{
   width:66px;
 }
 
-#languages-dropdown{
-
+#toolbar-button-back{
+  margin-right:0px;
 }

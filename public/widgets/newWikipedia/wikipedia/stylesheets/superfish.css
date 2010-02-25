@@ -25,7 +25,7 @@
   display:table-cell;
   vertical-align:middle;
 	position:		relative;
-	padding-left:5px;
+	padding-left:3px;
 	width:61px;
 	height:22px;
 }
@@ -36,8 +36,8 @@
 }
 .sf-menu li:hover ul,
 .sf-menu li.sfHover ul {
-	left:			-14px;
-	top:			32px; /* match top ul list item height */
+	left:			-20px;
+	top:			30px; /* match top ul list item height */
 	z-index:		99;
 }
 ul.sf-menu li:hover li ul,
@@ -64,10 +64,13 @@ ul.sf-menu li li li.sfHover ul {
 	float:			left;
 	font-family:arial, sans-serif;
 	font-size:12px;
+	margin-top:1px;
 }
 
 .sf-menu li ul{
   border:1px solid #ccc;
+  padding-top:6px;
+  padding-right:3px;
 }
 
 .sf-menu a {
@@ -81,6 +84,7 @@ ul.sf-menu li li li.sfHover ul {
 .sf-menu li ul li a.sf-sl-last{
 }
 .sf-menu li ul li a.sf-sl-first{
+
 }
 .sf-menu a, .sf-menu a:visited  { /* visited pseudo selector so IE6 applies text colour*/
 	color:			#000;

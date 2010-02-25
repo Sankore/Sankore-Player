@@ -56,6 +56,12 @@
               
               $(window).resize();
               
+              if(appHistory.list.length > 0){
+                wikiReq(appHistory.list[appHistory.index]);
+              }else{
+                wikiReq("");
+              }
+              
               $("#languages-dropdown>li>ul>li").each(function(){
                 $(this).click(function(){
                   languagesHandler($(this).text());
@@ -101,15 +107,17 @@
             });
             
             $(window).resize(function(){
-              $("#web-browser").height($(window).height() - $("#toolbar").height());
+              $("#web-browser").height($(window).height() - $("#toolbar").height() - 2);
+              $("#web-browser").width($(window).width() - 2);
+              
+              if($(window).width() < 280){
+                $(window).resizeTo(280, $(window).height());
+              }
+              
             });
             
             function wikiReq(kword){
               var textBoxInput = "";
-
-             	if ($(window).height() < 350){
-             			window.resizeTo($(window).width(),400);
-          		};
 
           		textBoxInput = remacc(kword.replace(/ /g,'_'));	
 
@@ -135,7 +143,7 @@
           	    appHistory.list[appHistory.index+1] = $("#url").val();
           	    appHistory.index = appHistory.list.length-1;
         	    }
-        	    
+        	            	    
         	    if(window.uniboard){
           	    savePref("historyList", appHistory.list.toString());
           	    savePref("historyIndex", appHistory.index)
@@ -290,6 +298,8 @@
         </div> <!--toolbar-body-->
         
       </div> <!--toolbar-->
+      <div id="web-canevas">
       <iframe id="web-browser" name="web-browser" src="" onload="hideLoading()"></iframe>
+      </div>
     </body>
 </html>
