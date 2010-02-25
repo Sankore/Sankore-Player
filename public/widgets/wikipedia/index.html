@@ -43,10 +43,12 @@
             }
             
             $(document).ready(function() {
+              var ubHistoryList = "";
+              var ubHistoryIndex = -1;
               
               if(window.uniboard){
-                var ubHistoryList = loadPref("historyList", "");
-                var ubHistoryIndex = loadPref("historyIndex", "-1");
+                ubHistoryList = loadPref("historyList", "");
+                ubHistoryIndex = loadPref("historyIndex", "-1");
               }
               
               lang = navigator.userAgent.split(";");
