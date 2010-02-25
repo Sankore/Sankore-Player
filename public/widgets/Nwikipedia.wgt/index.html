@@ -6,7 +6,6 @@
         
         <style type="text/css" media="screen, projection">
 
-            /* App */
             @import url('./wikipedia/stylesheets/master.css');
             @import url('./wikipedia/stylesheets/superfish.css');
 
@@ -45,22 +44,24 @@
             
             $(document).ready(function() {
               
+              if(window.uniboard){
+                var ubHistoryList = loadPref("historyList", "");
+                var ubHistoryIndex = loadPref("historyIndex", "-1");
+              }
+              
               lang = navigator.userAgent.split(";");
           		lang = lang[3].replace(/\s/g, "").substr(0, 2);
           		$("#current-language").text(lang.charAt(0).toUpperCase() + lang.substr(1));
               
-              if(window.uniboard){
-                appHistory.list = loadPref("historyList", "").split(",");
-                appHistory.index = parseInt(loadPref("historyIndex", "-1"));
-              }
-              
-              $(window).resize();
-              
-              if(appHistory.list.length > 0){
+              if(ubHistoryList.length > 0){
+                appHistory.list = ubHistoryList.split(",");
+                appHistory.index = parseInt(ubHistoryIndex);
                 wikiReq(appHistory.list[appHistory.index]);
               }else{
                 wikiReq("");
               }
+              
+              $(window).resize();
               
               $("#languages-dropdown>li>ul>li").each(function(){
                 $(this).click(function(){
@@ -70,10 +71,9 @@
               });
               
               $("#languages-dropdown").superfish({ 
-                firstOnClick: true,
                 dropShadows:false,
                 speed:1,
-                delay:800
+                delay:100
               });
               
               $("#url")
