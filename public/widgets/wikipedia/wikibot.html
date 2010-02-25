@@ -46,6 +46,10 @@
               var ubHistoryList = "";
               var ubHistoryIndex = "";
               
+              lang = navigator.userAgent.split(";");
+          		lang = lang[3].replace(/\s/g, "").substr(0, 2);
+          		$("#current-language").text(lang.charAt(0).toUpperCase() + lang.substr(1));
+              
               if(window.uniboard){
                 ubHistoryList = loadPref("historyList", "");
                 ubHistoryIndex = loadPref("historyIndex", "-1");
@@ -59,10 +63,6 @@
               }else{
                 wikiReq("");
               }
-              
-              lang = navigator.userAgent.split(";");
-          		lang = lang[3].replace(/\s/g, "").substr(0, 2);
-          		$("#current-language").text(lang.charAt(0).toUpperCase() + lang.substr(1));
               
               $(window).resize();
               
