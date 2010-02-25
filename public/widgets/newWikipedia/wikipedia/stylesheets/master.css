@@ -62,7 +62,7 @@ body{
 }
 
 #center-field.full{
-  margin-right:40px;
+  margin-right:78px;
   margin-left:68px;
 }
 
@@ -91,7 +91,7 @@ body{
 #toolbar-button-back{ background-image:url(../images/toolbarButtonBack.png) }
 #toolbar-button-forward{ background-image:url(../images/toolbarButtonForward.png) }
 #toolbar-button-home{ background-image:url(../images/toolbarButtonHome.png) }
-#toolbar-button-refresh{ background-image:url(../images/toolbarButtonRefresh.png) }
+#toolbar-button-languages{ background-image:url(../images/toolbarButtonLanguages.png) }
 
 #toolbar-button-search{
   width:22px;
@@ -101,4 +101,12 @@ body{
   background-image:url(../images/toolbarButtonSearch.png);
   background-repeat:no-repeat;
   background-position:center center;
+}
+
+#toolbar-button-languages{
+  width:66px;
+}
+
+#languages-dropdown{
+
 }
