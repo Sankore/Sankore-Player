@@ -147,7 +147,7 @@
           	    appHistory.index = appHistory.list.length-1;
         	    }
         	            	    
-        	    if(window.uniboard){
+        	    if(window.uniboard && $("#web-browser").attr("src") !== ""){
           	    savePref("historyList", appHistory.list.toString());
           	    savePref("historyIndex", appHistory.index)
           	  }
