@@ -1,0 +1,19 @@
+#header{
+  display:none;
+}
+
+#footmenu{
+  display:none;
+}
+
+#ghost{
+  display:none;
+}
+
+.thumb{
+  font-size:10px;
+}
+
+.message.notice{
+  display:none;
+}
