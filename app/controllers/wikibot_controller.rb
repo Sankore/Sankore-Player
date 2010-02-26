@@ -19,15 +19,15 @@ class WikibotController < ActionController::Base
       @fixButtons = @fixButtons.gsub("<link href='/", "<link href='http://m.wikipedia.com/")
       @fixButtons.insert(@fixButtons.index("</head>"), '<link href="/widgets/wikipedia/wikipedia/stylesheets/wiki.css" media="all" rel="Stylesheet" type="text/css" />')
     elsif @mode == 'wiktionary'
-      @surl = "http://" + @lang +".m.wiktionary.org/wiki/" + @input
+      @surl = "http://" + @lang +".wiktionary.org/wiki/" + @input
       page = agent.get(@surl)
       
-      @reqUrl = '<a href="http://' + @lang + '.m.wiktionary.org/wiki/'
+      @reqUrl = '<a href="http://' + @lang + '.wiktionary.org/wiki/'
       @fixImgLinks = page.body.gsub('<a href="/wiki', @reqUrl)
-      @wikibuttons = '<img src="http://' + @lang + '.m.wiktionary.org/skins-1.5/common/images/'
+      @wikibuttons = '<img src="http://' + @lang + '.wiktionary.org/skins-1.5/common/images/'
       @fixButtons = @fixImgLinks.gsub('<img src="/skins-1.5/common/images/', @wikibuttons)
-      @fixButtons = @fixButtons.gsub('SRC="/javascripts/', 'SRC="http://m.wiktionary.com/javascripts/')
-      @fixButtons = @fixButtons.gsub("<link href='/", "<link href='http://m.wiktionary.com/")
+      @fixButtons = @fixButtons.gsub('SRC="/javascripts/', 'SRC="http://wiktionary.com/javascripts/')
+      @fixButtons = @fixButtons.gsub(".css", ".nocss")
       @fixButtons.insert(@fixButtons.index("</head>"), '<link href="/widgets/wiktionary/wiktionary/stylesheets/wiki.css" media="all" rel="Stylesheet" type="text/css" />')
     end
     @content = @fixButtons
