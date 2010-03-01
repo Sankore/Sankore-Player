@@ -5,19 +5,21 @@ class DocumentPublishingController < ApplicationController
       
   def publish
     
-    publishing = PublishedDocument.new();
+    published_document= PublishedDocument.new();
     
-    publishing.document_uuid = request.headers["Document-UUID"]
-    publishing.publishing_uuid = request.headers["Publishing-UUID"]
-    publishing.title = request.headers["Publishing-Title"]
-    publishing.description = request.headers["Publishing-Description"]
-    publishing.author = request.headers["Publishing-Author"]
-    publishing.author_email = request.headers["Publishing-AuthorEMail"]
-    publishing.page_count = request.headers["Publishing-PageCount"]
+    published_document.document_uuid = request.headers["Document-UUID"]
+    published_document.publishing_uuid = request.headers["Publishing-UUID"]
+    published_document.title = request.headers["Document-Title"]
+    published_document.description = request.headers["Document-Description"]
+    published_document.author = request.headers["Document-Author"]
+    published_document.author_email = request.headers["Document-AuthorEMail"]
+    published_document.page_count = request.headers["Document-PageCount"]
+
+    published_document.save_payload(request.body)
     
-    publishing.save_payload(request.body)
+    published_document.save
     
-    publishing.save
+    DocumentPublishingMailer.deliver_notify(published_document)
     
     respond_to do |format|
       format.html { head :ok }
