@@ -39,5 +39,5 @@ config.action_mailer.smtp_settings = {
   :authentication => :plain,
   :user_name => 'dev@mnemis.com',
   :password => '',
-  :enable_starttls_auto => true
+  :enable_starttls_auto => false
 }

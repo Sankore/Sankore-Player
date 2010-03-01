@@ -5,7 +5,7 @@ class DocumentPublishingController < ApplicationController
       
   def publish
     
-    published_document= PublishedDocument.new();
+    published_document = PublishedDocument.new();
     
     published_document.document_uuid = request.headers["Document-UUID"]
     published_document.publishing_uuid = request.headers["Publishing-UUID"]
