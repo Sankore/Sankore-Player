@@ -28,7 +28,8 @@ class DocumentPublishingController < ApplicationController
   
   def show
     
-    publishing = PublishedDocument.find(:first, :conditions => {:document_uuid => params[:uuid]})
+    publishing = PublishedDocument.find(:first , :conditions => {:document_uuid => params[:uuid]} , :order => "created_on DESC")
+    
     redirect_to publishing.persistence_url + "/index.html"
 
     #respond_to do |format|
