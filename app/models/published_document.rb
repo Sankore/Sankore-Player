@@ -22,6 +22,14 @@ class PublishedDocument < ActiveRecord::Base
       if (!zip_file.directory?)
           puts "Saving file on S3: " + zip_file.name
           self.s3_bucket.put("publishing/documents/" + self.publishing_uuid + "/" + zip_file.name, zip_file.get_input_stream.read, {}, 'public-read', {})
+          
+          if zip_file.name == self.publishing_uuid + '.pdf'
+            self.has_pdf = true
+          end
+
+          if zip_file.name == self.publishing_uuid + '.ubz'
+            self.has_ubz = true
+          end
       end
     end
     
