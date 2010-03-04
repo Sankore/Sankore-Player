@@ -46,7 +46,7 @@ class DocumentPublishingController < ApplicationController
     if @to_be_unpublished_active
       
       PublishedDocument.find(:all, :conditions => {:document_uuid => @to_be_unpublished_active.document_uuid}).each do |to_be_unpublished|  
-          to_be_unpublished_active.unpublish   
+          to_be_unpublished.unpublish   
       end
       
       PublishedDocument.destroy_all(:document_uuid => @to_be_unpublished_active.document_uuid)
