@@ -14,6 +14,7 @@ class DocumentPublishingController < ApplicationController
     published_document.author = request.headers["Document-Author"]
     published_document.author_email = request.headers["Document-AuthorEMail"]
     published_document.page_count = request.headers["Document-PageCount"]
+    published_document.deletion_token = request.headers["Deletion-token"]
 
     published_document.save_payload(request.body)
     
@@ -29,13 +30,34 @@ class DocumentPublishingController < ApplicationController
   end
   
   def show
-    
+   
     @published_document = PublishedDocument.find(:first , :conditions => {:document_uuid => params[:uuid]} , :order => "created_at DESC")
-    
-    #redirect_to publishing.persistence_url + "/index.html"
 
     respond_to do |format|
       format.html
+    end    
+
+  end
+  
+  def unpublish
+  
+    @to_be_unpublished_active = PublishedDocument.find(:first , :conditions => {:deletion_token => params[:deletion_token]})
+    
+    if @to_be_unpublished_active
+      
+      PublishedDocument.find(:all, :conditions => {:document_uuid => to_be_unpublished_active.document_uuid}).each do |to_be_unpublished|  
+          to_be_unpublished_active.unpublish   
+      end
+      
+      PublishedDocument.destroy_all(:document_uuid => to_be_unpublished_active.document_uuid)
+
+      respond_to do |format|
+        format.html
+      end            
+    else
+      respond_to do |format|
+        format.any { head :forbidden }
+      end
     end    
   end
   

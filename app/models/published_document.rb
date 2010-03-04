@@ -39,6 +39,15 @@ class PublishedDocument < ActiveRecord::Base
 
   end
 
+  def unpublish
+    
+    init_s3_bucket
+    
+    self.s3_bucket.delete_folder(self.persistence_url)
+    
+  end
+
+
   def init_s3_bucket
     
     if (self.s3_bucket == nil && APP_CONFIG['documents_s3_bucket'])
