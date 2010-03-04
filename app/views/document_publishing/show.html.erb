@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+	"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<title>untitled</title>
+	
+	<style type="text/css">
+	  @import url(/uniboard-player/stylesheets/reset.css);
+	  @import url(/uniboard-player/stylesheets/master.css);
+	</style>
+	
+	<!-- Libraries -->
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+    <script type="text/javascript" src="/uniboard-player/scripts/jquery.easing.1.3.js"></script>
+	
+	<script type="text/javascript">
+	  
+	  var thumbsBar = { state:"min", fullHeightVal:25, minHeightVal:6 };
+	  var currentPage = { number:1, width:0, height:0 };
+	  var state = "full";
+	  var adaptPageTimer = null;
+	  var numberOfPages = <%= @published_document.page_count %>;	  
+	  var pagesBaseUrl =  '<%= @published_document.persistence_url %>';
+	    
+	  $(document).ready(function(){
+	    
+	    $("#menu-button-previous").click(function(){ goToPage("PREVIOUS") });
+	    $("#menu-button-next").click(function(){ goToPage("NEXT") });
+      $("#board-button-previous").click(function(){ goToPage("PREVIOUS") });
+	    $("#board-button-next").click(function(){ goToPage("NEXT") });
+	    $("#board-button-index").click(function(){  });
+	    
+	    $("#thumbnails").click(function(){
+  	    var newThumbsHeight = 0;
+  	    
+  	    if(thumbsBar.state === "min"){
+  	      $(".thumbnail").css("display", "inline");
+  	      //$("#thumbnails").append();
+  	      newThumbsHeight = thumbsBar.fullHeightVal;
+  	      thumbsBar.state = "full";
+	      } else {
+	        $(".thumbnail").css("display", "none");
+	        newThumbsHeight = thumbsBar.minHeightVal;
+	        thumbsBar.state = "min";
+        }
+        
+  	    adaptPage();
+  	    
+  	    $("#boards").animate(
+  	      {height:100-newThumbsHeight + "%"},
+  	      400,
+  	      "easeOutBack"
+  	    );
+  	    $("#thumbnails").animate(
+  	      {height:newThumbsHeight + "%"},
+  	      400,
+  	      "easeOutBack",
+  	      function(){clearInterval(adaptPageTimer)}
+  	    );
+  	  });
+  	  
+	    openPage(1);
+	  });
+	  
+	  function goToPage(pageNumber){
+	    var checkPoint = { finish:"%", start:"%" };
+	    
+	    if(pageNumber === "NEXT"){
+	      currentPage.number++;
+	      checkPoint = { finish:"-200%", start:"100%" };
+	    }else if(pageNumber === "PREVIOUS"){
+	      currentPage.number--;
+	      checkPoint = { finish:"100%", start:"-200%" };
+	    }else{
+	      currentPage.number = pageNumber;
+	    }
+	    
+	    if(currentPage.number <= 0){
+	      currentPage.number = numberOfPages;
+	    }else if(currentPage.number > numberOfPages){
+	      currentPage.number = 1;
+	    }
+	    
+	    console.log(currentPage.number);
+	    
+      $("#board-current").animate(
+        {marginLeft:checkPoint.finish},
+        300,
+        "easeInQuint",
+        function(){
+          $("#board-current").css({ marginLeft:checkPoint.start });
+          openPage(currentPage.number);
+          $("#board-current").animate(
+            {marginLeft:"0"},
+            300,
+            "easeOutQuint"
+          );
+        }
+      );
+	  }
+	  
+	  function adaptPage(){
+	    $(window).resize();
+	    adaptPageTimer = setTimeout(function(){adaptPage()}, 10);
+	  }
+	  
+    function openPage(pageNumber){
+      var pageNumber = ("00" + pageNumber).substr(("00" + pageNumber).length-3, 3);
+      var fileName = pagesBaseUrl + "/page" + pageNumber + ".svg"; 
+            
+      $.ajax({ 
+        url: fileName,
+        dataType: 'xml',
+        success: function(data){
+          currentPage.width = $(data).find("rect").attr("width");
+          currentPage.height = $(data).find("rect").attr("height");
+          // remove and reappend the object tag in order to update its content src
+          $("#current-page").attr("data", fileName);
+          var newCurrentPage = $("#current-page").clone();
+          $("#current-page").remove();
+          $("#board-canvas").append(newCurrentPage);
+          
+          console.log(fileName);
+          $(window).resize();
+        }
+      });
+    }
+	
+	  $(window).resize(function(){
+	    var ratioWh = currentPage.width / currentPage.height;
+	    $(".page").width($(".page").height() * ratioWh);
+	    if($(window).height() < 500){
+	      state = "mini";
+	    }
+	  });
+	  
+	</script>
+	
+</head>
+
+<body>
+
+  <div id="head">
+    <div id="menu">
+      <div id="menu-box-left" class="menu-box">
+        <div id="logo-uniboard"></div>
+      </div>
+      <div id="menu-box-center" class="menu-box">
+        <div class="menu-button" id="menu-button-previous"></div>
+        <div class="menu-button" id="menu-button-index"></div>
+        <div class="menu-button" id="menu-button-next"></div>
+      </div>
+      <div id="menu-box-right" class="menu-box">
+        <div class="menu-button" id="menu-button-export"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="body">
+    <div id="boards">
+      
+      <div class="board" id="board-current">
+        <div class="board-button" id="board-button-previous"></div>
+        <div class="page">
+          <table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0" style="line-height:0px; margin:auto">
+            <tr><td height="22" width="22" style="background-image:url(/uniboard-player/images/shadows/top-left.png)">&nbsp;</td>
+                <td height="22" colspan="3" style="background-image:url(/uniboard-player/images/shadows/top.png)">&nbsp;</td>
+                <td height="22" width="22" style="background-image:url(/uniboard-player/images/shadows/top-right.png)">&nbsp;</td>
+            </tr>
+            <tr>
+                <td width="22" style="background-image:url(/uniboard-player/images/shadows/left.png)">&nbsp;</td>
+                <td colspan="3" id="board-canvas">
+                  <object id="current-page" type="image/svg+xml" name="mainPage" data="<%= @published_document.persistence_url %>/page001.svg"></object>
+                </td>
+                <td width="22" style="background-image:url(/uniboard-player/images/shadows/right.png)">&nbsp;</td>
+            </tr>
+            <tr>
+                <td height="22" width="22" style="background-image:url(/uniboard-player/images/shadows/bottom-left.png)">&nbsp;</td>
+                <td width="22" height="22" style="background-image:url(/uniboard-player/images/shadows/bottom-left-near.png)">&nbsp;</td>
+                <td height="22" width="auto" style="background-image:url(/uniboard-player/images/shadows/bottom.png)">&nbsp;</td>
+                <td width="22" style="background-image:url(/uniboard-player/images/shadows/bottom-right-near.png)">&nbsp;</td>
+                <td height="22" width="22" style="background-image:url(/uniboard-player/images/shadows/bottom-right.png)">&nbsp;</td>
+            </tr></table>
+        </div>
+        <div class="board-button" id="board-button-next"></div>
+      </div>
+      
+    </div><!--boards-->
+    
+    <div id="thumbnails">
+      <div id="thumbnails-slider"></div>
+      <div class="thumbnail"><img src="<%= @published_document.persistence_url %>/page001.thumbnail.jpg" height="100%" width="auto"></div>
+      <div class="thumbnail"><img src="<%= @published_document.persistence_url %>/page002.thumbnail.jpg" height="100%" width="auto"></div>
+      <div class="thumbnail"><img src="<%= @published_document.persistence_url %>/page003.thumbnail.jpg" height="100%" width="auto"></div>
+      <div class="thumbnail"><img src="<%= @published_document.persistence_url %>/page004.thumbnail.jpg" height="100%" width="auto"></div>
+    </div>
+        
+  </div>
+
+  <div id="foot">
+  
+  </div>
+
+</body>
+</html>
