@@ -110,12 +110,12 @@
       var pageNumber = ("00" + pageNumber).substr(("00" + pageNumber).length-3, 3);
       var fileName = pagesBaseUrl + "/page" + pageNumber + ".svg"; 
             
-      $.ajax({ 
-        url: fileName,
-        dataType: 'xml',
-        success: function(data){
-          currentPage.width = $(data).find("rect").attr("width");
-          currentPage.height = $(data).find("rect").attr("height");
+      //$.ajax({ 
+      //  url: fileName,
+      //  dataType: 'xml',
+      //  success: function(data){
+      //    currentPage.width = $(data).find("rect").attr("width");
+      //    currentPage.height = $(data).find("rect").attr("height");
           // remove and reappend the object tag in order to update its content src
           $("#current-page").attr("data", fileName);
           var newCurrentPage = $("#current-page").clone();
@@ -124,12 +124,12 @@
           
           console.log(fileName);
           $(window).resize();
-        }
-      });
+      //  }
+      //});
     }
 	
 	  $(window).resize(function(){
-	    var ratioWh = currentPage.width / currentPage.height;
+	    var ratioWh = 1.66;//currentPage.width / currentPage.height;
 	    $(".page").width($(".page").height() * ratioWh);
 	    if($(window).height() < 500){
 	      state = "mini";
