@@ -9,16 +9,22 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100222085550) do
+ActiveRecord::Schema.define(:version => 20100304161934) do
 
-  create_table "documents", :force => true do |t|
-    t.string   "uuid"
-    t.string   "group"
-    t.string   "name"
-    t.string   "publishing_date"
-    t.string   "publishing_url"
+  create_table "published_documents", :force => true do |t|
+    t.string   "publishing_uuid"
+    t.string   "document_uuid"
+    t.string   "title"
+    t.string   "description"
+    t.string   "author"
+    t.string   "author_email"
+    t.integer  "page_count"
+    t.string   "persistence_url"
+    t.boolean  "has_pdf"
+    t.boolean  "has_ubz"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "deletion_token"
   end
 
 end
