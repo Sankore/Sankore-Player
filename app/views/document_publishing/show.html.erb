@@ -18,7 +18,7 @@
 	
 	<script type="text/javascript">
 	  
-	  (function($) {
+	  (function() {
 	  
   	  var thumbsBar = { state:"min", fullHeightVal:100, minHeightVal:0, sliding:false };
   	  var currentPage = { number:1, width:0, height:0 };
@@ -27,98 +27,104 @@
   	  var sliderTimer = null;
   	  var numberOfPages = <%= @published_document.page_count %>;
   	  var pagesBaseUrl =  '<%= @published_document.persistence_url %>';
-  	  var description = "<a href='mailto:rafi'>Rafi Najakalahr Fakha</a> <br/>06 Jun 2009<br/> <b>One, two, three, four</b> <br/><br/> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vel mattis lorem. Mauris porttitor neque quis velit consectetur mattis. Morbi et quam lorem, sed interdum augue. Aliquam pellentesque, arcu ac tincidunt varius, urna eros tristique erat, ut lacinia velit nisi at ante. Integer magna lorem, semper eu sodales quis, dapibus sed neque. Etiam non ligula quis nisi dapibus volutpat. Morbi vitae sollicitudin massa. Praesent mattis fringilla nunc, quis ultricies dolor elementum ut. Aliquam tincidunt porta interdum. Etiam vitae malesuada elit." // ! \\
+  	  var documentData = {
+  	    author:'<%= @published_document.author %>',
+  	    title:'<%= @published_document.title %>',
+  	    description:'<%= @published_document.description %>',
+  	    publishedAt:'<%= @published_document.created_at %>'
+  	  }
 	  	  
-  	  $(document).ready(function(){
+  	  jQuery(document).ready(function(){
 	      
 	      // bind the buttons events
-  	    $("#menu-button-previous").click(function(){ goToPage("PREVIOUS") });
-  	    $("#menu-button-index").toggle(function(){ showIndex() }, function(){ hideIndex() });
-  	    $("#menu-button-next").click(function(){ goToPage("NEXT") });
-        $("#board-button-previous").click(function(){ goToPage("PREVIOUS") });
-  	    $("#board-button-next").click(function(){ goToPage("NEXT") });
-  	    $("#board-button-last").click(function(){ goToPage(numberOfPages) });
-  	    $("#board-button-first").click(function(){ goToPage(1) });
-	      $(".board-button")
-	        .mouseenter(function(){$(this).animate({opacity:1})})
-	        .mouseout(function(){$(this).animate({opacity:0})});
-	      $("#menubottom-input").change(function(){ goToPage($("#menubottom-input").val()) });
-	      $("#moreLink").toggle(function(){showDescription()}, function(){hideDescription()});
-	      $("#menu-button-export")
+  	    jQuery("#menu-button-previous").click(function(){ goToPage("PREVIOUS") });
+  	    jQuery("#menu-button-index").toggle(function(){ showIndex() }, function(){ hideIndex() });
+  	    jQuery("#menu-button-next").click(function(){ goToPage("NEXT") });
+        jQuery("#board-button-previous").click(function(){ goToPage("PREVIOUS") });
+  	    jQuery("#board-button-next").click(function(){ goToPage("NEXT") });
+  	    jQuery("#board-button-last").click(function(){ goToPage(numberOfPages) });
+  	    jQuery("#board-button-first").click(function(){ goToPage(1) });
+	      jQuery(".board-button")
+	        .mouseenter(function(){jQuery(this).animate({opacity:1})})
+	        .mouseout(function(){jQuery(this).animate({opacity:0})});
+	      jQuery("#menubottom-input").change(function(){ goToPage(jQuery("#menubottom-input").val()) });
+	      jQuery("#moreLink").click(function(){ showDescription() });
+	      jQuery("#head-button-close").click(function(){ hideDescription() });
+	      jQuery("#menu-button-export")
 	        .toggle(
-	          function(){ $("#menu-export-dropdown").show() },
-	          function(){ $("#menu-export-dropdown").hide() })
+	          function(){ jQuery("#menu-export-dropdown").show() },
+	          function(){ jQuery("#menu-export-dropdown").hide() })
 	        .hover(
-	          function(){ $("#menu-button-export-left").css("background", "url(/uniboard-player/images/menu-button-export-left-over.png)") },
-	          function(){ $("#menu-button-export-left").css("background", "url(/uniboard-player/images/menu-button-export-left.png)") });
-	      $("#menu-button-full").click(function(){ 
-	        $("#logo-uniboard").hide();
-	        $("#document-title").hide();
-	        $("#head-button-close").show();
-	        $("#head").css({height:40});
-	        $("#foot").hide();
-	        $("#body").css({paddingTop:40, paddingBottom:40});
-	        $(window).resize();
+	          function(){ jQuery("#menu-button-export-left").css("background", "url(/uniboard-player/images/menu-button-export-left-over.png)") },
+	          function(){ jQuery("#menu-button-export-left").css("background", "url(/uniboard-player/images/menu-button-export-left.png)") });
+	      jQuery("#menu-button-full").click(function(){ 
+	        jQuery("#logo-uniboard").hide();
+	        jQuery("#document-title").hide();
+	        jQuery("#head-button-close").show();
+	        jQuery("#head").css({height:40});
+	        jQuery("#foot").hide();
+	        jQuery("#body").css({paddingTop:40, paddingBottom:40});
+	        jQuery(window).resize();
 	      });
-  	    $("#menu-button-showthumbnails").click(function(){
+  	    jQuery("#menu-button-showthumbnails").click(function(){
     	    var newFootHeight = 0;
   	    
     	    if(thumbsBar.state === "min"){
-    	      $(".thumbnail").css("display", "inline-block");
+    	      jQuery(".thumbnail").css("display", "inline-block");
     	      newFootHeight = thumbsBar.fullHeightVal;
     	      thumbsBar.state = "full";
   	      } else {
-  	        $(".thumbnail").css("display", "none");
+  	        jQuery(".thumbnail").css("display", "none");
   	        newFootHeight = thumbsBar.minHeightVal;
   	        thumbsBar.state = "min";
           }
     	    
-    	    $("#body").css({paddingBottom:110 + newFootHeight });
-    	    $("#thumbnails").animate(
+    	    jQuery("#body").css({paddingBottom:110 + newFootHeight });
+    	    jQuery("#thumbnails").animate(
     	      {height:32 + newFootHeight},
   	        400,
   	        "easeOutBack"
   	      );
-    	    $("#foot").animate(
+    	    jQuery("#foot").animate(
     	      {height:84 + newFootHeight, marginTop:-84 -newFootHeight -12},
     	      400,
     	      "easeOutBack"
     	    );
     	    
-    	    $(window).resize();
+    	    jQuery(window).resize();
     	  });
   	  
     	  // Constructs the slider
-    	  var sliderPage = $("#thumbnails-slider>div:first").clone();
+    	  var sliderPage = jQuery("#thumbnails-slider>div:first").clone();
     	  var sliderPageWidth = (100/numberOfPages) + "%";
-    	  $("#thumbnails-slider>div:first").remove();
+    	  jQuery("#thumbnails-slider>div:first").remove();
     	  for(var i=1; i<=numberOfPages; i++){
     	    var newSliderPage = sliderPage.clone();
     	    newSliderPage
     	      .css({ width:sliderPageWidth })
     	      .click(function(){
-    	        goToPage($(this).index()+1);
+    	        goToPage(jQuery(this).index()+1);
     	      });
     	    if(i===numberOfPages) newSliderPage.addClass("last");
-    	    $("#thumbnails-slider").append(newSliderPage);
+    	    jQuery("#thumbnails-slider").append(newSliderPage);
   	    }
   	    
   	    // Slider handler
-  	    $("#thumbnails-slider>div:first").append($("#thumbnails-slider-handler"));
-  	    $("#thumbnails-slider-handler").draggable({
+  	    jQuery("#thumbnails-slider>div:first").append(jQuery("#thumbnails-slider-handler"));
+  	    jQuery("#thumbnails-slider-handler").draggable({
   	      axis: 'x',
-  	      containment:[ $("#thumbnails-slider>div:first-child").offset().left, 0, 
-  	                    $("#thumbnails-slider>div:first-child").offset().left + $("#thumbnails-slider>div:first-child").width()*numberOfPages-20, 0  ],
+  	      containment:[ jQuery("#thumbnails-slider>div:first-child").offset().left, 0, 
+  	                    jQuery("#thumbnails-slider>div:first-child").offset().left + jQuery("#thumbnails-slider>div:first-child").width()*numberOfPages-20, 0  ],
   	      start:function(e){
-  	        $(this).css({left:"0"});
-  	        $(this).parent("div").css({zIndex:1});
+  	        jQuery(this).css({left:"0"});
+  	        jQuery(this).parent("div").css({zIndex:1});
   	        sliderListener(currentPage.number);
   	        thumbsBar.sliding = true;
   	      },
   	      stop:function(e){
-  	        $(this).css({left:"0"});
+  	        jQuery(this).css({left:"0"});
   	        clearTimeout(sliderTimer);
-  	        $(this).appendTo($("#thumbnails-slider>div")[currentPage.number-1]);
+  	        jQuery(this).appendTo(jQuery("#thumbnails-slider>div")[currentPage.number-1]);
   	        thumbsBar.sliding = false;
   	      } 
   	    });
@@ -127,29 +133,35 @@
   	    var newThumbnail = null;
   	    var formattedThumbNumber = null;
   	    for(var i=0; i<numberOfPages; i++){
-  	      newThumbnail = $("#thumbnails>.thumbnail:first").clone();
+  	      newThumbnail = jQuery("#thumbnails>.thumbnail:first").clone();
   	      formattedThumbNumber = formatPageNumber(i+1);
   	      newThumbnail.find("img").attr("src", pagesBaseUrl + "/page" + formattedThumbNumber + ".thumbnail.jpg");
-  	      $("#thumbnails>div:last-child").before(newThumbnail); 
+  	      jQuery("#thumbnails>div:last-child").before(newThumbnail); 
   	    }
-  	    $("#thumbnails>.thumbnail:first").remove();
+  	    jQuery("#thumbnails>.thumbnail:first").remove();
   	    
-  	    $(".thumbnail")
+  	    jQuery(".thumbnail")
 	        .hover(
-	          function(){ $(this).addClass("current") },
-	          function(){ $(this).removeClass("current") })
+	          function(){ jQuery(this).addClass("current") },
+	          function(){ jQuery(this).removeClass("current") })
 	        .click(function(){
-	          goToPage($(this).index()-1);
+	          goToPage(jQuery(this).index()-1);
 	        });
   	    
-  	    $(".board-button").animate({opacity: 0}, 1000);
-  	    $("#description-text").append(description);
-  	    $("#menubottom-input").after("/" + numberOfPages);
+  	    jQuery(".board-button").animate({opacity: 0}, 1000);
+  	    jQuery("#thumbnails>div:last-child").append(numberOfPages);
+  	    jQuery("#data-document-title").append(documentData.title);
+  	    jQuery("#data-document-author").append(documentData.author);
+  	    jQuery("#description-text").append("<a href='mailto:asd'>" + documentData.author + 
+  	                                        "</a><br/>" + documentData.title + 
+  	                                        "<br/>" + documentData.publishedAt + 
+  	                                        "<br/><br/>" + documentData.description);
+  	    jQuery("#menubottom-input").after("/" + numberOfPages);
   	    openPage(1);
   	  });
 	  
 	    function sliderListener(currentPageNmbr){
-	      var slider = $("#thumbnails-slider-handler");
+	      var slider = jQuery("#thumbnails-slider-handler");
 	      var unitWidth = slider.parent("div").width();
 	      var sliderIndex = 1 + Math.floor((slider.position().left + ((currentPageNmbr-1) * unitWidth)) / unitWidth);	      
 	      if(sliderIndex !== currentPage.number) goToPage(sliderIndex);
@@ -182,20 +194,20 @@
   	      currentPage.number = 1;
   	    }
 	    	
-        $("#board-current").animate(
+        jQuery("#board-current").animate(
           {marginLeft:checkPoint.finish},
           300,
           "easeInQuint",
           function(){
-    	    	$("#thumbnails").css({width: $("#thumbnails").width()});
-            $("#board-current").css({ marginLeft:checkPoint.start });
+    	    	jQuery("#thumbnails").css({width: jQuery("#thumbnails").width()});
+            jQuery("#board-current").css({ marginLeft:checkPoint.start });
             openPage(currentPage.number);
-            $("#board-current").animate(
+            jQuery("#board-current").animate(
               {marginLeft:"0"},
               300,
               "easeOutQuint",
               function(){
-                $("#thumbnails").css({width: "100%"});
+                jQuery("#thumbnails").css({width: "100%"});
               }
             );
           }
@@ -203,7 +215,7 @@
   	  }
 	  
   	  function adaptPage(){
-  	    $(window).resize();
+  	    jQuery(window).resize();
   	    adaptPageTimer = setTimeout(function(){adaptPage()}, 10);
   	  }
   	  
@@ -216,45 +228,45 @@
         var formattedPageNumber = formatPageNumber(pageNumber);
         var fileName = pagesBaseUrl + "/page" + formattedPageNumber + ".svg";
         currentPage.number = pageNumber;
-        /*$.ajax({ 
+        /*jQuery.ajax({ 
           url: fileName,
           dataType: 'xml',
           success: function(data){
-            currentPage.width = $(data).find("rect").attr("width");
-            currentPage.height = $(data).find("rect").attr("height");*/
-            $("#current-page").attr("src", fileName);
-            $("#menubottom-input").val(pageNumber);
-            $("#thumbnails-slider>div").removeClass("current");
-            $($("#thumbnails-slider>div")[pageNumber-1]).addClass("current");
-            if(!thumbsBar.sliding)$("#thumbnails-slider-handler").appendTo($("#thumbnails-slider>div")[pageNumber-1]);
-            $(window).resize();
+            currentPage.width = jQuery(data).find("rect").attr("width");
+            currentPage.height = jQuery(data).find("rect").attr("height");*/
+            jQuery("#current-page").attr("src", fileName);
+            jQuery("#menubottom-input").val(pageNumber);
+            jQuery("#thumbnails-slider>div").removeClass("current");
+            jQuery(jQuery("#thumbnails-slider>div")[pageNumber-1]).addClass("current");
+            if(!thumbsBar.sliding)jQuery("#thumbnails-slider-handler").appendTo(jQuery("#thumbnails-slider>div")[pageNumber-1]);
+            jQuery(window).resize();
           /*}
         });*/
       }
 	
 		  function showDescription(){
-  	    $("#boards").animate({marginTop:"100%"}, function(){
-  	      $("#boards").hide();
-  	      $("#document-title").hide();
-  	      $("#head-button-close").show();
-  	      $("#description").show();
+  	    jQuery("#boards").animate({marginTop:"100%"}, function(){
+  	      jQuery("#boards").hide();
+  	      jQuery("#document-title").hide();
+  	      jQuery("#head-button-close").show();
+  	      jQuery("#description").show();
   	    });
   	  }
   	  
   	  function hideDescription(){
-  	    $("#boards").animate({marginTop:"0"}, function(){
-  	      $("#boards").show();
-  	      $("#document-title").show();
-  	      $("#head-button-close").hide();
-  	      $("#description").hide();
+  	    jQuery("#boards").animate({marginTop:"0"}, function(){
+  	      jQuery("#boards").show();
+  	      jQuery("#document-title").show();
+  	      jQuery("#head-button-close").hide();
+  	      jQuery("#description").hide();
   	    });
   	  }
 	
   	  function showIndex(){
   	    var thumbsPerRow = Math.round(Math.sqrt(numberOfPages));
-  	    $("#boards").animate({marginTop:"-100%"}, function(){
-  	      $("#boards").hide();
-  	      $("#index")
+  	    jQuery("#boards").animate({marginTop:"-100%"}, function(){
+  	      jQuery("#boards").hide();
+  	      jQuery("#index")
     	      .show()
     	      .empty();
     	    drawIndexThumbnails(thumbsPerRow);
@@ -262,42 +274,43 @@
   	  }
 	  
   	  function hideIndex(){
-  	    $("#index").hide();
-  	    $("#boards").show();
-        $("#thumbnails").show();
-        $("#boards").animate({marginTop:"0"});
-    	  $("#thumbnails").animate({marginTop:"0"});
+  	    jQuery("#index").hide();
+  	    jQuery("#boards").show();
+        jQuery("#thumbnails").show();
+        jQuery("#boards").animate({marginTop:"0"});
+    	  jQuery("#thumbnails").animate({marginTop:"0"});
   	  }
 	  
   	  function drawIndexThumbnails(thumbsPerRow){
-  	    var newIndex = $("#index>div").length + 1;
+  	    var newIndex = jQuery("#index>div").length + 1;
   	    var newIndexThumbnailNumber = formatPageNumber(newIndex);
-  	    var newIndexThumbnail = $("<div class='thumbnail index'><img src='" + pagesBaseUrl + "/page" + 
+  	    var newIndexThumbnail = jQuery("<div class='thumbnail index'><img src='" + pagesBaseUrl + "/page" + 
   	                            newIndexThumbnailNumber + 
   	                            ".thumbnail.jpg' width='auto' height='100%'/></div>");
   	    newIndexThumbnail
   	      .hover(
-	          function(){ $(this).addClass("current") },
-	          function(){ $(this).removeClass("current") })
+	          function(){ jQuery(this).addClass("current") },
+	          function(){ jQuery(this).removeClass("current") })
 	        .click(function(){
 	          openPage(newIndex);
-	          $("#menu-button-index").click();
+	          jQuery("#menu-button-index").click();
+	          jQuery(window).resize();
 	        });
-  	    $("#index").append(newIndexThumbnail);
-  	    if((newIndex)%thumbsPerRow === 0)$("#index").append("<br/>");
-  	    if($("#index>div").length < numberOfPages) setTimeout(function(){drawIndexThumbnails(thumbsPerRow)}, 100);
+  	    jQuery("#index").append(newIndexThumbnail);
+  	    if((newIndex)%thumbsPerRow === 0)jQuery("#index").append("<br/>");
+  	    if(jQuery("#index>div").length < numberOfPages) setTimeout(function(){drawIndexThumbnails(thumbsPerRow)}, 100);
   	  }
 	
-  	  $(window).resize(function(){
+  	  jQuery(window).resize(function(){
   	    var ratioWh = 1.66;//currentPage.width / currentPage.height;
-  	    $(".page").width($(".page").height() * ratioWh);
-  	    $("#document-title").width($(".page").width());
-  	    if($(window).height() < 500){
+  	    jQuery(".page").width(jQuery(".page").height() * ratioWh);
+  	    jQuery("#document-title").width(jQuery(".page").width());
+  	    if(jQuery(window).height() < 500){
   	      state = "mini";
   	    }
   	  });
 	  
-  })(jQuery);
+  })();
   
 	</script>
 	
@@ -309,8 +322,8 @@
     <div id="logo-uniboard"></div>
     <div id="document-title">
       <ul>
-        <li>One, two, three, four<span>, 06 Jun 2009</span></li>
-        <li>Rafi Najakalahr Fakha</li>
+        <li id="data-document-title"></li>
+        <li id="data-document-author"></li>
         <li><a id="moreLink" href="#">more…</a></li>
       </ul>
     </div>
@@ -345,7 +358,7 @@
       <div id="thumbnails-slider"><div class="thumbnails-slider-page"></div></div>
       <div style="width:14px; height:80px; position:absolute; top:45px; left:0px; color:red; font-size:10px; line-height:80px; text-decoration:underline; letter-spacing:normal">1</div>
       <div class="thumbnail"><img src="" alt="thumbnail" height="100%" width="auto"/></div>
-      <div style="width:18px; height:80px; position:absolute; top:45px; left:100%; margin-left:-18px; color:red; font-size:10px; line-height:80px; text-decoration:underline; letter-spacing:normal">4</div>
+      <div style="width:18px; height:80px; position:absolute; top:45px; left:100%; margin-left:-18px; color:red; font-size:10px; line-height:80px; text-decoration:underline; letter-spacing:normal"></div>
     </div><!--thumbnails-->
     <div class="menu bottom">
       <div class="menu-box-left menu-box">

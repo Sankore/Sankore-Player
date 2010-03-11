@@ -51,7 +51,7 @@ input{
 .menu-box-center{ text-align:center; line-height:30px }
 .menu-box-right{ text-align:right }
 
-.menu-button{ height:31px; width:32px; display:inline-block }
+.menu-button{ height:31px; width:32px; display:inline-block; cursor:pointer }
 #menu-button-previous{ background:url(../images/menu-button-previous.png) }
 #menu-button-previous:hover{ background:url(../images/menu-button-previous-over.png) }
 #menu-button-index{ background:url(../images/menu-button-index.png); width:35px }
