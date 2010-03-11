@@ -1,11 +1,11 @@
 
 html{ height:100%; width:100% }
-body{ height:100%; width:100%; overflow:hidden; display:table; font-family:helvetica, arial, sans-serif; background-color:rgb(250, 250, 250) }
+body{ height:100%; width:100%; overflow:hidden; display:table; font-family:helvetica, arial, sans-serif; background-color:rgb(246, 247, 248) }
 
 a{ color:red }
 
 #head{
-  background-color:rgb(250, 250, 250);
+  background-color:rgb(246, 247, 248);
   display:table;
   text-align:center;
   position:absolute;
@@ -133,7 +133,7 @@ input{
   width:100%;
 }
 
-#boards{ background-color:rgb(250, 250, 250); overflow:visible; display:block; text-align:center; height:100%; width:100%; position:relative; margin:auto }
+#boards{ background-color:rgb(246, 247, 248); overflow:visible; display:block; text-align:center; height:100%; width:100%; position:relative; margin:auto }
 .board{ display:inline-block; width:100%; height:100%; letter-spacing:-5px }
 .board-button{ height:99%; width:38px; display:inline-block }
 .board-button-unit{ height:50% }
@@ -147,7 +147,7 @@ input{
 
 #thumbnails{ display:block; width:100%; height:32px; overflow:hidden; position:relative; margin-bottom:10px; text-align:center }
 #thumbnails-slider{ position:relative; height:8px; margin-top:24px; margin-bottom:14px }
-#thumbnails-slider-handler{ height:24px; width:31px; position:relative; top:-16px; background:url(../images/slider-handler.png) }
+#thumbnails-slider-handler{ height:28px; width:17px; position:relative; top:-21px; background:url(../images/slider-handler.png) }
 .thumbnails-slider-page{ position:relative; display:block; float:left; height:100%; width:100%; background:url(../images/thumbnails-slider-odd.png) center right }
 .thumbnails-slider-page.last{ background-position: center left } 
 .thumbnails-slider-page.current{ background-image:url(../images/thumbnails-slider-current.png) }

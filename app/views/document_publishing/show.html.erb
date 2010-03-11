@@ -68,30 +68,38 @@
 	      });
   	    jQuery("#menu-button-showthumbnails").click(function(){
     	    var newFootHeight = 0;
+    	    var easing = "";
   	    
     	    if(thumbsBar.state === "min"){
     	      jQuery(".thumbnail").css("display", "inline-block");
     	      newFootHeight = thumbsBar.fullHeightVal;
     	      thumbsBar.state = "full";
+    	      easing = "easeOutBack";
   	      } else {
   	        jQuery(".thumbnail").css("display", "none");
   	        newFootHeight = thumbsBar.minHeightVal;
   	        thumbsBar.state = "min";
+  	        easing = "easeInQuint";
           }
     	    
-    	    jQuery("#body").css({paddingBottom:110 + newFootHeight });
+    	    if(thumbsBar.state === "full"){
+    	      jQuery("#body").css({paddingBottom:110 + newFootHeight });
+    	      jQuery(window).resize();
+  	      }
     	    jQuery("#thumbnails").animate(
     	      {height:32 + newFootHeight},
   	        400,
-  	        "easeOutBack"
+  	        easing,
+  	        function(){ 
+  	          jQuery("#body").css({paddingBottom:110 + newFootHeight });
+  	          jQuery(window).resize();
+  	        }
   	      );
     	    jQuery("#foot").animate(
     	      {height:84 + newFootHeight, marginTop:-84 -newFootHeight -12},
     	      400,
-    	      "easeOutBack"
+    	      easing
     	    );
-    	    
-    	    jQuery(window).resize();
     	  });
   	  
     	  // Constructs the slider
