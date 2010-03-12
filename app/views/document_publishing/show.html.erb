@@ -76,7 +76,7 @@
     	      thumbsBar.state = "full";
     	      easing = "easeOutBack";
   	      } else {
-  	        jQuery(".thumbnail").css("display", "none");
+  	        //jQuery(".thumbnail").css("display", "none");
   	        newFootHeight = thumbsBar.minHeightVal;
   	        thumbsBar.state = "min";
   	        easing = "easeInQuint";
@@ -215,7 +215,7 @@
               300,
               "easeOutQuint",
               function(){
-                jQuery("#thumbnails").css({width: "100%"});
+                jQuery("#thumbnails").css({width: "auto"});
               }
             );
           }
@@ -360,7 +360,7 @@
   </div>
 
   <div id="foot">
-    <div style="position:relative; height:100%; margin-left:50px; margin-right:50px">
+    <div style="position:relative; height:100%">
    <div id="thumbnails">
       <div id="thumbnails-slider-handler"></div>
       <div id="thumbnails-slider"><div class="thumbnails-slider-page"></div></div>
