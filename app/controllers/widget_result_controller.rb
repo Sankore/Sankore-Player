@@ -6,9 +6,10 @@ class WidgetResultController < ApplicationController
   def record_result
     
     test_result = {}
-    test_result[:teacher_email] = "matthieu.rudaz@mnemis.com"
-    test_result[:student_name] = "toto"
-    test_result[:score] = 22
+    test_result[:teacher_email] = params[:teacher_email]
+    test_result[:student_email] = params[:student_email]
+    test_result[:student_name] = params[:student_name]
+    test_result[:score] = params[:score]
     
     WidgetResultMailer.deliver_notify(test_result)
     
