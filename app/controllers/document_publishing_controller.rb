@@ -15,6 +15,7 @@ class DocumentPublishingController < ApplicationController
     published_document.author_email = request.headers["Document-AuthorEMail"]
     published_document.page_count = request.headers["Document-PageCount"]
     published_document.deletion_token = request.headers["Deletion-Token"]
+    published_document.free_version = request.headers["Document-FreeVersion"] == 'true'
 
     published_document.save_payload(request.body)
     
