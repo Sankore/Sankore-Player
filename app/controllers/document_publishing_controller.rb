@@ -35,7 +35,6 @@ class DocumentPublishingController < ApplicationController
     @published_document = PublishedDocument.find(:first , :conditions => {:document_uuid => params[:uuid]} , :order => "created_at DESC")
 
     if @published_document
-
       respond_to do |format|
         format.html
       end
@@ -44,6 +43,7 @@ class DocumentPublishingController < ApplicationController
         format.any { head :forbidden }
       end
     end
+  end
   
   def unpublish
   
@@ -65,6 +65,6 @@ class DocumentPublishingController < ApplicationController
         format.any { head :forbidden }
       end
     end    
-  end
   
+  end
 end
