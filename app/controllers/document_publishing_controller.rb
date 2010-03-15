@@ -34,11 +34,16 @@ class DocumentPublishingController < ApplicationController
    
     @published_document = PublishedDocument.find(:first , :conditions => {:document_uuid => params[:uuid]} , :order => "created_at DESC")
 
-    respond_to do |format|
-      format.html
-    end    
+    if @published_document
 
-  end
+      respond_to do |format|
+        format.html
+      end
+    else
+      respond_to do |format|
+        format.any { head :forbidden }
+      end
+    end
   
   def unpublish
   
