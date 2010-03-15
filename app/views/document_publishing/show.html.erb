@@ -23,15 +23,20 @@
   	  var thumbsBar = { state:"min", fullHeightVal:100, minHeightVal:0, sliding:false };
   	  var currentPage = { number:1, width:0, height:0 };
   	  var state = "full";
+  	  var mode = "normal";
   	  var adaptPageTimer = null;
   	  var sliderTimer = null;
   	  var numberOfPages = <%= @published_document.page_count %>;
   	  var pagesBaseUrl =  '<%= @published_document.persistence_url %>';
   	  var documentData = {
   	    author:'<%= @published_document.author %>',
+  	    authorEmail:'<%= @published_document.author_email %>',
   	    title:'<%= @published_document.title %>',
   	    description:'<%= @published_document.description %>',
-  	    publishedAt:'<%= @published_document.created_at %>'
+  	    publishedAt:'<%= @published_document.created_at %>',
+  	    uuid:'<%= @published_document.publishing_uuid %>',
+  	    hasPdf:'<%= @published_document.has_pdf %>',
+  	    hasUbz:'<%= @published_document.has_ubz %>'
   	  }
 	  	  
   	  jQuery(document).ready(function(){
@@ -49,7 +54,7 @@
 	        .mouseout(function(){jQuery(this).animate({opacity:0})});
 	      jQuery("#menubottom-input").change(function(){ goToPage(jQuery("#menubottom-input").val()) });
 	      jQuery("#moreLink").click(function(){ showDescription() });
-	      jQuery("#head-button-close").click(function(){ hideDescription() });
+	      jQuery("#head-button-close").click(function(){ if(mode=="description"){hideDescription()}else if(mode=="full"){switchToNormalMode()} });
 	      jQuery("#menu-button-export")
 	        .toggle(
 	          function(){ jQuery("#menu-export-dropdown").show() },
@@ -58,13 +63,7 @@
 	          function(){ jQuery("#menu-button-export-left").css("background", "url(/uniboard-player/images/menu-button-export-left-over.png)") },
 	          function(){ jQuery("#menu-button-export-left").css("background", "url(/uniboard-player/images/menu-button-export-left.png)") });
 	      jQuery("#menu-button-full").click(function(){ 
-	        jQuery("#logo-uniboard").hide();
-	        jQuery("#document-title").hide();
-	        jQuery("#head-button-close").show();
-	        jQuery("#head").css({height:40});
-	        jQuery("#foot").hide();
-	        jQuery("#body").css({paddingTop:40, paddingBottom:40});
-	        jQuery(window).resize();
+          switchToFullMode();
 	      });
   	    jQuery("#menu-button-showthumbnails").click(function(){
     	    var newFootHeight = 0;
@@ -143,7 +142,9 @@
   	    for(var i=0; i<numberOfPages; i++){
   	      newThumbnail = jQuery("#thumbnails>.thumbnail:first").clone();
   	      formattedThumbNumber = formatPageNumber(i+1);
-  	      newThumbnail.find("img").attr("src", pagesBaseUrl + "/page" + formattedThumbNumber + ".thumbnail.jpg");
+  	      newThumbnail
+  	        .find("img").attr("src", pagesBaseUrl + "/page" + formattedThumbNumber + ".thumbnail.jpg")
+  	        .attr("title", "page " + (i+1));
   	      jQuery("#thumbnails>div:last-child").before(newThumbnail); 
   	    }
   	    jQuery("#thumbnails>.thumbnail:first").remove();
@@ -156,11 +157,32 @@
 	          goToPage(jQuery(this).index()-1);
 	        });
   	    
+  	    
+  	    if(documentData.hasPdf){ 
+  	      jQuery("#menu-export-hasPdf>a").addClass("disabled");
+  	    }else{ 
+          jQuery("#menu-export-hasPdf")
+  	        .hover(function(){jQuery(this).addClass("over")}, function(){jQuery(this).removeClass("over")})
+  	        .children("a").attr("href", pagesBaseUrl + "/" + documentData.uuid + ".pdf");
+  	    }
+  	    if(!documentData.hasUbz){
+  	      jQuery("#menu-export-hasUbz>a").addClass("disabled");
+  	    }else{ 
+  	      jQuery("#menu-export-hasUbz")
+  	        .hover(function(){jQuery(this).addClass("over")}, function(){jQuery(this).removeClass("over")})
+  	        .children("a").attr("href", pagesBaseUrl + "/" + documentData.uuid + ".ubz");
+  	    }
+  	    
+  	    jQuery(document).click(function(){
+  	      if(jQuery("#menu-export-dropdown").css("display") !== "none"){
+  	        jQuery("#menu-button-export").click();
+  	      }
+  	    });
   	    jQuery(".board-button").animate({opacity: 0}, 1000);
   	    jQuery("#thumbnails>div:last-child").append(numberOfPages);
   	    jQuery("#data-document-title").append(documentData.title);
   	    jQuery("#data-document-author").append(documentData.author);
-  	    jQuery("#description-text").append("<a href='mailto:asd'>" + documentData.author + 
+  	    jQuery("#description-text").append("<a href='mailto:" + documentData.authorEmail + "'>" + documentData.author + 
   	                                        "</a><br/>" + documentData.title + 
   	                                        "<br/>" + documentData.publishedAt + 
   	                                        "<br/><br/>" + documentData.description);
@@ -251,6 +273,28 @@
           /*}
         });*/
       }
+      
+      function switchToFullMode(){
+        jQuery("#logo-uniboard").hide();
+        jQuery("#document-title").hide();
+        jQuery("#head-button-close").show();
+        jQuery("#head").css({height:40});
+        jQuery("#foot").hide();
+        jQuery("#body").css({paddingTop:40, paddingBottom:40});
+        jQuery(window).resize();
+        mode = "full";
+      }
+      
+      function switchToNormalMode(){
+        jQuery("#logo-uniboard").show();
+        jQuery("#document-title").show();
+        jQuery("#head-button-close").hide();
+        jQuery("#head").css({height:55});
+        jQuery("#foot").show();
+        jQuery("#body").css({paddingTop:85, paddingBottom:110});
+        jQuery(window).resize();
+        mode = "normal";
+      }
 	
 		  function showDescription(){
   	    jQuery("#boards").animate({marginTop:"100%"}, function(){
@@ -259,6 +303,7 @@
   	      jQuery("#head-button-close").show();
   	      jQuery("#description").show();
   	    });
+  	    mode = "description";
   	  }
   	  
   	  function hideDescription(){
@@ -268,6 +313,7 @@
   	      jQuery("#head-button-close").hide();
   	      jQuery("#description").hide();
   	    });
+  	    mode = "normal";
   	  }
 	
   	  function showIndex(){
@@ -370,22 +416,22 @@
     </div><!--thumbnails-->
     <div class="menu bottom">
       <div class="menu-box-left menu-box">
-        <div class="menu-button" id="menu-button-showthumbnails"></div>
+        <div class="menu-button" id="menu-button-showthumbnails" title="Show the thumbnails" alt="Show thumbnails button"></div>
         <div style="display:block; float:left; height:31px; margin-left:10px; line-height:42px"><input id="menubottom-input" type="text"></div>
       </div>
       <div class="menu-box-center menu-box">
-        <div class="menu-button" id="menu-button-previous"></div>
-        <div class="menu-button" id="menu-button-index"></div>
-        <div class="menu-button" id="menu-button-next"></div>
+        <div class="menu-button" id="menu-button-previous" title="Previous page" alt="Previous page button"></div>
+        <div class="menu-button" id="menu-button-index" title="Show the index" alt="Show index button"></div>
+        <div class="menu-button" id="menu-button-next" title="Next page" alt="Next page button"></div>
       </div>
       <div class="menu-box-right menu-box">
-        <div class="menu-button" id="menu-button-full"></div>
-        <div class="menu-button" id="menu-button-export">
+        <div class="menu-button" id="menu-button-full" title="Switch to full mode" alt="Full mode button"></div>
+        <div class="menu-button" id="menu-button-export" title="Export this document as…" alt="Export button">
           <div id="menu-button-export-left"></div>
           <div id="menu-button-export-center">Export as…</div>
           <div id="menu-button-export-right"></div>
         </div>
-        <div id="menu-export-dropdown"><ul><li>.PDF</li><li>.UBZ</li></ul></div>
+        <div id="menu-export-dropdown"><ul><li id="menu-export-hasPdf"><a href="#">.PDF</a></li><li id="menu-export-hasUbz"><a href="#">.UBZ</a></li></ul></div>
       </div>
     </div>
     </div>
