@@ -14,8 +14,7 @@ class WidgetResultController < ApplicationController
     WidgetResultMailer.deliver_notify(test_result)
     
     respond_to do |format|
-      format.html { head :ok }
-      format.xml  { head :ok }
+      format.html
     end
     
   end
