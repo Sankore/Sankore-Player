@@ -15,6 +15,7 @@ class DocumentPublishingController < ApplicationController
     published_document.author_email = request.headers["Document-AuthorEMail"]
     published_document.page_count = request.headers["Document-PageCount"]
     published_document.deletion_token = request.headers["Deletion-Token"]
+    published_document.free_version = request.headers["Document-FreeVersion"] == 'true'
 
     published_document.save_payload(request.body)
     
@@ -23,8 +24,7 @@ class DocumentPublishingController < ApplicationController
     DocumentPublishingMailer.deliver_notify(published_document)
     
     respond_to do |format|
-      format.html { head :ok }
-      format.xml  { head :ok }
+      format.any { head :ok }
     end
     
   end
@@ -33,10 +33,15 @@ class DocumentPublishingController < ApplicationController
    
     @published_document = PublishedDocument.find(:first , :conditions => {:document_uuid => params[:uuid]} , :order => "created_at DESC")
 
-    respond_to do |format|
-      format.html
-    end    
-
+    if @published_document
+      respond_to do |format|
+        format.html
+      end
+    else
+      respond_to do |format|
+        format.any { head :forbidden }
+      end
+    end
   end
   
   def unpublish
@@ -59,6 +64,6 @@ class DocumentPublishingController < ApplicationController
         format.any { head :forbidden }
       end
     end    
-  end
   
+  end
 end
