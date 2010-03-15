@@ -162,14 +162,28 @@
   	      jQuery("#menu-export-hasPdf>a").addClass("disabled");
   	    }else{ 
           jQuery("#menu-export-hasPdf")
-  	        .hover(function(){jQuery(this).addClass("over")}, function(){jQuery(this).removeClass("over")})
+  	        .hover(
+  	          function(){
+  	            jQuery(this).children("a").addClass("over");
+  	            jQuery(this).addClass("over")}, 
+  	          function(){
+  	            jQuery(this).children("a").removeClass("over");
+  	            jQuery(this).removeClass("over");
+  	        })
   	        .children("a").attr("href", pagesBaseUrl + "/" + documentData.uuid + ".pdf");
   	    }
   	    if(!documentData.hasUbz){
   	      jQuery("#menu-export-hasUbz>a").addClass("disabled");
   	    }else{ 
   	      jQuery("#menu-export-hasUbz")
-  	        .hover(function(){jQuery(this).addClass("over")}, function(){jQuery(this).removeClass("over")})
+  	        .hover(
+  	          function(){
+  	            jQuery(this).children("a").addClass("over");
+  	            jQuery(this).addClass("over")}, 
+  	          function(){
+  	            jQuery(this).children("a").removeClass("over");
+  	            jQuery(this).removeClass("over");
+  	        })
   	        .children("a").attr("href", pagesBaseUrl + "/" + documentData.uuid + ".ubz");
   	    }
   	    
