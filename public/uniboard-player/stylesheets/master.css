@@ -63,7 +63,7 @@ input{
 #menu-button-export-right{ background:url(../images/menu-button-export-right.png); width:5px; height:100%; float:left }
 #menu-button-full{ background:url(../images/menu-button-full.png); margin-right:5px; }
 #menu-button-full:hover{ background:url(../images/menu-button-full-over.png) }
-#menu-export-dropdown{ display:none; position:absolute; top:-55px; left:100%; margin-left:-92px; width:70px; z-index:2; }
+#menu-export-dropdown{ display:none; position:absolute; top:-55px; left:100%; margin-left:-90px; width:70px; z-index:2; }
 #menu-export-dropdown ul{
   line-height:20px;
   text-align:left;
@@ -77,18 +77,11 @@ input{
   -moz-box-shadow: 2px 2px 3px #ddd;
 }
 
-#menu-export-dropdown ul li{
-  border-bottom:1px solid #ddd;
-}
-
-#menu-export-dropdown ul li:last-child{
-  border-bottom:0px;
-}
-
-#menu-export-dropdown ul li:hover{
-  background-color:red;
-  color:white;
-}
+#menu-export-dropdown ul li{ border-bottom:1px solid #ddd }
+#menu-export-dropdown ul li:last-child{ border-bottom:0px }
+#menu-export-dropdown ul li.over{ background-color:red; color:white }
+#menu-export-dropdown ul li a.disabled{ color:#ddd }
+#menu-export-dropdown ul li a{ color:#666; text-decoration:none; }
 
 #head-button-close{ background:url(../images/head-button-close.png); position:relative; display:none; width:17px; height:17px; float:right;margin:25px 50px 0px 0px; }
 #logo-uniboard{ background:url(../images/logo-uniboard.png); width:114px; height:25px; position:absolute; top:22px; left:50px }
