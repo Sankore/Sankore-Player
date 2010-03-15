@@ -39,10 +39,10 @@ class PublishedDocument < ActiveRecord::Base
 
   end
 
+
   def unpublish
     
     init_s3_bucket
-    
     self.s3_bucket.delete_folder(self.persistence_url)
     
   end
@@ -50,20 +50,19 @@ class PublishedDocument < ActiveRecord::Base
 
   def init_s3_bucket
     
-    if (self.s3_bucket == nil && APP_CONFIG['documents_s3_bucket'])
+    if (self.s3_bucket == nil && APP_CONFIG['publishing_s3_bucket'])
       
-      documents_s3_bucket = APP_CONFIG['documents_s3_bucket']
-      documents_s3_access_key_id = APP_CONFIG['documents_s3_access_key_id']
-      documents_s3_secret_access_key = APP_CONFIG['documents_s3_secret_access_key']
+      documents_s3_bucket = APP_CONFIG['publishing_s3_bucket']
+      documents_s3_access_key_id = APP_CONFIG['publishing_s3_access_key_id']
+      documents_s3_secret_access_key = APP_CONFIG['publishing_s3_secret_access_key']
       
-      self.documents_s3_publishing_endpoint = APP_CONFIG['documents_s3_publishing_endpoint']
+      self.documents_s3_publishing_endpoint = APP_CONFIG['publishing_s3_document_endpoint']
             
       s3 = RightAws::S3.new(documents_s3_access_key_id, documents_s3_secret_access_key)
       
       self.s3_bucket = s3.bucket(documents_s3_bucket)
       
     end
-  
   end
 
 end

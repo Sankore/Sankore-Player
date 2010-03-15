@@ -6,6 +6,8 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'documents/publish/:uuid', :controller => 'DocumentPublishing', :action => 'show' , :conditions => { :method => :get}
   map.connect 'documents/unpublish/:deletion_token', :controller => 'DocumentPublishing', :action => 'unpublish' , :conditions => { :method => :get}
 
+  map.connect 'captures/publish', :controller => 'CapturePublishing', :action => 'publish', :conditions => { :method => :post}
+
   map.connect 'widgets/wikibot/search', :controller => 'wikibot', :action => 'search', :conditions => { :method => :get }
   map.connect 'widgets/edu-game', :controller => 'WidgetResult', :action => 'record_result', :conditions => { :method => :post}
   
