@@ -24,8 +24,7 @@ class DocumentPublishingController < ApplicationController
     DocumentPublishingMailer.deliver_notify(published_document)
     
     respond_to do |format|
-      format.html { head :ok }
-      format.xml  { head :ok }
+      format.any { head :ok }
     end
     
   end
