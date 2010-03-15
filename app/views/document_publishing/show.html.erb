@@ -4,7 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-	<title>untitled</title>
+	<title>Uniboard player</title>
 	
 	<style type="text/css">
 	  @import url(/uniboard-player/stylesheets/reset.css);
@@ -12,130 +12,314 @@
 	</style>
 	
 	<!-- Libraries -->
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
-    <script type="text/javascript" src="/uniboard-player/scripts/jquery.easing.1.3.js"></script>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+  <script type="text/javascript" src="/uniboard-player/scripts/jquery-ui-1.8rc3.custom.min.js"></script>
+  <script type="text/javascript" src="/uniboard-player/scripts/jquery.easing.1.3.js"></script>
 	
 	<script type="text/javascript">
 	  
-	  var thumbsBar = { state:"min", fullHeightVal:25, minHeightVal:6 };
-	  var currentPage = { number:1, width:0, height:0 };
-	  var state = "full";
-	  var adaptPageTimer = null;
-	  var numberOfPages = <%= @published_document.page_count %>;	  
-	  var pagesBaseUrl =  '<%= @published_document.persistence_url %>';
-	    
-	  $(document).ready(function(){
-	    
-	    $("#menu-button-previous").click(function(){ goToPage("PREVIOUS") });
-	    $("#menu-button-next").click(function(){ goToPage("NEXT") });
-      $("#board-button-previous").click(function(){ goToPage("PREVIOUS") });
-	    $("#board-button-next").click(function(){ goToPage("NEXT") });
-	    $("#board-button-index").click(function(){  });
-	    
-	    $("#thumbnails").click(function(){
-  	    var newThumbsHeight = 0;
+	  (function() {
+	  
+  	  var thumbsBar = { state:"min", fullHeightVal:100, minHeightVal:0, sliding:false };
+  	  var currentPage = { number:1, width:0, height:0 };
+  	  var state = "full";
+  	  var adaptPageTimer = null;
+  	  var sliderTimer = null;
+  	  var numberOfPages = <%= @published_document.page_count %>;
+  	  var pagesBaseUrl =  '<%= @published_document.persistence_url %>';
+  	  var documentData = {
+  	    author:'<%= @published_document.author %>',
+  	    title:'<%= @published_document.title %>',
+  	    description:'<%= @published_document.description %>',
+  	    publishedAt:'<%= @published_document.created_at %>'
+  	  }
+	  	  
+  	  jQuery(document).ready(function(){
+	      
+	      // bind the buttons events
+  	    jQuery("#menu-button-previous").click(function(){ goToPage("PREVIOUS") });
+  	    jQuery("#menu-button-index").toggle(function(){ showIndex() }, function(){ hideIndex() });
+  	    jQuery("#menu-button-next").click(function(){ goToPage("NEXT") });
+        jQuery("#board-button-previous").click(function(){ goToPage("PREVIOUS") });
+  	    jQuery("#board-button-next").click(function(){ goToPage("NEXT") });
+  	    jQuery("#board-button-last").click(function(){ goToPage(numberOfPages) });
+  	    jQuery("#board-button-first").click(function(){ goToPage(1) });
+	      jQuery(".board-button")
+	        .mouseenter(function(){jQuery(this).animate({opacity:1})})
+	        .mouseout(function(){jQuery(this).animate({opacity:0})});
+	      jQuery("#menubottom-input").change(function(){ goToPage(jQuery("#menubottom-input").val()) });
+	      jQuery("#moreLink").click(function(){ showDescription() });
+	      jQuery("#head-button-close").click(function(){ hideDescription() });
+	      jQuery("#menu-button-export")
+	        .toggle(
+	          function(){ jQuery("#menu-export-dropdown").show() },
+	          function(){ jQuery("#menu-export-dropdown").hide() })
+	        .hover(
+	          function(){ jQuery("#menu-button-export-left").css("background", "url(/uniboard-player/images/menu-button-export-left-over.png)") },
+	          function(){ jQuery("#menu-button-export-left").css("background", "url(/uniboard-player/images/menu-button-export-left.png)") });
+	      jQuery("#menu-button-full").click(function(){ 
+	        jQuery("#logo-uniboard").hide();
+	        jQuery("#document-title").hide();
+	        jQuery("#head-button-close").show();
+	        jQuery("#head").css({height:40});
+	        jQuery("#foot").hide();
+	        jQuery("#body").css({paddingTop:40, paddingBottom:40});
+	        jQuery(window).resize();
+	      });
+  	    jQuery("#menu-button-showthumbnails").click(function(){
+    	    var newFootHeight = 0;
+    	    var easing = "";
   	    
-  	    if(thumbsBar.state === "min"){
-  	      $(".thumbnail").css("display", "inline");
-  	      //$("#thumbnails").append();
-  	      newThumbsHeight = thumbsBar.fullHeightVal;
-  	      thumbsBar.state = "full";
-	      } else {
-	        $(".thumbnail").css("display", "none");
-	        newThumbsHeight = thumbsBar.minHeightVal;
-	        thumbsBar.state = "min";
-        }
-        
-  	    adaptPage();
-  	    
-  	    $("#boards").animate(
-  	      {height:100-newThumbsHeight + "%"},
-  	      400,
-  	      "easeOutBack"
-  	    );
-  	    $("#thumbnails").animate(
-  	      {height:newThumbsHeight + "%"},
-  	      400,
-  	      "easeOutBack",
-  	      function(){clearInterval(adaptPageTimer)}
-  	    );
-  	  });
+    	    if(thumbsBar.state === "min"){
+    	      jQuery(".thumbnail").css("display", "inline-block");
+    	      newFootHeight = thumbsBar.fullHeightVal;
+    	      thumbsBar.state = "full";
+    	      easing = "easeOutBack";
+  	      } else {
+  	        //jQuery(".thumbnail").css("display", "none");
+  	        newFootHeight = thumbsBar.minHeightVal;
+  	        thumbsBar.state = "min";
+  	        easing = "easeInQuint";
+          }
+    	    
+    	    if(thumbsBar.state === "full"){
+    	      jQuery("#body").css({paddingBottom:110 + newFootHeight });
+    	      jQuery(window).resize();
+  	      }
+    	    jQuery("#thumbnails").animate(
+    	      {height:32 + newFootHeight},
+  	        400,
+  	        easing,
+  	        function(){ 
+  	          jQuery("#body").css({paddingBottom:110 + newFootHeight });
+  	          jQuery(window).resize();
+  	        }
+  	      );
+    	    jQuery("#foot").animate(
+    	      {height:96 + newFootHeight, marginTop:-96 -newFootHeight},
+    	      400,
+    	      easing
+    	    );
+    	  });
   	  
-	    openPage(1);
-	  });
+    	  // Constructs the slider
+    	  var sliderPage = jQuery("#thumbnails-slider>div:first").clone();
+    	  var sliderPageWidth = (100/numberOfPages) + "%";
+    	  jQuery("#thumbnails-slider>div:first").remove();
+    	  for(var i=1; i<=numberOfPages; i++){
+    	    var newSliderPage = sliderPage.clone();
+    	    newSliderPage
+    	      .css({ width:sliderPageWidth })
+    	      .click(function(){
+    	        goToPage(jQuery(this).index()+1);
+    	      });
+    	    if(i===numberOfPages) newSliderPage.addClass("last");
+    	    jQuery("#thumbnails-slider").append(newSliderPage);
+  	    }
+  	    
+  	    // Slider handler
+  	    jQuery("#thumbnails-slider>div:first").append(jQuery("#thumbnails-slider-handler"));
+  	    jQuery("#thumbnails-slider-handler").draggable({
+  	      axis: 'x',
+  	      containment:[ jQuery("#thumbnails-slider>div:first-child").offset().left, 0, 
+  	                    jQuery("#thumbnails-slider>div:first-child").offset().left + jQuery("#thumbnails-slider>div:first-child").width()*numberOfPages-20, 0  ],
+  	      start:function(e){
+  	        jQuery(this).css({left:"0"});
+  	        jQuery(this).parent("div").css({zIndex:1});
+  	        sliderListener(currentPage.number);
+  	        thumbsBar.sliding = true;
+  	      },
+  	      stop:function(e){
+  	        jQuery(this).css({left:"0"});
+  	        clearTimeout(sliderTimer);
+  	        jQuery(this).appendTo(jQuery("#thumbnails-slider>div")[currentPage.number-1]);
+  	        thumbsBar.sliding = false;
+  	      } 
+  	    });
+  	    
+  	    // Add the thumbnails
+  	    var newThumbnail = null;
+  	    var formattedThumbNumber = null;
+  	    for(var i=0; i<numberOfPages; i++){
+  	      newThumbnail = jQuery("#thumbnails>.thumbnail:first").clone();
+  	      formattedThumbNumber = formatPageNumber(i+1);
+  	      newThumbnail.find("img").attr("src", pagesBaseUrl + "/page" + formattedThumbNumber + ".thumbnail.jpg");
+  	      jQuery("#thumbnails>div:last-child").before(newThumbnail); 
+  	    }
+  	    jQuery("#thumbnails>.thumbnail:first").remove();
+  	    
+  	    jQuery(".thumbnail")
+	        .hover(
+	          function(){ jQuery(this).addClass("current") },
+	          function(){ jQuery(this).removeClass("current") })
+	        .click(function(){
+	          goToPage(jQuery(this).index()-1);
+	        });
+  	    
+  	    jQuery(".board-button").animate({opacity: 0}, 1000);
+  	    jQuery("#thumbnails>div:last-child").append(numberOfPages);
+  	    jQuery("#data-document-title").append(documentData.title);
+  	    jQuery("#data-document-author").append(documentData.author);
+  	    jQuery("#description-text").append("<a href='mailto:asd'>" + documentData.author + 
+  	                                        "</a><br/>" + documentData.title + 
+  	                                        "<br/>" + documentData.publishedAt + 
+  	                                        "<br/><br/>" + documentData.description);
+  	    jQuery("#menubottom-input").after("/" + numberOfPages);
+  	    openPage(1);
+  	  });
 	  
-	  function goToPage(pageNumber){
-	    var checkPoint = { finish:"%", start:"%" };
-	    
-	    if(pageNumber === "NEXT"){
-	      currentPage.number++;
-	      checkPoint = { finish:"-200%", start:"100%" };
-	    }else if(pageNumber === "PREVIOUS"){
-	      currentPage.number--;
-	      checkPoint = { finish:"100%", start:"-200%" };
-	    }else{
-	      currentPage.number = pageNumber;
+	    function sliderListener(currentPageNmbr){
+	      var slider = jQuery("#thumbnails-slider-handler");
+	      var unitWidth = slider.parent("div").width();
+	      var sliderIndex = 1 + Math.floor((slider.position().left + ((currentPageNmbr-1) * unitWidth)) / unitWidth);	      
+	      if(sliderIndex !== currentPage.number) goToPage(sliderIndex);
+	      sliderTimer = setTimeout(function(){sliderListener(currentPageNmbr)}, 10);
 	    }
-	    
-	    if(currentPage.number <= 0){
-	      currentPage.number = numberOfPages;
-	    }else if(currentPage.number > numberOfPages){
-	      currentPage.number = 1;
-	    }
-	    
-	    console.log(currentPage.number);
-	    
-      $("#board-current").animate(
-        {marginLeft:checkPoint.finish},
-        300,
-        "easeInQuint",
-        function(){
-          $("#board-current").css({ marginLeft:checkPoint.start });
-          openPage(currentPage.number);
-          $("#board-current").animate(
-            {marginLeft:"0"},
-            300,
-            "easeOutQuint"
-          );
-        }
-      );
-	  }
 	  
-	  function adaptPage(){
-	    $(window).resize();
-	    adaptPageTimer = setTimeout(function(){adaptPage()}, 10);
-	  }
+  	  function goToPage(pageNumber){
+  	    var checkPoint = { finish:"%", start:"%" };
+	    
+  	    if(pageNumber === "NEXT"){
+  	      currentPage.number++;
+  	      checkPoint = { finish:"-200%", start:"100%" };
+  	    }else if(pageNumber === "PREVIOUS"){
+  	      currentPage.number--;
+  	      checkPoint = { finish:"100%", start:"-200%" };
+  	    }else{
+  	      if(pageNumber > currentPage.number){
+  	        checkPoint = { finish:"-200%", start:"100%" };
+  	      }else if(pageNumber < currentPage.number){
+  	        checkPoint = { finish:"100%", start:"-200%" };
+	        }else{
+	          return 0;
+          }
+  	      currentPage.number = pageNumber;
+  	    }
+	    
+  	    if(currentPage.number <= 0){
+  	      currentPage.number = numberOfPages;
+  	    }else if(currentPage.number > numberOfPages){
+  	      currentPage.number = 1;
+  	    }
+	    	
+        jQuery("#board-current").animate(
+          {marginLeft:checkPoint.finish},
+          300,
+          "easeInQuint",
+          function(){
+    	    	jQuery("#thumbnails").css({width: jQuery("#thumbnails").width()});
+            jQuery("#board-current").css({ marginLeft:checkPoint.start });
+            openPage(currentPage.number);
+            jQuery("#board-current").animate(
+              {marginLeft:"0"},
+              300,
+              "easeOutQuint",
+              function(){
+                jQuery("#thumbnails").css({width: "auto"});
+              }
+            );
+          }
+        );
+  	  }
 	  
-    function openPage(pageNumber){
-      var pageNumber = ("00" + pageNumber).substr(("00" + pageNumber).length-3, 3);
-      var fileName = pagesBaseUrl + "/page" + pageNumber + ".svg"; 
-            
-      //$.ajax({ 
-      //  url: fileName,
-      //  dataType: 'xml',
-      //  success: function(data){
-      //    currentPage.width = $(data).find("rect").attr("width");
-      //    currentPage.height = $(data).find("rect").attr("height");
-          // remove and reappend the object tag in order to update its content src
-          $("#current-page").attr("data", fileName);
-          var newCurrentPage = $("#current-page").clone();
-          $("#current-page").remove();
-          $("#board-canvas").append(newCurrentPage);
-          
-          console.log(fileName);
-          $(window).resize();
-      //  }
-      //});
-    }
+  	  function adaptPage(){
+  	    jQuery(window).resize();
+  	    adaptPageTimer = setTimeout(function(){adaptPage()}, 10);
+  	  }
+  	  
+  	  function formatPageNumber(pageNumber){
+  	    var formattedPageNumber = ("00" + pageNumber).substr(("00" + pageNumber).length-3, 3);
+  	    return formattedPageNumber;
+  	  }
+	  
+      function openPage(pageNumber){
+        var formattedPageNumber = formatPageNumber(pageNumber);
+        var fileName = pagesBaseUrl + "/page" + formattedPageNumber + ".svg";
+        currentPage.number = pageNumber;
+        /*jQuery.ajax({ 
+          url: fileName,
+          dataType: 'xml',
+          success: function(data){
+            currentPage.width = jQuery(data).find("rect").attr("width");
+            currentPage.height = jQuery(data).find("rect").attr("height");*/
+            jQuery("#current-page").attr("src", fileName);
+            jQuery("#menubottom-input").val(pageNumber);
+            jQuery("#thumbnails-slider>div").removeClass("current");
+            jQuery(jQuery("#thumbnails-slider>div")[pageNumber-1]).addClass("current");
+            if(!thumbsBar.sliding)jQuery("#thumbnails-slider-handler").appendTo(jQuery("#thumbnails-slider>div")[pageNumber-1]);
+            jQuery(window).resize();
+          /*}
+        });*/
+      }
 	
-	  $(window).resize(function(){
-	    var ratioWh = 1.66;//currentPage.width / currentPage.height;
-	    $(".page").width($(".page").height() * ratioWh);
-	    if($(window).height() < 500){
-	      state = "mini";
-	    }
-	  });
+		  function showDescription(){
+  	    jQuery("#boards").animate({marginTop:"100%"}, function(){
+  	      jQuery("#boards").hide();
+  	      jQuery("#document-title").hide();
+  	      jQuery("#head-button-close").show();
+  	      jQuery("#description").show();
+  	    });
+  	  }
+  	  
+  	  function hideDescription(){
+  	    jQuery("#boards").animate({marginTop:"0"}, function(){
+  	      jQuery("#boards").show();
+  	      jQuery("#document-title").show();
+  	      jQuery("#head-button-close").hide();
+  	      jQuery("#description").hide();
+  	    });
+  	  }
+	
+  	  function showIndex(){
+  	    var thumbsPerRow = Math.round(Math.sqrt(numberOfPages));
+  	    jQuery("#boards").animate({marginTop:"-100%"}, function(){
+  	      jQuery("#boards").hide();
+  	      jQuery("#index")
+    	      .show()
+    	      .empty();
+    	    drawIndexThumbnails(thumbsPerRow);
+  	    });
+  	  }
 	  
+  	  function hideIndex(){
+  	    jQuery("#index").hide();
+  	    jQuery("#boards").show();
+        jQuery("#thumbnails").show();
+        jQuery("#boards").animate({marginTop:"0"});
+    	  jQuery("#thumbnails").animate({marginTop:"0"});
+  	  }
+	  
+  	  function drawIndexThumbnails(thumbsPerRow){
+  	    var newIndex = jQuery("#index>div").length + 1;
+  	    var newIndexThumbnailNumber = formatPageNumber(newIndex);
+  	    var newIndexThumbnail = jQuery("<div class='thumbnail index'><img src='" + pagesBaseUrl + "/page" + 
+  	                            newIndexThumbnailNumber + 
+  	                            ".thumbnail.jpg' width='auto' height='100%'/></div>");
+  	    newIndexThumbnail
+  	      .hover(
+	          function(){ jQuery(this).addClass("current") },
+	          function(){ jQuery(this).removeClass("current") })
+	        .click(function(){
+	          openPage(newIndex);
+	          jQuery("#menu-button-index").click();
+	          jQuery(window).resize();
+	        });
+  	    jQuery("#index").append(newIndexThumbnail);
+  	    if((newIndex)%thumbsPerRow === 0)jQuery("#index").append("<br/>");
+  	    if(jQuery("#index>div").length < numberOfPages) setTimeout(function(){drawIndexThumbnails(thumbsPerRow)}, 100);
+  	  }
+	
+  	  jQuery(window).resize(function(){
+  	    var ratioWh = 1.66;//currentPage.width / currentPage.height;
+  	    jQuery(".page").width(jQuery(".page").height() * ratioWh);
+  	    jQuery("#document-title").width(jQuery(".page").width());
+  	    if(jQuery(window).height() < 500){
+  	      state = "mini";
+  	    }
+  	  });
+	  
+  })();
+  
 	</script>
 	
 </head>
@@ -143,66 +327,69 @@
 <body>
 
   <div id="head">
-    <div id="menu">
-      <div id="menu-box-left" class="menu-box">
-        <div id="logo-uniboard"></div>
-      </div>
-      <div id="menu-box-center" class="menu-box">
-        <div class="menu-button" id="menu-button-previous"></div>
-        <div class="menu-button" id="menu-button-index"></div>
-        <div class="menu-button" id="menu-button-next"></div>
-      </div>
-      <div id="menu-box-right" class="menu-box">
-        <div class="menu-button" id="menu-button-export"></div>
-      </div>
+    <div id="logo-uniboard"></div>
+    <div id="document-title">
+      <ul>
+        <li id="data-document-title"></li>
+        <li id="data-document-author"></li>
+        <li><a id="moreLink" href="#">more…</a></li>
+      </ul>
     </div>
+    <div class="menu-button" id="head-button-close"></div>
   </div>
 
   <div id="body">
     <div id="boards">
-      
       <div class="board" id="board-current">
-        <div class="board-button" id="board-button-previous"></div>
-        <div class="page">
-          <table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0" style="line-height:0px; margin:auto">
-            <tr><td height="22" width="22" style="background-image:url(/uniboard-player/images/shadows/top-left.png)">&nbsp;</td>
-                <td height="22" colspan="3" style="background-image:url(/uniboard-player/images/shadows/top.png)">&nbsp;</td>
-                <td height="22" width="22" style="background-image:url(/uniboard-player/images/shadows/top-right.png)">&nbsp;</td>
-            </tr>
-            <tr>
-                <td width="22" style="background-image:url(/uniboard-player/images/shadows/left.png)">&nbsp;</td>
-                <td colspan="3" id="board-canvas">
-                  <object id="current-page" type="image/svg+xml" name="mainPage" data="<%= @published_document.persistence_url %>/page001.svg"></object>
-                </td>
-                <td width="22" style="background-image:url(/uniboard-player/images/shadows/right.png)">&nbsp;</td>
-            </tr>
-            <tr>
-                <td height="22" width="22" style="background-image:url(/uniboard-player/images/shadows/bottom-left.png)">&nbsp;</td>
-                <td width="22" height="22" style="background-image:url(/uniboard-player/images/shadows/bottom-left-near.png)">&nbsp;</td>
-                <td height="22" width="auto" style="background-image:url(/uniboard-player/images/shadows/bottom.png)">&nbsp;</td>
-                <td width="22" style="background-image:url(/uniboard-player/images/shadows/bottom-right-near.png)">&nbsp;</td>
-                <td height="22" width="22" style="background-image:url(/uniboard-player/images/shadows/bottom-right.png)">&nbsp;</td>
-            </tr></table>
+        <div class="board-button">
+          <div class="board-button-unit" id="board-button-previous"></div>
+          <div class="board-button-unit" id="board-button-first"></div>
         </div>
-        <div class="board-button" id="board-button-next"></div>
+        <iframe class="page" id="current-page" src=""></iframe>
+        <div class="board-button">
+          <div class="board-button-unit" id="board-button-next"></div>
+          <div class="board-button-unit" id="board-button-last"></div>
+        </div>
       </div>
-      
     </div><!--boards-->
-    
-    <div id="thumbnails">
-      <div id="thumbnails-slider"></div>
-      <div class="thumbnail"><img src="<%= @published_document.persistence_url %>/page001.thumbnail.jpg" height="100%" width="auto"></div>
-      <div class="thumbnail"><img src="<%= @published_document.persistence_url %>/page002.thumbnail.jpg" height="100%" width="auto"></div>
-      <div class="thumbnail"><img src="<%= @published_document.persistence_url %>/page003.thumbnail.jpg" height="100%" width="auto"></div>
-      <div class="thumbnail"><img src="<%= @published_document.persistence_url %>/page004.thumbnail.jpg" height="100%" width="auto"></div>
-    </div>
-        
+    <div id="index">
+    </div><!--index-->
+    <div id="description">
+      <div id="description-text"></div>
+    </div><!--description-->
   </div>
 
   <div id="foot">
-  
+    <div style="position:relative; height:100%">
+   <div id="thumbnails">
+      <div id="thumbnails-slider-handler"></div>
+      <div id="thumbnails-slider"><div class="thumbnails-slider-page"></div></div>
+      <div style="width:14px; height:80px; position:absolute; top:45px; left:0px; color:red; font-size:10px; line-height:80px; text-decoration:underline; letter-spacing:normal">1</div>
+      <div class="thumbnail"><img src="" alt="thumbnail" height="100%" width="auto"/></div>
+      <div style="width:18px; height:80px; position:absolute; top:45px; left:100%; margin-left:-18px; color:red; font-size:10px; line-height:80px; text-decoration:underline; letter-spacing:normal"></div>
+    </div><!--thumbnails-->
+    <div class="menu bottom">
+      <div class="menu-box-left menu-box">
+        <div class="menu-button" id="menu-button-showthumbnails"></div>
+        <div style="display:block; float:left; height:31px; margin-left:10px; line-height:42px"><input id="menubottom-input" type="text"></div>
+      </div>
+      <div class="menu-box-center menu-box">
+        <div class="menu-button" id="menu-button-previous"></div>
+        <div class="menu-button" id="menu-button-index"></div>
+        <div class="menu-button" id="menu-button-next"></div>
+      </div>
+      <div class="menu-box-right menu-box">
+        <div class="menu-button" id="menu-button-full"></div>
+        <div class="menu-button" id="menu-button-export">
+          <div id="menu-button-export-left"></div>
+          <div id="menu-button-export-center">Export as…</div>
+          <div id="menu-button-export-right"></div>
+        </div>
+        <div id="menu-export-dropdown"><ul><li>.PDF</li><li>.UBZ</li></ul></div>
+      </div>
+    </div>
+    </div>
   </div>
 
 </body>
 </html>
-
