@@ -49,9 +49,14 @@
   	    jQuery("#board-button-next").click(function(){ goToPage("NEXT") });
   	    jQuery("#board-button-last").click(function(){ goToPage(numberOfPages) });
   	    jQuery("#board-button-first").click(function(){ goToPage(1) });
-	      jQuery(".board-button")
-	        .mouseenter(function(){jQuery(this).animate({opacity:1})})
-	        .mouseout(function(){jQuery(this).animate({opacity:0})});
+
+	      jQuery("#current-page")
+	        .mouseenter(function(){jQuery(".board-button>div").stop().animate({opacity:0})})
+	        .bind("mouseleave", boardButtonOutHandler);
+	      jQuery("#boards")
+	        .mouseleave(function(){jQuery(".board-button>div").stop().animate({opacity:0})})
+	        .bind("mouseenter", boardButtonOutHandler);
+	      
 	      jQuery("#menubottom-input").change(function(){ goToPage(jQuery("#menubottom-input").val()) });
 	      jQuery("#moreLink").click(function(){ showDescription() });
 	      jQuery("#head-button-close").click(function(){ if(mode=="description"){hideDescription()}else if(mode=="full"){switchToNormalMode()} });
@@ -162,14 +167,28 @@
   	      jQuery("#menu-export-hasPdf>a").addClass("disabled");
   	    }else{ 
           jQuery("#menu-export-hasPdf")
-  	        .hover(function(){jQuery(this).addClass("over")}, function(){jQuery(this).removeClass("over")})
+  	        .hover(
+  	          function(){
+  	            jQuery(this).children("a").addClass("over");
+  	            jQuery(this).addClass("over")}, 
+  	          function(){
+  	            jQuery(this).children("a").removeClass("over");
+  	            jQuery(this).removeClass("over");
+  	        })
   	        .children("a").attr("href", pagesBaseUrl + "/" + documentData.uuid + ".pdf");
   	    }
   	    if(!documentData.hasUbz){
   	      jQuery("#menu-export-hasUbz>a").addClass("disabled");
   	    }else{ 
   	      jQuery("#menu-export-hasUbz")
-  	        .hover(function(){jQuery(this).addClass("over")}, function(){jQuery(this).removeClass("over")})
+  	        .hover(
+  	          function(){
+  	            jQuery(this).children("a").addClass("over");
+  	            jQuery(this).addClass("over")}, 
+  	          function(){
+  	            jQuery(this).children("a").removeClass("over");
+  	            jQuery(this).removeClass("over");
+  	        })
   	        .children("a").attr("href", pagesBaseUrl + "/" + documentData.uuid + ".ubz");
   	    }
   	    
@@ -178,7 +197,7 @@
   	        jQuery("#menu-button-export").click();
   	      }
   	    });
-  	    jQuery(".board-button").animate({opacity: 0}, 1000);
+  	    jQuery(".board-button>div").animate({opacity: 0}, 3000);
   	    jQuery("#thumbnails>div:last-child").append(numberOfPages);
   	    jQuery("#data-document-title").append(documentData.title);
   	    jQuery("#data-document-author").append(documentData.author);
@@ -197,6 +216,17 @@
 	      if(sliderIndex !== currentPage.number) goToPage(sliderIndex);
 	      sliderTimer = setTimeout(function(){sliderListener(currentPageNmbr)}, 10);
 	    }
+	    
+      function boardButtonOutHandler(event){
+        if( event.pageY >= jQuery("#boards").position().top && 
+            event.pageY <= (jQuery("#boards").position().top + jQuery("#boards").height()) ){
+          if(event.pageX >= (jQuery("#current-page").position().left + jQuery("#current-page").width())){
+            jQuery("#board-button-next").stop().animate({opacity:1}, 200);
+          }else if(event.pageX < jQuery("#current-page").position().left){
+            jQuery("#board-button-previous").stop().animate({opacity:1}, 200);
+          }
+        }
+      }
 	  
   	  function goToPage(pageNumber){
   	    var checkPoint = { finish:"%", start:"%" };
@@ -218,13 +248,17 @@
   	      currentPage.number = pageNumber;
   	    }
 	    
-  	    if(currentPage.number <= 0){
-  	      currentPage.number = numberOfPages;
-  	    }else if(currentPage.number > numberOfPages){
+  	    if(currentPage.number < 1){
   	      currentPage.number = 1;
+  	    }else if(currentPage.number > numberOfPages){
+  	      currentPage.number = numberOfPages;
   	    }
 	    	
-        jQuery("#board-current").animate(
+	    	jQuery("#current-page")
+	    	  .unbind("mouseenter")
+	    	  .unbind("mouseleave");
+	    	
+        jQuery("#board-current").stop().animate(
           {marginLeft:checkPoint.finish},
           300,
           "easeInQuint",
@@ -238,6 +272,9 @@
               "easeOutQuint",
               function(){
                 jQuery("#thumbnails").css({width: "auto"});
+                jQuery("#current-page")
+                  .mouseenter(function(){jQuery(".board-button>div").animate({opacity:0})})
+                  .bind("mouseleave", boardButtonOutHandler);
               }
             );
           }
@@ -272,6 +309,26 @@
             jQuery(window).resize();
           /*}
         });*/
+
+        if(pageNumber === 1){
+          jQuery("#menu-button-previous").unbind("click");
+          jQuery("#board-button-previous").unbind("click");
+        }else{ 
+          if(jQuery("#menu-button-previous").data("events") === null){
+            jQuery("#menu-button-previous").bind("click", function(){goToPage("PREVIOUS")});
+            jQuery("#board-button-previous").bind("click", function(){goToPage("PREVIOUS")});
+          }
+        }
+        
+        if(pageNumber === numberOfPages){
+          jQuery("#menu-button-next").unbind("click");
+          jQuery("#board-button-next").unbind("click");
+        }else{ 
+          if(jQuery("#menu-button-next").data("events") === null){
+            jQuery("#menu-button-next").bind("click", function(){goToPage("NEXT")});
+            jQuery("#board-button-next").bind("click", function(){goToPage("NEXT")});
+          }
+        }
       }
       
       function switchToFullMode(){
@@ -389,12 +446,10 @@
       <div class="board" id="board-current">
         <div class="board-button">
           <div class="board-button-unit" id="board-button-previous"></div>
-          <div class="board-button-unit" id="board-button-first"></div>
         </div>
         <iframe class="page" id="current-page" src=""></iframe>
         <div class="board-button">
           <div class="board-button-unit" id="board-button-next"></div>
-          <div class="board-button-unit" id="board-button-last"></div>
         </div>
       </div>
     </div><!--boards-->
