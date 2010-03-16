@@ -51,10 +51,12 @@ input{
 .menu-button{ height:31px; width:32px; display:inline-block; cursor:pointer }
 #menu-button-previous{ background:url(../images/menu-button-previous.png) }
 #menu-button-previous:hover{ background:url(../images/menu-button-previous-over.png) }
+#menu-button-previous.disabled{ background:url(../images/menu-button-previous-disabled.png) }
 #menu-button-index{ background:url(../images/menu-button-index.png); width:35px }
 #menu-button-index:hover{ background:url(../images/menu-button-index-over.png) }
 #menu-button-next{ background:url(../images/menu-button-next.png) }
 #menu-button-next:hover{ background:url(../images/menu-button-next-over.png) }
+#menu-button-next.disabled{ background:url(../images/menu-button-next-disabled.png) }
 #menu-button-showthumbnails{ background:url(../images/menu-button-showthumbnails.png); float:left; }
 #menu-button-showthumbnails:hover{ background:url(../images/menu-button-showthumbnails-over.png) }
 #menu-button-export{ width:auto }
@@ -131,15 +133,15 @@ input{
 
 #boards{ background-color:rgb(246, 247, 248); overflow:visible; display:block; text-align:center; height:100%; width:100%; position:relative; margin:auto }
 .board{ display:inline-block; width:100%; height:100%; letter-spacing:-5px }
-.board-button{ height:99%; width:38px; display:inline-block }
-.board-button-unit{ height:50% }
-#board-button-previous{ background:url(../images/board-button-previous.png) center left no-repeat }
-#board-button-first{ background:url(../images/board-button-first.png) center left no-repeat }
-#board-button-next{ background:url(../images/board-button-next.png) center right no-repeat }
-#board-button-last{ background:url(../images/board-button-last.png) center right no-repeat }
+.board-button{ height:99%; width:38px; display:inline-block; position:relative; z-index:1 }
+.board-button-unit{ height:51px; width:32px; top:50%; position:absolute; margin-top:-30px}
+#board-button-previous{ background:url(../images/board-button-previous.png) center left no-repeat; margin-left:5px; }
+#board-button-previous:hover{ background-image:url(../images/board-button-previous-over.png) }
+#board-button-next{ background:url(../images/board-button-next.png) center right no-repeat; margin-left:1px; }
+#board-button-next:hover{ background-image:url(../images/board-button-next-over.png) }
 
 .page{ display:inline-block; margin:auto; height:100% }
-#current-page{ width:100%; height:100%; background-color:white; border:1px solid rgb(210, 211, 212); box-shadow: 2px 2px 10px #bbb; -webkit-box-shadow: 2px 2px 10px #bbb; -moz-box-shadow: 2px 2px 10px #bbb }
+#current-page{ position:relative; z-index:0; width:100%; height:100%; background-color:white; border:1px solid rgb(210, 211, 212); box-shadow: 2px 2px 10px #bbb; -webkit-box-shadow: 2px 2px 10px #bbb; -moz-box-shadow: 2px 2px 10px #bbb }
 
 #thumbnails{ display:block; padding:0px 50px 10px 50px; height:32px; overflow:hidden; position:relative; text-align:center; background:url(../images/menu-slider-background.png) repeat-x center 10px; }
 #thumbnails-slider{ position:relative; height:8px; margin-top:24px; margin-bottom:14px }
