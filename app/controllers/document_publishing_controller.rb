@@ -4,27 +4,36 @@ require 'uri'
 class DocumentPublishingController < ApplicationController
       
   def publish
+    token_uuid = request.headers["Token-UUID"]
+    token_encrypted_base64 = request.headers["Token-Encrypted"]
     
-    published_document = PublishedDocument.new();
+    if true # PublishingTokenHelper.burn_token(token_uuid, token_encrypted_base64)
+      
+      published_document = PublishedDocument.new();
     
-    published_document.document_uuid = request.headers["Document-UUID"]
-    published_document.publishing_uuid = request.headers["Publishing-UUID"]
-    published_document.title = request.headers["Document-Title"]
-    published_document.description = request.headers["Document-Description"]
-    published_document.author = request.headers["Document-Author"]
-    published_document.author_email = request.headers["Document-AuthorEMail"]
-    published_document.page_count = request.headers["Document-PageCount"]
-    published_document.deletion_token = request.headers["Deletion-Token"]
-    published_document.free_version = request.headers["Document-FreeVersion"] == 'true'
+      published_document.document_uuid = request.headers["Document-UUID"]
+      published_document.publishing_uuid = request.headers["Publishing-UUID"]
+      published_document.title = request.headers["Document-Title"]
+      published_document.description = request.headers["Document-Description"]
+      published_document.author = request.headers["Document-Author"]
+      published_document.author_email = request.headers["Document-AuthorEMail"]
+      published_document.page_count = request.headers["Document-PageCount"]
+      published_document.deletion_token = request.headers["Deletion-Token"]
+      published_document.free_version = request.headers["Document-FreeVersion"] == 'true'
 
-    published_document.save_payload(request.body)
+      published_document.save_payload(request.body)
     
-    published_document.save
+      published_document.save
     
-    DocumentPublishingMailer.deliver_notify(published_document)
+      DocumentPublishingMailer.deliver_notify(published_document)
     
-    respond_to do |format|
-      format.any { head :ok }
+      respond_to do |format|
+        format.any { head :ok }
+      end
+    else
+      respond_to do |format|
+        format.any { head :forbidden }
+      end
     end
     
   end

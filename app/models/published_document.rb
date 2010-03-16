@@ -1,14 +1,8 @@
 class PublishedDocument < ActiveRecord::Base
-  
-  attr_accessor :documents_s3_publishing_endpoint 
-  attr_accessor :s3_bucket
-  
-  @documents_s3_publishing_endpoint = nil 
-  @s3_bucket = nil
-  
+   
   def save_payload(payload)
     
-    init_s3_bucket
+    s3_bucket = PublishingHelper.publishing_s3_bucket
 
     zip_file_path = File.join(RAILS_ROOT, 'tmp', 'upload', self.publishing_uuid + '.zip')
     
@@ -21,7 +15,7 @@ class PublishedDocument < ActiveRecord::Base
     Zip::ZipFile.foreach(zip_file_path) do |zip_file|
       if (!zip_file.directory?)
           puts "Saving file on S3: " + zip_file.name
-          self.s3_bucket.put("publishing/documents/" + self.publishing_uuid + "/" + zip_file.name, zip_file.get_input_stream.read, {}, 'public-read', {})
+          s3_bucket.put("publishing/documents/" + self.publishing_uuid + "/" + zip_file.name, zip_file.get_input_stream.read, {}, 'public-read', {})
           
           if zip_file.name == self.publishing_uuid + '.pdf'
             self.has_pdf = true
@@ -34,35 +28,16 @@ class PublishedDocument < ActiveRecord::Base
     end
     
     FileUtils.rm_f(zip_file_path)
-       
-    self.persistence_url = self.documents_s3_publishing_endpoint + "/publishing/documents/" + self.publishing_uuid
+
+    self.persistence_url = PublishingHelper.publishing_s3_bucket_public_endpoint + "/publishing/documents/" + self.publishing_uuid
 
   end
 
 
   def unpublish
     
-    init_s3_bucket
-    self.s3_bucket.delete_folder(self.persistence_url)
+    s3_bucket = PublishingHelper.publishing_s3_bucket
+    s3_bucket.delete_folder(self.persistence_url)
     
   end
-
-
-  def init_s3_bucket
-    
-    if (self.s3_bucket == nil && APP_CONFIG['publishing_s3_bucket'])
-      
-      documents_s3_bucket = APP_CONFIG['publishing_s3_bucket']
-      documents_s3_access_key_id = APP_CONFIG['publishing_s3_access_key_id']
-      documents_s3_secret_access_key = APP_CONFIG['publishing_s3_secret_access_key']
-      
-      self.documents_s3_publishing_endpoint = APP_CONFIG['publishing_s3_document_endpoint']
-            
-      s3 = RightAws::S3.new(documents_s3_access_key_id, documents_s3_secret_access_key)
-      
-      self.s3_bucket = s3.bucket(documents_s3_bucket)
-      
-    end
-  end
-
 end

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100304161934) do
+ActiveRecord::Schema.define(:version => 20100315164317) do
 
   create_table "published_documents", :force => true do |t|
     t.string   "publishing_uuid"
@@ -25,6 +25,15 @@ ActiveRecord::Schema.define(:version => 20100304161934) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "deletion_token"
+    t.boolean  "free_version"
+  end
+
+  create_table "publishing_tokens", :force => true do |t|
+    t.string   "uuid"
+    t.string   "token"
+    t.string   "salt"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

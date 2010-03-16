@@ -8,6 +8,8 @@ ActionController::Routing::Routes.draw do |map|
 
   map.connect 'captures/publish', :controller => 'CapturePublishing', :action => 'publish', :conditions => { :method => :post}
 
+  map.connect 'publish/token', :controller => 'Publishing', :action => 'generate_token', :conditions => { :method => :get}
+
   map.connect 'widgets/wikibot/search', :controller => 'wikibot', :action => 'search', :conditions => { :method => :get }
   map.connect 'widgets/edu-game', :controller => 'WidgetResult', :action => 'record_result', :conditions => { :method => :post}
   
