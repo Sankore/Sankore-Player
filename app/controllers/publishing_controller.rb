@@ -10,7 +10,6 @@ class PublishingController < ApplicationController
  
     token.uuid = UUID.generate
     token.token = random_alphanumeric(128)
-    token.salt = random_alphanumeric(16)
 
     token.save
 
