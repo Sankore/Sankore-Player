@@ -152,14 +152,25 @@ input{
 .thumbnail{
   height:80px;
   width:auto;
-  display:none;
+  display:inline-block;
+  position:relative;
   border:1px solid rgb(210, 211, 212);
   margin-right:5px;
-  margin-bottom:5px;
+  margin-bottom:25px;
   box-shadow: 2px 2px 3px #ddd;
   -webkit-box-shadow: 2px 2px 3px #ddd;
   -moz-box-shadow: 2px 2px 3px #ddd;
 }
+
+#thumbnails-canvas{
+  position:relative;
+  width:auto;
+}
+
+#thumbnail-previous{ background:url(../images/thumbnails-previous.png) center center no-repeat}
+#thumbnail-previous.disabled{ background-image:none}
+#thumbnail-next{ background:url(../images/thumbnails-next.png) center center no-repeat }
+#thumbnail-next.disabled{ background-image:none }
 
 .thumbnail.current{
   border-bottom: 3px solid red;
