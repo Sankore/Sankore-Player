@@ -247,8 +247,9 @@
   	    });
   	    jQuery(".board-button>div").animate({opacity: 0}, 3000);
   	    //jQuery("#thumbnails>div:last-child").append(numberOfPages);
-  	    jQuery("#data-document-title").append(documentData.title);
-  	    jQuery("#data-document-author").append(documentData.author);
+  	    var docTitle = jQuery("<span>" + documentData.title + ", </span>");
+  	    jQuery("#data-document-title").append(docTitle);
+  	    jQuery("#data-document-title").append(documentData.author);
   	    jQuery("#description-text").append("<a href='mailto:" + documentData.authorEmail + "'>" + documentData.author + 
   	                                        "</a><br/>" + documentData.title + 
   	                                        "<br/>" + documentData.publishedAt + 
@@ -482,8 +483,7 @@
     <div id="document-title">
       <ul>
         <li id="data-document-title"></li>
-        <li id="data-document-author"></li>
-        <li><a id="moreLink" href="#">more…</a></li>
+        <li id="data-document-author">&nbsp;<a id="moreLink" href="#">Information sheet</a></li>
       </ul>
     </div>
     <div class="menu-button" id="head-button-close"></div>
