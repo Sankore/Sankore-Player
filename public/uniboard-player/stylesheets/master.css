@@ -87,7 +87,7 @@ input{
 #menu-export-dropdown ul li a{ color:#666; text-decoration:none; }
 
 #head-button-close{ background:url(../images/head-button-close.png); position:relative; display:none; width:17px; height:17px; float:right;margin:25px 50px 0px 0px; }
-#logo-uniboard{ background:url(../images/logo-uniboard.png); width:114px; height:25px; position:absolute; top:22px; left:50px }
+#logo-uniboard{ width:114px; height:25px; position:absolute; top:22px; left:50px }
 
 #document-title{
   font-weight:normal;
