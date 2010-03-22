@@ -38,6 +38,51 @@
   	    hasPdf:'<%= @published_document.has_pdf %>',
   	    hasUbz:'<%= @published_document.has_ubz %>'
   	  }
+  	  var thumbnails = {
+  	    thumbsToHide:[],
+  	    firstVisibleThumb:null,
+  	    next:function(){
+  	      var yToCheck = jQuery("#thumbnails>#thumbnails-canvas>.thumbnail:first").position().top;
+  	      jQuery("#thumbnails>#thumbnails-canvas>.thumbnail").each(function(){
+  	        if(jQuery(this).position().top === yToCheck){
+  	          if(jQuery(this).index() === numberOfPages-1){
+  	            jQuery("#thumbnail-next").addClass("disabled");
+  	            thumbnails.thumbsToHide = [];
+  	            return false;
+	            }
+	            jQuery("#thumbnail-previous").removeClass("disabled");
+  	          thumbnails.thumbsToHide.push(jQuery(this));
+  	        }else{
+  	          thumbnails.firstVisibleThumb = jQuery(this);
+  	          return false;
+  	        }
+  	      });
+  	      for(var i=0; i<thumbnails.thumbsToHide.length; i++){
+  	        thumbnails.thumbsToHide[i].hide();
+  	      }
+  	      thumbnails.thumbsToHide = [];
+  	    },
+  	    previous:function(){
+  	      var thumbIndex = 0;
+  	      var currentThumb = null;
+          jQuery("#thumbnails>#thumbnails-canvas>.thumbnail").each(function(){
+            thumbIndex++;
+            currentThumb = jQuery(jQuery("#thumbnails>#thumbnails-canvas>.thumbnail")[thumbnails.firstVisibleThumb.index()-thumbIndex]);
+            if(currentThumb.length > 0){
+              jQuery("#thumbnail-next").removeClass("disabled");
+              currentThumb.show();
+              if(thumbnails.firstVisibleThumb.position().top !== currentThumb.position().top) {
+                thumbnails.firstVisibleThumb = currentThumb;
+                return false;
+              }
+            }else{
+              jQuery("#thumbnail-previous").addClass("disabled");
+              return false;
+            }
+          })
+          
+  	    }
+  	  }
 	  	  
   	  jQuery(document).ready(function(){
 	      
@@ -57,6 +102,9 @@
 	        .mouseleave(function(){jQuery(".board-button>div").stop().animate({opacity:0})})
 	        .bind("mouseenter", boardButtonOutHandler);
 	      
+	      jQuery("#thumbnail-next").click(function(){thumbnails.next()});
+	      jQuery("#thumbnail-previous").click(function(){thumbnails.previous()});
+	      
 	      jQuery("#menubottom-input").change(function(){ goToPage(jQuery("#menubottom-input").val()) });
 	      jQuery("#moreLink").click(function(){ showDescription() });
 	      jQuery("#head-button-close").click(function(){ if(mode=="description"){hideDescription()}else if(mode=="full"){switchToNormalMode()} });
@@ -75,7 +123,7 @@
     	    var easing = "";
   	    
     	    if(thumbsBar.state === "min"){
-    	      jQuery(".thumbnail").css("display", "inline-block");
+    	      //jQuery(".thumbnail").css("display", "inline-block");
     	      newFootHeight = thumbsBar.fullHeightVal;
     	      thumbsBar.state = "full";
     	      easing = "easeOutBack";
@@ -145,21 +193,21 @@
   	    var newThumbnail = null;
   	    var formattedThumbNumber = null;
   	    for(var i=0; i<numberOfPages; i++){
-  	      newThumbnail = jQuery("#thumbnails>.thumbnail:first").clone();
+  	      newThumbnail = jQuery("#thumbnails>#thumbnails-canvas>.thumbnail:first").clone();
   	      formattedThumbNumber = formatPageNumber(i+1);
   	      newThumbnail
   	        .find("img").attr("src", pagesBaseUrl + "/page" + formattedThumbNumber + ".thumbnail.jpg")
   	        .attr("title", "page " + (i+1));
-  	      jQuery("#thumbnails>div:last-child").before(newThumbnail); 
+  	      jQuery("#thumbnails>#thumbnails-canvas>div:last-child").after(newThumbnail); 
   	    }
-  	    jQuery("#thumbnails>.thumbnail:first").remove();
+  	    jQuery("#thumbnails>#thumbnails-canvas>.thumbnail:first").remove();
   	    
   	    jQuery(".thumbnail")
 	        .hover(
 	          function(){ jQuery(this).addClass("current") },
 	          function(){ jQuery(this).removeClass("current") })
 	        .click(function(){
-	          goToPage(jQuery(this).index()-1);
+	          goToPage(jQuery(this).index()+1);
 	        });
   	    
   	    
@@ -198,9 +246,10 @@
   	      }
   	    });
   	    jQuery(".board-button>div").animate({opacity: 0}, 3000);
-  	    jQuery("#thumbnails>div:last-child").append(numberOfPages);
-  	    jQuery("#data-document-title").append(documentData.title);
-  	    jQuery("#data-document-author").append(documentData.author);
+  	    //jQuery("#thumbnails>div:last-child").append(numberOfPages);
+  	    var docTitle = jQuery("<span>" + documentData.title + ", </span>");
+  	    jQuery("#data-document-title").append(docTitle);
+  	    jQuery("#data-document-title").append(documentData.author);
   	    jQuery("#description-text").append("<a href='mailto:" + documentData.authorEmail + "'>" + documentData.author + 
   	                                        "</a><br/>" + documentData.title + 
   	                                        "<br/>" + documentData.publishedAt + 
@@ -430,12 +479,11 @@
 <body>
 
   <div id="head">
-    <div id="logo-uniboard"></div>
+    <a href="http://www.getuniboard.com"><img src="/uniboard-player/images/logo-uniboard.png" id="logo-uniboard"></a>
     <div id="document-title">
       <ul>
         <li id="data-document-title"></li>
-        <li id="data-document-author"></li>
-        <li><a id="moreLink" href="#">more…</a></li>
+        <li id="data-document-author">&nbsp;<a id="moreLink" href="#">Information sheet</a></li>
       </ul>
     </div>
     <div class="menu-button" id="head-button-close"></div>
@@ -465,9 +513,11 @@
    <div id="thumbnails">
       <div id="thumbnails-slider-handler"></div>
       <div id="thumbnails-slider"><div class="thumbnails-slider-page"></div></div>
-      <div style="width:14px; height:80px; position:absolute; top:45px; left:0px; color:red; font-size:10px; line-height:80px; text-decoration:underline; letter-spacing:normal">1</div>
-      <div class="thumbnail"><img src="" alt="thumbnail" height="100%" width="auto"/></div>
-      <div style="width:18px; height:80px; position:absolute; top:45px; left:100%; margin-left:-18px; color:red; font-size:10px; line-height:80px; text-decoration:underline; letter-spacing:normal"></div>
+      <div style="width:40px; height:80px; position:absolute; top:45px; left:0px; color:red; font-size:10px; line-height:80px; text-decoration:underline; letter-spacing:normal" id="thumbnail-previous" class="disabled"></div>
+      <div id="thumbnails-canvas">
+        <div class="thumbnail"><img src="" alt="thumbnail" height="100%" width="auto"/></div>
+      </div>
+      <div style="width:40px; height:80px; position:absolute; top:45px; left:100%; margin-left:-41px; color:red; font-size:10px; line-height:80px; text-decoration:underline; letter-spacing:normal" id="thumbnail-next"></div>
     </div><!--thumbnails-->
     <div class="menu bottom">
       <div class="menu-box-left menu-box">

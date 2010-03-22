@@ -1,11 +1,11 @@
 
 html{ height:100%; width:100% }
-body{ height:100%; width:100%; overflow:hidden; display:table; font-family:helvetica, arial, sans-serif; background-color:rgb(246, 247, 248) }
+body{ height:100%; width:100%; overflow:hidden; display:table; font-family:helvetica, arial, sans-serif; background-color:rgb(236, 237, 238) }
 
 a{ color:red }
 
 #head{
-  background-color:rgb(246, 247, 248);
+  background-color:rgb(236, 237, 238);
   display:table;
   text-align:center;
   position:absolute;
@@ -43,7 +43,7 @@ input{
   height:55px;
 }
 
-.menu-box{ width:33.3%; height:31px; display:inline-block; vertical-align:middle; margin-top:11px; position:relative }
+.menu-box{ width:33.3%; height:31px; display:inline-block; vertical-align:middle; margin-top:12px; position:relative }
 .menu-box-left{ text-align:left; letter-spacing:2px }
 .menu-box-center{ text-align:center; line-height:30px }
 .menu-box-right{ text-align:right }
@@ -87,14 +87,19 @@ input{
 #menu-export-dropdown ul li a{ color:#666; text-decoration:none; }
 
 #head-button-close{ background:url(../images/head-button-close.png); position:relative; display:none; width:17px; height:17px; float:right;margin:25px 50px 0px 0px; }
-#logo-uniboard{ background:url(../images/logo-uniboard.png); width:114px; height:25px; position:absolute; top:22px; left:50px }
+#logo-uniboard{ width:114px; height:25px; position:absolute; top:22px; left:50px }
 
 #document-title{
+  font-weight:normal;
   letter-spacing:normal;
   text-align:right;
   margin:auto;
   margin-top:28px;
   font-size:12px;
+}
+
+#document-title span{
+  font-weight:bold;
 }
 
 #document-title ul{
@@ -108,9 +113,7 @@ input{
 }
 
 #document-title ul li{
-  border-bottom:1px solid #eee;
   margin-bottom:5px;
-  display:inline;
 }
 
 #document-title img{
@@ -131,7 +134,7 @@ input{
   width:100%;
 }
 
-#boards{ background-color:rgb(246, 247, 248); overflow:visible; display:block; text-align:center; height:100%; width:100%; position:relative; margin:auto }
+#boards{ background-color:rgb(236, 237, 238); overflow:visible; display:block; text-align:center; height:100%; width:100%; position:relative; margin:auto }
 .board{ display:inline-block; width:100%; height:100%; letter-spacing:-5px }
 .board-button{ height:99%; width:38px; display:inline-block; position:relative; z-index:1 }
 .board-button-unit{ height:51px; width:32px; top:50%; position:absolute; margin-top:-30px}
@@ -152,14 +155,25 @@ input{
 .thumbnail{
   height:80px;
   width:auto;
-  display:none;
+  display:inline-block;
+  position:relative;
   border:1px solid rgb(210, 211, 212);
   margin-right:5px;
-  margin-bottom:5px;
+  margin-bottom:25px;
   box-shadow: 2px 2px 3px #ddd;
   -webkit-box-shadow: 2px 2px 3px #ddd;
   -moz-box-shadow: 2px 2px 3px #ddd;
 }
+
+#thumbnails-canvas{
+  position:relative;
+  width:auto;
+}
+
+#thumbnail-previous{ background:url(../images/thumbnails-previous.png) center center no-repeat}
+#thumbnail-previous.disabled{ background-image:none}
+#thumbnail-next{ background:url(../images/thumbnails-next.png) center center no-repeat }
+#thumbnail-next.disabled{ background-image:none }
 
 .thumbnail.current{
   border-bottom: 3px solid red;
