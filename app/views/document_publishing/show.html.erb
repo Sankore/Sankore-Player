@@ -4,8 +4,11 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-	<title>Uniboard player</title>
-	
+	<title><%= @published_document.title %></title>
+	<meta name="title" content='<%= @published_document.title %>'>
+	<meta name="description" content='<%= @published_document.description %>'>
+	<link rel="image_src" href='<%= @published_document.persistence_url %>/page001.thumbnail.jpg'>
+
 	<style type="text/css">
 	  @import url(/uniboard-player/stylesheets/reset.css);
 	  @import url(/uniboard-player/stylesheets/master.css);
@@ -15,20 +18,20 @@
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
   <script type="text/javascript" src="/uniboard-player/scripts/jquery-ui-1.8rc3.custom.min.js"></script>
   <script type="text/javascript" src="/uniboard-player/scripts/jquery.easing.1.3.js"></script>
+  
+  <!-- Uniboard-player -->
+	<script type="text/javascript" src="/uniboard-player/scripts/ubplayer.js"></script>
+	<script type="text/javascript" src="/uniboard-player/scripts/ubplayer.player.js"></script>
+	<script type="text/javascript" src="/uniboard-player/scripts/ubplayer.viewer.js"></script>
 	
 	<script type="text/javascript">
+	
+	var myUbPlayer = null;
+	
+	jQuery(document).ready(function(){
 	  
-	  (function() {
-	  
-  	  var thumbsBar = { state:"min", fullHeightVal:100, minHeightVal:0, sliding:false };
-  	  var currentPage = { number:1, width:0, height:0 };
-  	  var state = "full";
-  	  var mode = "normal";
-  	  var adaptPageTimer = null;
-  	  var sliderTimer = null;
-  	  var numberOfPages = <%= @published_document.page_count %>;
-  	  var pagesBaseUrl =  '<%= @published_document.persistence_url %>';
-  	  var documentData = {
+	  var args = {
+	    documentData:{
   	    author:'<%= @published_document.author %>',
   	    authorEmail:'<%= @published_document.author_email %>',
   	    title:'<%= @published_document.title %>',
@@ -36,442 +39,15 @@
   	    publishedAt:'<%= @published_document.created_at %>',
   	    uuid:'<%= @published_document.publishing_uuid %>',
   	    hasPdf:'<%= @published_document.has_pdf %>',
-  	    hasUbz:'<%= @published_document.has_ubz %>'
+  	    hasUbz:'<%= @published_document.has_ubz %>',
+  	    numberOfPages:'<%= @published_document.page_count %>',
+  	    pagesBaseUrl:'<%= @published_document.persistence_url %>'
   	  }
-  	  var thumbnails = {
-  	    thumbsToHide:[],
-  	    firstVisibleThumb:null,
-  	    next:function(){
-  	      var yToCheck = jQuery("#thumbnails>#thumbnails-canvas>.thumbnail:first").position().top;
-  	      jQuery("#thumbnails>#thumbnails-canvas>.thumbnail").each(function(){
-  	        if(jQuery(this).position().top === yToCheck){
-  	          if(jQuery(this).index() === numberOfPages-1){
-  	            jQuery("#thumbnail-next").addClass("disabled");
-  	            thumbnails.thumbsToHide = [];
-  	            return false;
-	            }
-	            jQuery("#thumbnail-previous").removeClass("disabled");
-  	          thumbnails.thumbsToHide.push(jQuery(this));
-  	        }else{
-  	          thumbnails.firstVisibleThumb = jQuery(this);
-  	          return false;
-  	        }
-  	      });
-  	      for(var i=0; i<thumbnails.thumbsToHide.length; i++){
-  	        thumbnails.thumbsToHide[i].hide();
-  	      }
-  	      thumbnails.thumbsToHide = [];
-  	    },
-  	    previous:function(){
-  	      var thumbIndex = 0;
-  	      var currentThumb = null;
-          jQuery("#thumbnails>#thumbnails-canvas>.thumbnail").each(function(){
-            thumbIndex++;
-            currentThumb = jQuery(jQuery("#thumbnails>#thumbnails-canvas>.thumbnail")[thumbnails.firstVisibleThumb.index()-thumbIndex]);
-            if(currentThumb.length > 0){
-              jQuery("#thumbnail-next").removeClass("disabled");
-              currentThumb.show();
-              if(thumbnails.firstVisibleThumb.position().top !== currentThumb.position().top) {
-                thumbnails.firstVisibleThumb = currentThumb;
-                return false;
-              }
-            }else{
-              jQuery("#thumbnail-previous").addClass("disabled");
-              return false;
-            }
-          })
-          
-  	    }
-  	  }
-	  	  
-  	  jQuery(document).ready(function(){
-	      
-	      // bind the buttons events
-  	    jQuery("#menu-button-previous").click(function(){ goToPage("PREVIOUS") });
-  	    jQuery("#menu-button-index").toggle(function(){ showIndex() }, function(){ hideIndex() });
-  	    jQuery("#menu-button-next").click(function(){ goToPage("NEXT") });
-        jQuery("#board-button-previous").click(function(){ goToPage("PREVIOUS") });
-  	    jQuery("#board-button-next").click(function(){ goToPage("NEXT") });
-  	    jQuery("#board-button-last").click(function(){ goToPage(numberOfPages) });
-  	    jQuery("#board-button-first").click(function(){ goToPage(1) });
-
-	      jQuery("#current-page")
-	        .mouseenter(function(){jQuery(".board-button>div").stop().animate({opacity:0})})
-	        .bind("mouseleave", boardButtonOutHandler);
-	      jQuery("#boards")
-	        .mouseleave(function(){jQuery(".board-button>div").stop().animate({opacity:0})})
-	        .bind("mouseenter", boardButtonOutHandler);
-	      
-	      jQuery("#thumbnail-next").click(function(){thumbnails.next()});
-	      jQuery("#thumbnail-previous").click(function(){thumbnails.previous()});
-	      
-	      jQuery("#menubottom-input").change(function(){ goToPage(jQuery("#menubottom-input").val()) });
-	      jQuery("#moreLink").click(function(){ showDescription() });
-	      jQuery("#head-button-close").click(function(){ if(mode=="description"){hideDescription()}else if(mode=="full"){switchToNormalMode()} });
-	      jQuery("#menu-button-export")
-	        .toggle(
-	          function(){ jQuery("#menu-export-dropdown").show() },
-	          function(){ jQuery("#menu-export-dropdown").hide() })
-	        .hover(
-	          function(){ jQuery("#menu-button-export-left").css("background", "url(/uniboard-player/images/menu-button-export-left-over.png)") },
-	          function(){ jQuery("#menu-button-export-left").css("background", "url(/uniboard-player/images/menu-button-export-left.png)") });
-	      jQuery("#menu-button-full").click(function(){ 
-          switchToFullMode();
-	      });
-  	    jQuery("#menu-button-showthumbnails").click(function(){
-    	    var newFootHeight = 0;
-    	    var easing = "";
-  	    
-    	    if(thumbsBar.state === "min"){
-    	      //jQuery(".thumbnail").css("display", "inline-block");
-    	      newFootHeight = thumbsBar.fullHeightVal;
-    	      thumbsBar.state = "full";
-    	      easing = "easeOutBack";
-  	      } else {
-  	        //jQuery(".thumbnail").css("display", "none");
-  	        newFootHeight = thumbsBar.minHeightVal;
-  	        thumbsBar.state = "min";
-  	        easing = "easeInQuint";
-          }
-    	    
-    	    if(thumbsBar.state === "full"){
-    	      jQuery("#body").css({paddingBottom:110 + newFootHeight });
-    	      jQuery(window).resize();
-  	      }
-    	    jQuery("#thumbnails").animate(
-    	      {height:32 + newFootHeight},
-  	        400,
-  	        easing,
-  	        function(){ 
-  	          jQuery("#body").css({paddingBottom:110 + newFootHeight });
-  	          jQuery(window).resize();
-  	        }
-  	      );
-    	    jQuery("#foot").animate(
-    	      {height:96 + newFootHeight, marginTop:-96 -newFootHeight},
-    	      400,
-    	      easing
-    	    );
-    	  });
-  	  
-    	  // Constructs the slider
-    	  var sliderPage = jQuery("#thumbnails-slider>div:first").clone();
-    	  var sliderPageWidth = (100/numberOfPages) + "%";
-    	  jQuery("#thumbnails-slider>div:first").remove();
-    	  for(var i=1; i<=numberOfPages; i++){
-    	    var newSliderPage = sliderPage.clone();
-    	    newSliderPage
-    	      .css({ width:sliderPageWidth })
-    	      .click(function(){
-    	        goToPage(jQuery(this).index()+1);
-    	      });
-    	    if(i===numberOfPages) newSliderPage.addClass("last");
-    	    jQuery("#thumbnails-slider").append(newSliderPage);
-  	    }
-  	    
-  	    // Slider handler
-  	    jQuery("#thumbnails-slider>div:first").append(jQuery("#thumbnails-slider-handler"));
-  	    jQuery("#thumbnails-slider-handler").draggable({
-  	      axis: 'x',
-  	      containment:[ jQuery("#thumbnails-slider>div:first-child").offset().left, 0, 
-  	                    jQuery("#thumbnails-slider>div:first-child").offset().left + jQuery("#thumbnails-slider>div:first-child").width()*numberOfPages-20, 0  ],
-  	      start:function(e){
-  	        jQuery(this).css({left:"0"});
-  	        jQuery(this).parent("div").css({zIndex:1});
-  	        sliderListener(currentPage.number);
-  	        thumbsBar.sliding = true;
-  	      },
-  	      stop:function(e){
-  	        jQuery(this).css({left:"0"});
-  	        clearTimeout(sliderTimer);
-  	        jQuery(this).appendTo(jQuery("#thumbnails-slider>div")[currentPage.number-1]);
-  	        thumbsBar.sliding = false;
-  	      } 
-  	    });
-  	    
-  	    // Add the thumbnails
-  	    var newThumbnail = null;
-  	    var formattedThumbNumber = null;
-  	    for(var i=0; i<numberOfPages; i++){
-  	      newThumbnail = jQuery("#thumbnails>#thumbnails-canvas>.thumbnail:first").clone();
-  	      formattedThumbNumber = formatPageNumber(i+1);
-  	      newThumbnail
-  	        .find("img").attr("src", pagesBaseUrl + "/page" + formattedThumbNumber + ".thumbnail.jpg")
-  	        .attr("title", "page " + (i+1));
-  	      jQuery("#thumbnails>#thumbnails-canvas>div:last-child").after(newThumbnail); 
-  	    }
-  	    jQuery("#thumbnails>#thumbnails-canvas>.thumbnail:first").remove();
-  	    
-  	    jQuery(".thumbnail")
-	        .hover(
-	          function(){ jQuery(this).addClass("current") },
-	          function(){ jQuery(this).removeClass("current") })
-	        .click(function(){
-	          goToPage(jQuery(this).index()+1);
-	        });
-  	    
-  	    
-  	    if(!documentData.hasPdf){ 
-  	      jQuery("#menu-export-hasPdf>a").addClass("disabled");
-  	    }else{ 
-          jQuery("#menu-export-hasPdf")
-  	        .hover(
-  	          function(){
-  	            jQuery(this).children("a").addClass("over");
-  	            jQuery(this).addClass("over")}, 
-  	          function(){
-  	            jQuery(this).children("a").removeClass("over");
-  	            jQuery(this).removeClass("over");
-  	        })
-  	        .children("a").attr("href", pagesBaseUrl + "/" + documentData.uuid + ".pdf");
-  	    }
-  	    if(!documentData.hasUbz){
-  	      jQuery("#menu-export-hasUbz>a").addClass("disabled");
-  	    }else{ 
-  	      jQuery("#menu-export-hasUbz")
-  	        .hover(
-  	          function(){
-  	            jQuery(this).children("a").addClass("over");
-  	            jQuery(this).addClass("over")}, 
-  	          function(){
-  	            jQuery(this).children("a").removeClass("over");
-  	            jQuery(this).removeClass("over");
-  	        })
-  	        .children("a").attr("href", pagesBaseUrl + "/" + documentData.uuid + ".ubz");
-  	    }
-  	    
-  	    jQuery(document).click(function(){
-  	      if(jQuery("#menu-export-dropdown").css("display") !== "none"){
-  	        jQuery("#menu-button-export").click();
-  	      }
-  	    });
-  	    jQuery(".board-button>div").animate({opacity: 0}, 3000);
-  	    //jQuery("#thumbnails>div:last-child").append(numberOfPages);
-  	    var docTitle = jQuery("<span>" + documentData.title + ", </span>");
-  	    jQuery("#data-document-title").append(docTitle);
-  	    jQuery("#data-document-title").append(documentData.author);
-  	    jQuery("#description-text").append("<a href='mailto:" + documentData.authorEmail + "'>" + documentData.author + 
-  	                                        "</a><br/>" + documentData.title + 
-  	                                        "<br/>" + documentData.publishedAt + 
-  	                                        "<br/><br/>" + documentData.description);
-  	    jQuery("#menubottom-input").after("/" + numberOfPages);
-  	    openPage(1);
-  	  });
+	  };
 	  
-	    function sliderListener(currentPageNmbr){
-	      var slider = jQuery("#thumbnails-slider-handler");
-	      var unitWidth = slider.parent("div").width();
-	      var sliderIndex = 1 + Math.floor((slider.position().left + ((currentPageNmbr-1) * unitWidth)) / unitWidth);	      
-	      if(sliderIndex !== currentPage.number) goToPage(sliderIndex);
-	      sliderTimer = setTimeout(function(){sliderListener(currentPageNmbr)}, 10);
-	    }
-	    
-      function boardButtonOutHandler(event){
-        if( event.pageY >= jQuery("#boards").position().top && 
-            event.pageY <= (jQuery("#boards").position().top + jQuery("#boards").height()) ){
-          if(event.pageX >= (jQuery("#current-page").position().left + jQuery("#current-page").width())){
-            jQuery("#board-button-next").stop().animate({opacity:1}, 200);
-          }else if(event.pageX < jQuery("#current-page").position().left){
-            jQuery("#board-button-previous").stop().animate({opacity:1}, 200);
-          }
-        }
-      }
-	  
-  	  function goToPage(pageNumber){
-  	    var checkPoint = { finish:"%", start:"%" };
-	    
-  	    if(pageNumber === "NEXT"){
-  	      currentPage.number++;
-  	      checkPoint = { finish:"-200%", start:"100%" };
-  	    }else if(pageNumber === "PREVIOUS"){
-  	      currentPage.number--;
-  	      checkPoint = { finish:"100%", start:"-200%" };
-  	    }else{
-  	      if(pageNumber > currentPage.number){
-  	        checkPoint = { finish:"-200%", start:"100%" };
-  	      }else if(pageNumber < currentPage.number){
-  	        checkPoint = { finish:"100%", start:"-200%" };
-	        }else{
-	          return 0;
-          }
-  	      currentPage.number = pageNumber;
-  	    }
-	    
-  	    if(currentPage.number < 1){
-  	      currentPage.number = 1;
-  	    }else if(currentPage.number > numberOfPages){
-  	      currentPage.number = numberOfPages;
-  	    }
-	    	
-	    	jQuery("#current-page")
-	    	  .unbind("mouseenter")
-	    	  .unbind("mouseleave");
-	    	
-        jQuery("#board-current").stop().animate(
-          {marginLeft:checkPoint.finish},
-          300,
-          "easeInQuint",
-          function(){
-    	    	jQuery("#thumbnails").css({width: jQuery("#thumbnails").width()});
-            jQuery("#board-current").css({ marginLeft:checkPoint.start });
-            openPage(currentPage.number);
-            jQuery("#board-current").animate(
-              {marginLeft:"0"},
-              300,
-              "easeOutQuint",
-              function(){
-                jQuery("#thumbnails").css({width: "auto"});
-                jQuery("#current-page")
-                  .mouseenter(function(){jQuery(".board-button>div").animate({opacity:0})})
-                  .bind("mouseleave", boardButtonOutHandler);
-              }
-            );
-          }
-        );
-  	  }
-	  
-  	  function adaptPage(){
-  	    jQuery(window).resize();
-  	    adaptPageTimer = setTimeout(function(){adaptPage()}, 10);
-  	  }
-  	  
-  	  function formatPageNumber(pageNumber){
-  	    var formattedPageNumber = ("00" + pageNumber).substr(("00" + pageNumber).length-3, 3);
-  	    return formattedPageNumber;
-  	  }
-	  
-      function openPage(pageNumber){
-        var formattedPageNumber = formatPageNumber(pageNumber);
-        var fileName = pagesBaseUrl + "/page" + formattedPageNumber + ".svg";
-        currentPage.number = pageNumber;
-        /*jQuery.ajax({ 
-          url: fileName,
-          dataType: 'xml',
-          success: function(data){
-            currentPage.width = jQuery(data).find("rect").attr("width");
-            currentPage.height = jQuery(data).find("rect").attr("height");*/
-            jQuery("#current-page").attr("src", fileName);
-            jQuery("#menubottom-input").val(pageNumber);
-            jQuery("#thumbnails-slider>div").removeClass("current");
-            jQuery(jQuery("#thumbnails-slider>div")[pageNumber-1]).addClass("current");
-            if(!thumbsBar.sliding)jQuery("#thumbnails-slider-handler").appendTo(jQuery("#thumbnails-slider>div")[pageNumber-1]);
-            jQuery(window).resize();
-          /*}
-        });*/
-
-        if(pageNumber === 1){
-          jQuery("#menu-button-previous").unbind("click");
-          jQuery("#board-button-previous").unbind("click");
-        }else{ 
-          if(jQuery("#menu-button-previous").data("events") === null){
-            jQuery("#menu-button-previous").bind("click", function(){goToPage("PREVIOUS")});
-            jQuery("#board-button-previous").bind("click", function(){goToPage("PREVIOUS")});
-          }
-        }
-        
-        if(pageNumber === numberOfPages){
-          jQuery("#menu-button-next").unbind("click");
-          jQuery("#board-button-next").unbind("click");
-        }else{ 
-          if(jQuery("#menu-button-next").data("events") === null){
-            jQuery("#menu-button-next").bind("click", function(){goToPage("NEXT")});
-            jQuery("#board-button-next").bind("click", function(){goToPage("NEXT")});
-          }
-        }
-      }
-      
-      function switchToFullMode(){
-        jQuery("#logo-uniboard").hide();
-        jQuery("#document-title").hide();
-        jQuery("#head-button-close").show();
-        jQuery("#head").css({height:40});
-        jQuery("#foot").hide();
-        jQuery("#body").css({paddingTop:40, paddingBottom:40});
-        jQuery(window).resize();
-        mode = "full";
-      }
-      
-      function switchToNormalMode(){
-        jQuery("#logo-uniboard").show();
-        jQuery("#document-title").show();
-        jQuery("#head-button-close").hide();
-        jQuery("#head").css({height:55});
-        jQuery("#foot").show();
-        jQuery("#body").css({paddingTop:85, paddingBottom:110});
-        jQuery(window).resize();
-        mode = "normal";
-      }
+	  myUbPlayer = new UbPlayer.Player(args);
+	});
 	
-		  function showDescription(){
-  	    jQuery("#boards").animate({marginTop:"100%"}, function(){
-  	      jQuery("#boards").hide();
-  	      jQuery("#document-title").hide();
-  	      jQuery("#head-button-close").show();
-  	      jQuery("#description").show();
-  	    });
-  	    mode = "description";
-  	  }
-  	  
-  	  function hideDescription(){
-  	    jQuery("#boards").animate({marginTop:"0"}, function(){
-  	      jQuery("#boards").show();
-  	      jQuery("#document-title").show();
-  	      jQuery("#head-button-close").hide();
-  	      jQuery("#description").hide();
-  	    });
-  	    mode = "normal";
-  	  }
-	
-  	  function showIndex(){
-  	    var thumbsPerRow = Math.round(Math.sqrt(numberOfPages));
-  	    jQuery("#boards").animate({marginTop:"-100%"}, function(){
-  	      jQuery("#boards").hide();
-  	      jQuery("#index")
-    	      .show()
-    	      .empty();
-    	    drawIndexThumbnails(thumbsPerRow);
-  	    });
-  	  }
-	  
-  	  function hideIndex(){
-  	    jQuery("#index").hide();
-  	    jQuery("#boards").show();
-        jQuery("#thumbnails").show();
-        jQuery("#boards").animate({marginTop:"0"});
-    	  jQuery("#thumbnails").animate({marginTop:"0"});
-  	  }
-	  
-  	  function drawIndexThumbnails(thumbsPerRow){
-  	    var newIndex = jQuery("#index>div").length + 1;
-  	    var newIndexThumbnailNumber = formatPageNumber(newIndex);
-  	    var newIndexThumbnail = jQuery("<div class='thumbnail index'><img src='" + pagesBaseUrl + "/page" + 
-  	                            newIndexThumbnailNumber + 
-  	                            ".thumbnail.jpg' width='auto' height='100%'/></div>");
-  	    newIndexThumbnail
-  	      .hover(
-	          function(){ jQuery(this).addClass("current") },
-	          function(){ jQuery(this).removeClass("current") })
-	        .click(function(){
-	          openPage(newIndex);
-	          jQuery("#menu-button-index").click();
-	          jQuery(window).resize();
-	        });
-  	    jQuery("#index").append(newIndexThumbnail);
-  	    if((newIndex)%thumbsPerRow === 0)jQuery("#index").append("<br/>");
-  	    if(jQuery("#index>div").length < numberOfPages) setTimeout(function(){drawIndexThumbnails(thumbsPerRow)}, 100);
-  	  }
-	
-  	  jQuery(window).resize(function(){
-  	    var ratioWh = 1.66;//currentPage.width / currentPage.height;
-  	    jQuery(".page").width(jQuery(".page").height() * ratioWh);
-  	    jQuery("#document-title").width(jQuery(".page").width());
-  	    if(jQuery(window).height() < 500){
-  	      state = "mini";
-  	    }
-  	  });
-	  
-  })();
-  
 	</script>
 	
 </head>
@@ -483,7 +59,8 @@
     <div id="document-title">
       <ul>
         <li id="data-document-title"></li>
-        <li id="data-document-author">&nbsp;<a id="moreLink" href="#">Information sheet</a></li>
+        <li id="data-document-author">&nbsp;<a id="moreLink" href="#">More…</a>&nbsp;<a name="fb_share" type="button_count" href="http://www.facebook.com/sharer.php">Share</a>
+        <script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script></li>
       </ul>
     </div>
     <div class="menu-button" id="head-button-close"></div>
@@ -491,6 +68,7 @@
 
   <div id="body">
     <div id="boards">
+      <!-- Current board -->
       <div class="board" id="board-current">
         <div class="board-button">
           <div class="board-button-unit" id="board-button-previous"></div>
@@ -498,6 +76,14 @@
         <iframe class="page" id="current-page" src=""></iframe>
         <div class="board-button">
           <div class="board-button-unit" id="board-button-next"></div>
+        </div>
+        <!-- App Viewer -->
+        <div id="app-viewer">
+          <div id="app-viewer-c"><!-- table -->
+            <div id="app-viewer-appcanvas"><!-- table-cell -->
+              <iframe id="app-viewer-app" src=""></iframe><!-- vertical and horizontal centered iframe -->
+            </div>
+          </div>
         </div>
       </div>
     </div><!--boards-->
