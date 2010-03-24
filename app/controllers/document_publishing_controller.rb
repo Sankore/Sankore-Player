@@ -1,5 +1,6 @@
 require 'net/http'
 require 'uri'
+require 'spawn'
 
 class DocumentPublishingController < ApplicationController
       
@@ -21,12 +22,16 @@ class DocumentPublishingController < ApplicationController
       published_document.deletion_token = request.headers["Deletion-Token"]
       published_document.free_version = request.headers["Document-FreeVersion"] == 'true'
 
-      published_document.save_payload(request.body)
+      spawn do
+        
+        published_document.save_payload(request.body)
     
-      published_document.save
+        published_document.save
     
-      DocumentPublishingMailer.deliver_notify(published_document)
+        DocumentPublishingMailer.deliver_notify(published_document)
     
+      end
+
       respond_to do |format|
         format.any { head :ok }
       end
