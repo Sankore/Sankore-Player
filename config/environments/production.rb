@@ -27,14 +27,12 @@ config.action_view.cache_template_loading            = true
 # Enable threaded mode
 # config.threadsafe!
 
-# Disable delivery errors, bad email addresses will be ignored
-# config.action_mailer.raise_delivery_errors = false
-
 config.action_mailer.smtp_settings = {
   :address => 'localhost',
-  :domain => 'mail.mnemis.com',
+  :domain => 'mail.getuniboard.com',
   :enable_starttls_auto => false
 }
-config.action_mailer.default_url_options = { :host => 'uniboard.mnemis.com' }
+
+# config.action_mailer.default_url_options = { :host => 'uniboard.mnemis.com' }
 # Devise
-config.action_mailer.default_url_options = { :host => 'mnemis.com' }
+config.action_mailer.default_url_options = { :host => 'getuniboard.com' }
