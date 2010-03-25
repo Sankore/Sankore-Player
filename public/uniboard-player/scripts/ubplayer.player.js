@@ -419,8 +419,8 @@ UbPlayer.Player.prototype.openPage = function(pageNumber){
   
   var fileExtention = "svg";
   
-  if (jQuery.browser == "msie")
-      fileExtention = "jpg";
+  if (jQuery.browser.msie)
+    fileExtention = "jpg";
   
   var fileName = this.documentData.pagesBaseUrl + "/page" + formattedPageNumber + "." + fileExtention;
   this.currentPage.number = pageNumber;
