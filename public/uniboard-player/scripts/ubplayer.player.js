@@ -416,7 +416,13 @@ UbPlayer.Player.prototype.formatDate = function(date){
 UbPlayer.Player.prototype.openPage = function(pageNumber){
   var that = this;
   var formattedPageNumber = this.formatPageNumber(pageNumber);
-  var fileName = this.documentData.pagesBaseUrl + "/page" + formattedPageNumber + ".svg";
+  
+  var fileExtention = "svg";
+  
+  if (jQuery.browser.msie)
+    fileExtention = "jpg";
+  
+  var fileName = this.documentData.pagesBaseUrl + "/page" + formattedPageNumber + "." + fileExtention;
   this.currentPage.number = pageNumber;
   /*jQuery.ajax({ 
     url: fileName,
