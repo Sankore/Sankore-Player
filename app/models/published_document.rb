@@ -29,7 +29,7 @@ class PublishedDocument < ActiveRecord::Base
     
     FileUtils.rm_f(zip_file_path)
 
-    self.persistence_url = PublishingHelper.publishing_s3_bucket_public_endpoint + "/publishing/documents/" + self.publishing_uuid
+    self.persistence_url = "publishing/documents/" + self.publishing_uuid
 
   end
 
@@ -40,4 +40,15 @@ class PublishedDocument < ActiveRecord::Base
     s3_bucket.delete_folder(self.persistence_url)
     
   end
+
+  def public_url
+
+    # compatibility with first versions which included the full url access
+    if (self.persistence_url.include? PublishingHelper.publishing_s3_bucket_public_endpoint)
+        return self.persistence_url
+    end
+
+    return PublishingHelper.publishing_s3_bucket_public_endpoint + "/" + self.persistence_url
+  end
+
 end
