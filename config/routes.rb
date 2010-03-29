@@ -1,12 +1,15 @@
 ActionController::Routing::Routes.draw do |map|
- 
+  
   #map.resources :published_documents
+  #map.resources :published_captures
 
   map.connect 'documents/publish', :controller => 'DocumentPublishing', :action => 'publish', :conditions => { :method => :post}
   map.connect 'documents/publish/:uuid', :controller => 'DocumentPublishing', :action => 'show' , :conditions => { :method => :get}
   map.connect 'documents/unpublish/:deletion_token', :controller => 'DocumentPublishing', :action => 'unpublish' , :conditions => { :method => :get}
 
   map.connect 'captures/publish', :controller => 'CapturePublishing', :action => 'publish', :conditions => { :method => :post}
+  map.connect 'captures/publish/:uuid', :controller => 'CapturePublishing', :action => 'show' , :conditions => { :method => :get}
+  map.connect 'captures/unpublish/:deletion_token', :controller => 'CapturePublishing', :action => 'unpublish' , :conditions => { :method => :get}
 
   map.connect 'publish/token', :controller => 'Publishing', :action => 'generate_token', :conditions => { :method => :get}
 

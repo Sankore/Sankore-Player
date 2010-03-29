@@ -1,0 +1,2 @@
+module PublishedCapturesHelper
+end
