@@ -22,6 +22,8 @@ UbPlayer.Viewer.prototype.show = function(appUrl){
     }
   };
   
+  jQuery("#app-viewer-app").hide();
+  
   jQuery.ajax({
     url: app.config,
     dataType: 'xml',
@@ -37,7 +39,11 @@ UbPlayer.Viewer.prototype.show = function(appUrl){
         .attr("src", app.index)
         .width(app.width)
         .height(app.height);
+      jQuery("#app-viewer-appborder")
+        .width(app.width + 20)
+        .height(app.height + 35)
       jQuery("#app-viewer").show();
+      jQuery("#app-viewer-app").show();
     }
   });
 }

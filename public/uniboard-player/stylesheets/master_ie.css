@@ -1,0 +1,263 @@
+
+html{ height:100%; width:100% }
+body{ height:100%; width:100%; overflow:hidden; display:table; font-family:helvetica, arial, sans-serif; background-color:rgb(236, 237, 238) }
+
+a{ color:red }
+
+#head{
+  background-color:rgb(236, 237, 238);
+  display:table;
+  text-align:center;
+  position:absolute;
+  top:0;
+  height:55px;
+  width:100%;
+  font-weight:bold;
+  color:#333;
+  font-size:11px;
+  z-index:1;
+}
+
+span{
+  font-weight:normal;
+}
+
+input{
+  border:1px solid rgb(190, 191, 192);
+  display:inline-block;
+}
+
+.menu{
+  display:table-cell;
+  vertical-align:middle;
+  letter-spacing:-3px;
+  height:31px;
+}
+
+.menu.bottom{
+  display:block;
+  position:relative;
+  padding:0px 50px 0px 50px;
+  color:#666;
+  font-size:12px;
+  height:55px;
+}
+
+.menu-box{ width:33.3%; height:31px; display:inline-block; vertical-align:middle; margin-top:12px; position:relative }
+.menu-box-left{ text-align:left; letter-spacing:2px }
+.menu-box-center{ text-align:center; line-height:30px }
+.menu-box-right{ text-align:right }
+
+.menu-button{ height:31px; width:32px; display:inline-block; cursor:pointer }
+#menu-button-previous{ background:url(../images/menu-button-previous.png) }
+#menu-button-previous:hover{ background:url(../images/menu-button-previous-over.png) }
+#menu-button-previous.disabled{ background:url(../images/menu-button-previous-disabled.png) }
+#menu-button-index{ background:url(../images/menu-button-index.png); width:35px }
+#menu-button-index:hover{ background:url(../images/menu-button-index-over.png) }
+#menu-button-next{ background:url(../images/menu-button-next.png) }
+#menu-button-next:hover{ background:url(../images/menu-button-next-over.png) }
+#menu-button-next.disabled{ background:url(../images/menu-button-next-disabled.png) }
+#menu-button-showthumbnails{ background:url(../images/menu-button-showthumbnails.png); float:left; }
+#menu-button-showthumbnails:hover{ background:url(../images/menu-button-showthumbnails-over.png) }
+#menu-button-export{ width:auto }
+#menu-button-export-left{ background:url(../images/menu-button-export-left.png); width:33px; height:100%; float:left }
+#menu-button-export-center{ background:url(../images/menu-button-export-center.png); width:auto; height:100%; float:left; padding:0px 10px 0px 10px; letter-spacing:normal; line-height:30px }
+#menu-button-export-right{ background:url(../images/menu-button-export-right.png); width:5px; height:100%; float:left }
+#menu-button-full{ background:url(../images/menu-button-full.png); margin-right:5px; }
+#menu-button-full:hover{ background:url(../images/menu-button-full-over.png) }
+#menu-export-dropdown{ display:none; position:absolute; top:-55px; left:100%; margin-left:-90px; width:70px; z-index:2; }
+#menu-export-dropdown ul{
+  line-height:20px;
+  text-align:left;
+  padding:5px 10px 5px 10px;
+  width:100%;
+  letter-spacing:normal;
+  background-color:white;
+  border:1px solid rgb(210, 211, 212);
+  box-shadow: 2px 2px 3px #ddd;
+  -webkit-box-shadow: 2px 2px 3px #ddd;
+  -moz-box-shadow: 2px 2px 3px #ddd;
+}
+
+#menu-export-dropdown ul li{ border-bottom:1px solid #ddd }
+#menu-export-dropdown ul li:last-child{ border-bottom:0px }
+#menu-export-dropdown ul li.over{ background-color:red }
+#menu-export-dropdown ul li a.over{ color:white }
+#menu-export-dropdown ul li a.disabled{ color:#ddd }
+#menu-export-dropdown ul li a{ color:#666; text-decoration:none; }
+
+#head-button-close{ background:url(../images/head-button-close.png); position:relative; display:none; width:17px; height:17px; float:right;margin:25px 50px 0px 0px; }
+#logo-uniboard{ width:114px; height:25px; position:absolute; top:22px; left:50px }
+
+#document-title{
+  font-weight:normal;
+  letter-spacing:normal;
+  text-align:right;
+  margin:auto;
+  margin-top:28px;
+  font-size:12px;
+}
+
+#document-title span{
+  font-weight:bold;
+}
+
+#document-title ul{
+  width:200px;
+  display:inline-block;
+  line-height:normal;
+}
+
+#data-document-author{
+  font-weight:normal;
+}
+
+#document-title ul li{
+  margin-bottom:5px;
+}
+
+#document-title img{
+  margin-right:5px;
+  vertical-align:bottom;
+  margin-bottom:2px;
+}
+
+#body{
+  display:table-cell;
+  overflow:hidden;
+  vertical-align:middle;
+  text-align:center;
+  z-index:0;
+  padding-top:85px;
+  padding-bottom:110px;
+  height:100%;
+  width:100%;
+}
+
+#app-viewer{
+  width:100%;
+  height:100%;
+  position:absolute;
+  top:0px;
+}
+
+#app-viewer-c{
+  height:100%;
+  position:relative;
+  margin:auto;
+  top:0px;
+  display:table;
+  background:url(../images/app-viewer-background.png) ;
+}
+
+#app-viewer-appcanvas{
+  height:100%;
+  width:100%;
+  position:relative;
+  margin:auto;
+  display:table-cell;
+  vertical-align:middle;
+}
+
+#app-viewer-app{
+  z-index:1;
+  position:relative;
+}
+
+#boards{ background-color:rgb(236, 237, 238); overflow:visible; display:block; text-align:center; height:100%; width:100%; position:relative; margin:auto }
+.board{ display:inline-block; width:100%; height:100%; letter-spacing:-5px }
+.board-button{ height:99%; width:38px; display:inline-block; position:relative; z-index:1 }
+.board-button-unit{ height:51px; width:32px; top:50%; position:absolute; margin-top:-30px}
+#board-button-previous{ background:url(../images/board-button-previous.png) center left no-repeat; margin-left:5px; }
+#board-button-previous:hover{ background-image:url(../images/board-button-previous-over.png) }
+#board-button-next{ background:url(../images/board-button-next.png) center right no-repeat; margin-left:1px; }
+#board-button-next:hover{ background-image:url(../images/board-button-next-over.png) }
+
+.page{ display:inline-block; margin:auto; height:100% }
+#current-page{ position:relative; z-index:0; width:100%; height:100%; background-color:white; border:1px solid rgb(210, 211, 212); box-shadow: 2px 2px 10px #bbb; -webkit-box-shadow: 2px 2px 10px #bbb; -moz-box-shadow: 2px 2px 10px #bbb }
+
+#thumbnails{ display:block; padding:0px 50px 10px 50px; height:32px; overflow:hidden; position:relative; text-align:center; background:url(../images/menu-slider-background.png) repeat-x center 10px; }
+#thumbnails-slider{ position:relative; height:8px; margin-top:24px; margin-bottom:14px }
+#thumbnails-slider-handler{ height:28px; width:17px; position:relative; top:-21px; background:url(../images/slider-handler.png) }
+.thumbnails-slider-page{ position:relative; display:block; float:left; height:100%; width:100%; background:url(../images/thumbnails-slider-odd.png) center right }
+.thumbnails-slider-page.last{ background-position: center left } 
+.thumbnails-slider-page.current{ background-image:url(../images/thumbnails-slider-current.png) }
+.thumbnail{
+  height:80px;
+  width:auto;
+  display:inline-block;
+  position:relative;
+  border:1px solid rgb(210, 211, 212);
+  margin-right:5px;
+  margin-bottom:25px;
+  box-shadow: 2px 2px 3px #ddd;
+  -webkit-box-shadow: 2px 2px 3px #ddd;
+  -moz-box-shadow: 2px 2px 3px #ddd;
+}
+
+#thumbnails-canvas{
+  position:relative;
+  width:auto;
+}
+
+#thumbnail-previous{ background:url(../images/thumbnails-previous.png) center center no-repeat}
+#thumbnail-previous.disabled{ background-image:none}
+#thumbnail-next{ background:url(../images/thumbnails-next.png) center center no-repeat }
+#thumbnail-next.disabled{ background-image:none }
+
+.thumbnail.current{
+  border-bottom: 3px solid red;
+}
+
+.thumbnail.index{
+  height:100px;
+  display:inline-block;
+}
+
+#index{ position:relative; width:100%; height:auto; padding-top:22px; text-align:center; vertical-align:middle; display:none; margin:auto }
+#description{ 
+  display:none; 
+  margin:auto; 
+  width:320px;
+  height:400px;
+  overflow:auto;
+  text-align:left;
+  line-height:30px;
+  color:#333;
+  font-size:14px;
+  padding:30px 30px 10px 30px;
+  background-color:white;
+  border:1px solid rgb(210, 211, 212);
+  box-shadow: 2px 2px 10px #bbb;
+  -webkit-box-shadow: 2px 2px 10px #bbb;
+  -moz-box-shadow: 2px 2px 10px #bbb;
+}
+
+#description-text{
+  background:url(../images/board-description-background.png);
+  width:290px;
+  padding:0px 15px 0px 15px;
+}
+
+#foot{
+  display:block;
+  vertical-align:middle;
+  letter-spacing:-4px;
+  position:absolute;
+  margin-top:-96px;
+  left:0px;
+  top:100%;
+  width:100%;
+  height:96px;
+  background:url(../images/menu-background.png) repeat-x bottom;
+}
+
+#menubottom-input{
+  text-align:right;
+  width:2em;
+  font-color:#333;
+  margin-right:2px;
+  color:#666;
+  font-size:12px;
+  font-family:helvetica, arial, sans-serif;
+}

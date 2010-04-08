@@ -66,6 +66,7 @@ UbPlayer.Player = function(args) {
   jQuery("#menu-button-next").click(function(){ that.goToPage("NEXT") });
   jQuery("#board-button-previous").click(function(){ that.goToPage("PREVIOUS") });
   jQuery("#board-button-next").click(function(){ that.goToPage("NEXT") });
+  jQuery("#menu-button-index-embed").toggle(function(){ that.showIndex() }, function(){ that.hideIndex() });
 
   jQuery("#current-page")
     .mouseenter(function(){jQuery(".board-button>div").stop().animate({opacity:0})})
@@ -76,10 +77,15 @@ UbPlayer.Player = function(args) {
 
   jQuery("#thumbnail-next").click(function(){that.thumbnails.next()});
   jQuery("#thumbnail-previous").click(function(){that.thumbnails.previous()});
-
+  
+  //jQuery("#menu-share-email").click(function(){that.showSharing()});
   jQuery("#menubottom-input").change(function(){ that.goToPage(jQuery("#menubottom-input").val()) });
-  jQuery("#moreLink").click(function(){ that.showDescription() });
-  jQuery("#head-button-close").click(function(){ if(that.mode=="description"){that.hideDescription()}else if(that.mode=="full"){that.switchToNormalMode()} });
+  jQuery("#menu-button-showdetails").click(function(){ that.showDescription() });
+  jQuery("#shareDoc")
+   .toggle(
+      function(){ jQuery("#menu-share-dropdown").show() },
+      function(){ jQuery("#menu-share-dropdown").hide() });
+  jQuery("#quitFullscreen").click(function(){ if(that.mode=="description"){that.hideDescription()}else if(that.mode=="full"){that.switchToNormalMode()} });
   jQuery("#menu-button-export")
     .toggle(
       function(){ jQuery("#menu-export-dropdown").show() },
@@ -87,6 +93,10 @@ UbPlayer.Player = function(args) {
     .hover(
       function(){ jQuery("#menu-button-export-left").css("background", "url(/uniboard-player/images/menu-button-export-left-over.png)") },
       function(){ jQuery("#menu-button-export-left").css("background", "url(/uniboard-player/images/menu-button-export-left.png)") });
+  jQuery("#menu-list-share")
+    .toggle(
+      function(){ jQuery("#menu-share-dropdown").show() },
+      function(){ jQuery("#menu-share-dropdown").hide() });
   jQuery("#menu-button-full").click(function(){ 
     that.switchToFullMode();
   });
@@ -132,6 +142,7 @@ UbPlayer.Player = function(args) {
     var newSliderPage = sliderPage.clone();
     newSliderPage
       .css({ width:sliderPageWidth })
+      .attr("title", "page " + i)
       .click(function(){
         that.goToPage(jQuery(this).index()+1);
       });
@@ -180,9 +191,9 @@ UbPlayer.Player = function(args) {
       that.goToPage(jQuery(this).index()+1);
     });
 
-
   if(!this.documentData.hasPdf){ 
     jQuery("#menu-export-hasPdf>a").addClass("disabled");
+    jQuery("#menu-export-hasPdf").addClass("disabled");
   }else{ 
     jQuery("#menu-export-hasPdf")
       .hover(
@@ -193,10 +204,13 @@ UbPlayer.Player = function(args) {
           jQuery(this).children("a").removeClass("over");
           jQuery(this).removeClass("over");
       })
-      .children("a").attr("href", this.documentData.pagesBaseUrl + "/" + this.documentData.uuid + ".pdf");
+      .children("a")
+        .attr("href", this.documentData.pagesBaseUrl + "/" + this.documentData.uuid + ".pdf")
+        .attr("target", "_blank");
   }
   if(!this.documentData.hasUbz){
     jQuery("#menu-export-hasUbz>a").addClass("disabled");
+    jQuery("#menu-export-hasUbz").addClass("disabled");
   }else{ 
     jQuery("#menu-export-hasUbz")
       .hover(
@@ -207,18 +221,25 @@ UbPlayer.Player = function(args) {
           jQuery(this).children("a").removeClass("over");
           jQuery(this).removeClass("over");
       })
-      .children("a").attr("href", this.documentData.pagesBaseUrl + "/" + this.documentData.uuid + ".ubz");
+      .children("a")
+        .attr("href", this.documentData.pagesBaseUrl + "/" + this.documentData.uuid + ".ubz")
+        .attr("target", "_blank");
   }
 
   jQuery(document).click(function(){
     if(jQuery("#menu-export-dropdown").css("display") !== "none"){
       jQuery("#menu-button-export").click();
     }
+    if(jQuery("#menu-share-dropdown").css("display") !== "none"){
+      if(that.state == "embedded"){
+        jQuery("#menu-list-share").click();
+      }else{
+        jQuery("#shareDoc").click();
+      }
+    }
   });
+  jQuery("#menu-share-twitter>a").attr("href", "http://twitter.com/home?status=Currently reading " + this.documentData.pagesBaseUrl);
   jQuery(".board-button>div").animate({opacity: 0}, 3000);
-  var docTitle = jQuery("<span>" + this.documentData.title + ", </span>");
-  jQuery("#data-document-title").append(docTitle);
-  jQuery("#data-document-title").append(this.documentData.author);
   jQuery("#description-text").append("<a href='mailto:" + this.documentData.authorEmail + "'>" + this.documentData.author + 
                                       "</a><br/>" + this.documentData.title + 
                                       "<br/>" + this.formatDate(this.documentData.publishedAt) + 
@@ -277,6 +298,8 @@ UbPlayer.Player.prototype.goToPage = function(pageNumber){
 	jQuery("#current-page")
 	  .unbind("mouseenter")
 	  .unbind("mouseleave");
+	  
+	this.viewer.hide();
 	
   jQuery("#board-current").stop().animate(
     {marginLeft:checkPoint.finish},
@@ -307,52 +330,71 @@ UbPlayer.Player.prototype.adaptPage = function(){
 }
 
 UbPlayer.Player.prototype.switchToFullMode = function(){
-  jQuery("#logo-uniboard").hide();
-  jQuery("#document-title").hide();
+  jQuery(".board-button").css("display", "inline-block");
+  jQuery(".board-button-unit").css("display", "block");
   jQuery("#head-button-close").show();
-  jQuery("#head").css({height:40});
   jQuery("#foot").hide();
+  jQuery("#head-list-share").css("display", "none");
+  jQuery("#head-list-close").css("display", "inline-block");
   jQuery("#body").css({paddingTop:40, paddingBottom:40});
   jQuery(window).resize();
   this.mode = "full";
 }
 
 UbPlayer.Player.prototype.switchToNormalMode = function(){
-  jQuery("#logo-uniboard").show();
-  jQuery("#document-title").show();
+  jQuery(".board-button").css("display", "none");
+  jQuery(".board-button-unit").css("display", "none");
   jQuery("#head-button-close").hide();
-  jQuery("#head").css({height:55});
   jQuery("#foot").show();
-  jQuery("#body").css({paddingTop:85, paddingBottom:110});
+  jQuery("#head-list-share").css("display", "inline-block");
+  jQuery("#head-list-close").css("display", "none");
+  jQuery("#body").css({paddingTop:40, paddingBottom:110});
   jQuery(window).resize();
   this.mode = "normal";
 }
 
-UbPlayer.Player.prototype.showDescription = function(){
+UbPlayer.Player.prototype.showSharing = function(){
   jQuery("#boards").animate({marginTop:"100%"}, function(){
-    jQuery("#boards").hide();
-    jQuery("#document-title").hide();
-    jQuery("#head-button-close").show();
-    jQuery("#description").show();
-  });
+     jQuery(this).hide();
+     jQuery("#sharing").show();
+   });
+}
+
+UbPlayer.Player.prototype.hideSharing = function(){
+
+}
+
+UbPlayer.Player.prototype.showDescription = function(){
+  jQuery("#description-container").css({width:"300px"});
+  jQuery("#description").show();
   this.mode = "description";
 }
 
 UbPlayer.Player.prototype.hideDescription = function(){
-  jQuery("#boards").animate({marginTop:"0"}, function(){
-    jQuery("#boards").show();
-    jQuery("#document-title").show();
-    jQuery("#head-button-close").hide();
-    jQuery("#description").hide();
-  });
+  jQuery("#boards").animate(
+    {marginTop:"0"}, 
+    function(){
+      jQuery("#boards").show();
+      jQuery("#document-title").show();
+      jQuery("#head-button-close").hide();
+      jQuery("#description").hide();
+    });
   this.mode = "normal";
 }
 
 UbPlayer.Player.prototype.showIndex = function(){
   var that = this;
   var thumbsPerRow = Math.round(Math.sqrt(this.documentData.numberOfPages));
+
+  jQuery("#menu-button-previous")
+    .addClass("disabled")
+    .unbind("click");
+  jQuery("#menu-button-next")
+    .addClass("disabled")
+    .unbind("click");
+
   jQuery("#boards").animate({marginTop:"-100%"}, function(){
-    jQuery("#boards").hide();
+    jQuery(this).hide();
     jQuery("#index")
       .show()
       .empty();
@@ -361,11 +403,19 @@ UbPlayer.Player.prototype.showIndex = function(){
 }
 
 UbPlayer.Player.prototype.hideIndex = function(){
+  var that = this;
+  
+  jQuery("#menu-button-previous")
+    .removeClass("disabled")
+    .bind("click", function(){that.goToPage("PREVIOUS")});
+  jQuery("#menu-button-next")
+    .removeClass("disabled")
+    .bind("click", function(){that.goToPage("NEXT")});
+    
   jQuery("#index").hide();
-  jQuery("#boards").show();
-  jQuery("#thumbnails").show();
-  jQuery("#boards").animate({marginTop:"0"});
-  jQuery("#thumbnails").animate({marginTop:"0"});
+  jQuery("#boards")
+    .show()
+    .animate({marginTop:"0"});
 }
 
 UbPlayer.Player.prototype.drawIndexThumbnails = function(thumbsPerRow){
@@ -377,27 +427,19 @@ UbPlayer.Player.prototype.drawIndexThumbnails = function(thumbsPerRow){
                           ".thumbnail.jpg' width='auto' height='100%'/></div>");
   newIndexThumbnail
     .hover(
-      function(){ jQuery(this).addClass("current") },
-      function(){ jQuery(this).removeClass("current") })
+      function(){ if(newIndex !== that.currentPage.number) jQuery(this).addClass("selected") },
+      function(){ jQuery(this).removeClass("selected") })
     .click(function(){
-      that.openPage(newIndex);
+      that.goToPage(newIndex);
       jQuery("#menu-button-index").click();
       jQuery(window).resize();
     });
+    
   jQuery("#index").append(newIndexThumbnail);
+  if(newIndex === this.currentPage.number){ newIndexThumbnail.addClass("current") }
   if((newIndex)%thumbsPerRow === 0)jQuery("#index").append("<br/>");
   if(jQuery("#index>div").length < this.documentData.numberOfPages) setTimeout(function(){that.drawIndexThumbnails(thumbsPerRow)}, 100);
 }
-
-jQuery(window).resize(function(){
-  var ratioWh = 1.66;//this.currentPage.width / this.currentPage.height;
-  jQuery(".page").width(jQuery(".page").height() * ratioWh);
-  jQuery("#app-viewer-c").width(jQuery(".page").width());
-  jQuery("#document-title").width(jQuery(".page").width());
-  if(jQuery(window).height() < 500){
-    this.state = "mini";
-  }
-});
 
 UbPlayer.Player.prototype.formatPageNumber = function(pageNumber){
   var formattedPageNumber = ("00" + pageNumber).substr(("00" + pageNumber).length-3, 3);

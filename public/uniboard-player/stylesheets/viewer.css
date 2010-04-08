@@ -1,8 +1,22 @@
 
 rect.over{
-  fill:red;
+  fill:none;
+  stroke:red;
+  stroke-width:3;
 }
 
 rect.out{
-  fill:#dedede;
+  fill:none;
+}
+
+foreignObject{
+  display:none;
+}
+
+rect.body{
+  fill:#efefef;
+}
+
+rect.ghost{
+  fill:none;
 }
