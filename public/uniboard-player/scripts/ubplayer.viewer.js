@@ -8,10 +8,7 @@ UbPlayer.Viewer = function() {
   });
 };
 
-UbPlayer.Viewer.prototype.show = function(appUrl){
-  
-  alert("vshow 1");
-  
+UbPlayer.Viewer.prototype.show = function(appUrl){  
   var app = {
     index:"", 
     config:appUrl + "/config.xml", 
@@ -25,6 +22,7 @@ UbPlayer.Viewer.prototype.show = function(appUrl){
     }
   };
   
+  alert(appUrl);
   jQuery("#app-viewer-app").hide();
   
   jQuery.ajax({
