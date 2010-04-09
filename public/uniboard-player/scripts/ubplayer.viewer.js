@@ -9,7 +9,7 @@ UbPlayer.Viewer = function() {
 };
 
 UbPlayer.Viewer.prototype.show = function(appUrl){  
-  var app = {
+  /*var app = {
     index:"", 
     config:appUrl + "/config.xml", 
     icon:appUrl + "/icon.png",
@@ -22,10 +22,22 @@ UbPlayer.Viewer.prototype.show = function(appUrl){
     }
   };
   
-  alert(appUrl);
-  jQuery("#app-viewer-app").hide();
+  jQuery("#app-viewer-app").hide();*/
   
-  jQuery.ajax({
+  YAHOO.util.CrossFrame.onMessageEvent.subscribe(
+    function (type, args, obj) {
+      var message = args[0];
+      var domain = args[1];
+      
+      alert(message);
+    }
+  );
+  
+  YAHOO.util.CrossFrame.send("http://assets.getuniboard.com/publishing/proxy/proxy.html",
+                             "frames['getAppConf']",
+                             "message");
+  
+  /*jQuery.ajax({
     url: app.config,
     dataType: 'xml',
     success: function(data){
@@ -47,7 +59,7 @@ UbPlayer.Viewer.prototype.show = function(appUrl){
       jQuery("#app-viewer").show();
       jQuery("#app-viewer-app").show();
     }
-  });
+  });*/
 }
 
 UbPlayer.Viewer.prototype.hide = function(){
