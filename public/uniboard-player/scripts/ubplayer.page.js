@@ -19,6 +19,9 @@ UbPlayer.Page.updateForeignObjects = function()
 
   for(var i = 0; i < foreignObjects.length; i++)
   {
+    
+    if(foreignObjects[i].getAttributeNS(UbPlayer.Page.uniboardNS, "source").length===0) continue;
+    
     var fo = foreignObjects[i];
     var appbody = document.createElementNS(UbPlayer.Page.svgNS, 'rect');
     var appview = document.createElementNS(UbPlayer.Page.svgNS, 'image');
@@ -52,7 +55,6 @@ UbPlayer.Page.updateForeignObjects = function()
     
     appborder.setAttributeNS(null, 'id', widgetUuid);
     appborder.setAttributeNS(null, 'class', 'out');
-    appview.setAttributeNS(null, 'class', 'app');
         
     //if(window.parent.myUbPlayer.state !== "embedded"){
       appview.setAttributeNS(null, 'onclick', "window.parent.myUbPlayer.viewer.show('" + widgetUrl + "');");
@@ -60,6 +62,7 @@ UbPlayer.Page.updateForeignObjects = function()
       appview.setAttributeNS(null, 'onmouseout', "document.getElementById('" + widgetUuid + "').setAttributeNS(null, 'class', 'out')");
     //}
     
+    foreignObjects[i].setAttributeNS(null, 'class', 'app');
     foreignObjects[i].parentNode.insertBefore(appbody, foreignObjects[i]);
     foreignObjects[i].parentNode.insertBefore(appborder, foreignObjects[i]);
     foreignObjects[i].parentNode.insertBefore(appview, foreignObjects[i]);
