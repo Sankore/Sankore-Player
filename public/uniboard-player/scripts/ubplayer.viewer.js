@@ -9,6 +9,9 @@ UbPlayer.Viewer = function() {
 };
 
 UbPlayer.Viewer.prototype.show = function(appUrl){
+  
+  alert("vshow 1");
+  
   var app = {
     index:"", 
     config:appUrl + "/config.xml", 
@@ -28,6 +31,7 @@ UbPlayer.Viewer.prototype.show = function(appUrl){
     url: app.config,
     dataType: 'xml',
     success: function(data){
+      alert("vshow 2");
       app.index = appUrl + "/" + jQuery(data).find("content").attr("src");
       app.width = parseInt(jQuery(data).find("widget").attr("width"));
       app.height = parseInt(jQuery(data).find("widget").attr("height"));

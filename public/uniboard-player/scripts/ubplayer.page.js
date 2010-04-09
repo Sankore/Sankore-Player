@@ -59,7 +59,7 @@ UbPlayer.Page.updateForeignObjects = function()
     appborder.setAttributeNS(null, 'class', 'out');
         
     if(window.parent.myUbPlayer.state !== "embedded"){
-      appview.setAttributeNS(null, 'onclick', "window.parent.myUbPlayer.viewer.show('" + widgetUrl + "');");
+      appview.setAttributeNS(null, 'onclick', "alert('Show');window.parent.myUbPlayer.viewer.show('" + widgetUrl + "')");
       appview.setAttributeNS(null, 'onmouseover', "UbPlayer.Page.highlight('" + widgetUuid + "')");
       appview.setAttributeNS(null, 'onmouseout', "document.getElementById('" + widgetUuid + "').setAttributeNS(null, 'class', 'out')");
     }
@@ -81,9 +81,6 @@ UbPlayer.Page.init = function()
 UbPlayer.Page.highlight = function(widgetUuid)
 {
   document.getElementById(widgetUuid).setAttributeNS(null, 'class', 'over');
-  //var clickmeDiv = jQuery("div");
-  //clickmeDiv.css({height:50, width:100, backgroundColor:"red"});
-  //$("body").append(clickmeDiv);
 }
 
 UbPlayer.Page.testImage = function(appview, appbody, url)
