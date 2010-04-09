@@ -23,9 +23,7 @@ UbPlayer.Viewer.prototype.show = function(appUrl){
   };
   
   jQuery("#app-viewer-app").hide();*/
-  
-  alert("CrossFrame.send");
-  
+    
   YAHOO.util.CrossFrame.onMessageEvent.subscribe(
     function (type, args, obj) {
       var message = args[0];
@@ -35,9 +33,11 @@ UbPlayer.Viewer.prototype.show = function(appUrl){
     }
   );
   
+  alert("CrossFrame.send");
+  
   YAHOO.util.CrossFrame.send("http://assets.getuniboard.com/publishing/proxy/proxy.html",
                              "frames['getAppConf']",
-                             "message");
+                             appUrl);
   
   /*jQuery.ajax({
     url: app.config,
