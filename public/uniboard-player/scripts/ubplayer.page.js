@@ -5,7 +5,7 @@ UbPlayer.Page.svgNS = 'http://www.w3.org/2000/svg';
 UbPlayer.Page.uniboardNS = 'http://uniboard.mnemis.com/document';
 UbPlayer.Page.xlinkNS = 'http://www.w3.org/1999/xlink';
 
-UbPlayer.Page.reduceDomain = function()
+/*UbPlayer.Page.reduceDomain = function()
 {
   var allDomainsParts = document.domain.split(".");
   
@@ -13,7 +13,7 @@ UbPlayer.Page.reduceDomain = function()
     document.domain = allDomainsParts[allDomainsParts.length - 2] + "." + allDomainsParts[allDomainsParts.length - 1];
     
   console.log(document.domain);
-}
+}*/
 
 UbPlayer.Page.updateForeignObjects = function()
 {
@@ -74,7 +74,7 @@ UbPlayer.Page.updateForeignObjects = function()
 
 UbPlayer.Page.init = function() 
 {
-  UbPlayer.Page.reduceDomain();
+  UbPlayer.reduceDomain();
   UbPlayer.Page.updateForeignObjects();
 }
 

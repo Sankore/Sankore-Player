@@ -245,6 +245,7 @@ UbPlayer.Player = function(args) {
                                       "<br/>" + this.formatDate(this.documentData.publishedAt) + 
                                       "<br/><br/>" + this.documentData.description);
   jQuery("#menubottom-input").after("/" + this.documentData.numberOfPages);
+  UbPlayer.reduceDomain();
   this.openPage(1);
 };
 
