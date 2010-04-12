@@ -15,6 +15,7 @@ UbPlayer.Player = function(args) {
   this.adaptPageTimer = null;
   this.sliderTimer = null;
   this.documentData = args.documentData;
+  this.pageFileExtension = args.pageFileExtension;
   this.thumbnails = {
     thumbsToHide:[],
     firstVisibleThumb:null,
@@ -463,7 +464,7 @@ UbPlayer.Player.prototype.openPage = function(pageNumber){
   var that = this;
   var formattedPageNumber = this.formatPageNumber(pageNumber);
   
-  var fileExtention = "svg";
+  var fileExtention = pageFileExtension;
   
   if (jQuery.browser.msie)
     fileExtention = "jpg";
