@@ -15,7 +15,6 @@ UbPlayer.Player = function(args) {
   this.adaptPageTimer = null;
   this.sliderTimer = null;
   this.documentData = args.documentData;
-  this.pageFileExtension = args.pageFileExtension;
   this.thumbnails = {
     thumbsToHide:[],
     firstVisibleThumb:null,
@@ -463,13 +462,12 @@ UbPlayer.Player.prototype.formatDate = function(date){
 UbPlayer.Player.prototype.openPage = function(pageNumber){
   var that = this;
   var formattedPageNumber = this.formatPageNumber(pageNumber);
-  
-  var fileExtention = pageFileExtension;
+  var fileExtension = this.documentData.pageFileExtension;
   
   if (jQuery.browser.msie)
-    fileExtention = "jpg";
+    fileExtension = "jpg";
   
-  var fileName = this.documentData.pagesBaseUrl + "/page" + formattedPageNumber + "." + fileExtention;
+  var fileName = this.documentData.pagesBaseUrl + "/page" + formattedPageNumber + "." + fileExtension;
   this.currentPage.number = pageNumber;
   /*jQuery.ajax({ 
     url: fileName,
