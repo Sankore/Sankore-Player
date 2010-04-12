@@ -4,6 +4,6 @@ class AddFreeVersionToPublishedCapture < ActiveRecord::Migration
   end
 
   def self.down
-    remove_colmun :published_captures, :free_version
+    remove_column :published_captures, :free_version
   end
 end

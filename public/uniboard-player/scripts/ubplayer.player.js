@@ -462,7 +462,7 @@ UbPlayer.Player.prototype.formatDate = function(date){
 UbPlayer.Player.prototype.openPage = function(pageNumber){
   var that = this;
   var formattedPageNumber = this.formatPageNumber(pageNumber);
-  var fileExtension = jQuery.browser.msie ? "jpg" : this.documentData.pageFileExtension;
+  var fileExtension = jQuery.browser.msie ? "jpg" : "svg";
   var fileName = this.documentData.pagesBaseUrl + "/page" + formattedPageNumber + "." + fileExtension;
   
   this.currentPage.number = pageNumber;

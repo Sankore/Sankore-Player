@@ -4,6 +4,6 @@ class AddFreeVersionToPublishedDocument < ActiveRecord::Migration
   end
 
   def self.down
-    remove_colmun :published_documents, :free_version
+    remove_column :published_documents, :free_version
   end
 end

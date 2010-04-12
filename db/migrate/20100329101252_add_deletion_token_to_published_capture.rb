@@ -4,6 +4,6 @@ class AddDeletionTokenToPublishedCapture < ActiveRecord::Migration
   end
 
   def self.down
-    remove_colmun :published_captures, :deletion_token
+    remove_column :published_captures, :deletion_token
   end
 end

@@ -4,6 +4,6 @@ class AddPublicationVersionToPublishedDocuments < ActiveRecord::Migration
   end
 
   def self.down
-    remove_colmun :published_documents, :publication_version
+    remove_column :published_documents, :publication_version
   end
 end
