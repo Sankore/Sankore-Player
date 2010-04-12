@@ -1,5 +1,19 @@
 class PublishedDocument < ActiveRecord::Base
    
+  def set_minimal_version(version)
+    if self.publication_version < version
+      self.publication_version = version
+    end
+  end
+
+  def page_file_extension
+    if self.publication_version && self.publication_version >= 2
+        return "xml"
+    else
+        return "svg"
+    end
+  end
+
   def save_payload(payload)
     
     s3_bucket = PublishingHelper.publishing_s3_bucket
@@ -11,11 +25,19 @@ class PublishedDocument < ActiveRecord::Base
     zip_file = File.open(zip_file_path, "wb")
     zip_file.write(payload.read)
     zip_file.close
+
+    self.set_minimal_version(2)
        
     Zip::ZipFile.foreach(zip_file_path) do |zip_file|
       if (!zip_file.directory?)
-          puts "Saving file on S3: " + zip_file.name
-          s3_bucket.put("publishing/documents/" + self.publishing_uuid + "/" + zip_file.name, zip_file.get_input_stream.read, {}, 'public-read', {})
+          
+          filename = zip_file.name 
+
+          if filename[0, 4] == "page" && filename[filename.length - 4, 4] == ".svg" then
+            filename = zip_file.name[".svg"] = ".xml"
+          end
+
+          s3_bucket.put("publishing/documents/" + self.publishing_uuid + "/" + filename, zip_file.get_input_stream.read, {}, 'public-read', {})
           
           if zip_file.name == self.publishing_uuid + '.pdf'
             self.has_pdf = true
