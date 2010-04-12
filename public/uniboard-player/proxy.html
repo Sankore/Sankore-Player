@@ -35,7 +35,16 @@
 
         return r;
     }
+    
+    function reduceDomain() {
+      var allDomainsParts = document.domain.split(".");
 
+      if (allDomainsParts.length > 2)
+        document.domain = allDomainsParts[allDomainsParts.length - 2] + "." + allDomainsParts[allDomainsParts.length - 1];    
+    }
+    
+    reduceDomain();
+    
     // Match things like parent.frames["aaa"].top.frames[0].frames['bbb']
     r = /^(?:(?:(top|parent|frames\[(?:(?:['"][a-zA-Z\d-_]*['"])|\d+)\]))(?:\.|$))+/;
 

@@ -50,6 +50,7 @@
 	    
 	    myUbPlayer = new UbPlayer.Player(args);
 	    
+	    // load specific css according to the window width
 	    if(jQuery(window).width() < 800){        
         myUbPlayer.state = "embedded";
         jQuery("body").append('<link rel=stylesheet type="text/css" href="/uniboard-player/stylesheets/master.css">');
