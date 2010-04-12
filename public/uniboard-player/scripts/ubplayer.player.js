@@ -80,7 +80,10 @@ UbPlayer.Player = function(args) {
   
   //jQuery("#menu-share-email").click(function(){that.showSharing()});
   jQuery("#menubottom-input").change(function(){ that.goToPage(jQuery("#menubottom-input").val()) });
-  jQuery("#menu-button-showdetails").click(function(){ that.showDescription() });
+  jQuery("#menu-button-showdetails")
+    .toggle(
+      function(){ that.showDescription() },
+      function(){ that.hideDescription() });
   jQuery("#shareDoc")
    .toggle(
       function(){ jQuery("#menu-share-dropdown").show() },
