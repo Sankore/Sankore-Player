@@ -1,7 +1,7 @@
 class PublishedDocument < ActiveRecord::Base
    
   def set_minimal_version(version)
-    if self.publication_version < version
+    if self.publication_version == nil || self.publication_version < version
       self.publication_version = version
     end
   end
