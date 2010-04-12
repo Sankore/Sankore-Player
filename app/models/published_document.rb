@@ -34,7 +34,7 @@ class PublishedDocument < ActiveRecord::Base
           filename = zip_file.name 
 
           if filename[0, 4] == "page" && filename[filename.length - 4, 4] == ".svg" then
-            filename = zip_file.name[".svg"] = ".xml"
+            filename[".svg"] = ".xml"
           end
 
           s3_bucket.put("publishing/documents/" + self.publishing_uuid + "/" + filename, zip_file.get_input_stream.read, {}, 'public-read', {})
