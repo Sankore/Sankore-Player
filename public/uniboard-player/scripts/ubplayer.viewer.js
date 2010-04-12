@@ -16,8 +16,10 @@ UbPlayer.Viewer = function() {
             
       appData = message.split(",");
       app.index = appData[0];
-      app.width = appData[2];
-      app.height = appData[1];
+      app.width = parseInt(appData[1]);
+      app.height = parseInt(appData[2]);
+      
+      console.log(app);
       
       jQuery("#app-viewer-app")
         .attr("src", app.index)
