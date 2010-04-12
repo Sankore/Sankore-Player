@@ -9,7 +9,8 @@ UbPlayer.Viewer = function() {
 };
 
 UbPlayer.Viewer.prototype.show = function(appUrl){  
-  /*var app = {
+  var appData = [];
+  var app = {
     index:"", 
     config:appUrl + "/config.xml", 
     icon:appUrl + "/icon.png",
@@ -21,24 +22,7 @@ UbPlayer.Viewer.prototype.show = function(appUrl){
       description:""
     }
   };
-  
-  jQuery("#app-viewer-app").hide();*/
     
-  YAHOO.util.CrossFrame.onMessageEvent.subscribe(
-    function (type, args, obj) {
-      var message = args[0];
-      var domain = args[1];
-      
-      alert(message);
-    }
-  );
-  
-  alert("CrossFrame.send");
-  
-  YAHOO.util.CrossFrame.send("http://assets.getuniboard.com/publishing/proxy/proxy.html",
-                             "frames['getAppConf']",
-                             appUrl);
-  
   /*jQuery.ajax({
     url: app.config,
     dataType: 'xml',
@@ -62,6 +46,26 @@ UbPlayer.Viewer.prototype.show = function(appUrl){
       jQuery("#app-viewer-app").show();
     }
   });*/
+  
+  //if(window.location)
+  
+  YAHOO.util.CrossFrame.onMessageEvent.subscribe(
+    function (type, args, obj) {
+      var message = args[0];
+      var domain = args[1];
+      
+      alert(message);
+      
+      appData = message.split(",");
+      
+      alert(appData[0] + ", " + appData[1]);
+    }
+  );
+    
+  YAHOO.util.CrossFrame.send(
+    "http://assets.getuniboard.com/publishing/proxy/proxy.html",
+    "frames['getAppConf']",
+    appUrl);
 }
 
 UbPlayer.Viewer.prototype.hide = function(){
