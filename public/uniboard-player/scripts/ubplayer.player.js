@@ -462,42 +462,38 @@ UbPlayer.Player.prototype.formatDate = function(date){
 UbPlayer.Player.prototype.openPage = function(pageNumber){
   var that = this;
   var formattedPageNumber = this.formatPageNumber(pageNumber);
-  var fileExtension = this.documentData.pageFileExtension;
-  
-  if (jQuery.browser.msie)
-    fileExtension = "jpg";
-  
+  var fileExtension = jQuery.browser.msie ? "jpg" : this.documentData.pageFileExtension;
   var fileName = this.documentData.pagesBaseUrl + "/page" + formattedPageNumber + "." + fileExtension;
+  
   this.currentPage.number = pageNumber;
-  /*jQuery.ajax({ 
-    url: fileName,
-    dataType: 'xml',
-    success: function(data){
-      this.currentPage.width = jQuery(data).find("rect").attr("width");
-      this.currentPage.height = jQuery(data).find("rect").attr("height");*/
-      jQuery("#current-page").attr("src", fileName);
-      jQuery("#menubottom-input").val(pageNumber);
-      jQuery("#thumbnails-slider>div").removeClass("current");
-      jQuery(jQuery("#thumbnails-slider>div")[pageNumber-1]).addClass("current");
-      if(!this.thumbsBar.sliding)jQuery("#thumbnails-slider-handler").appendTo(jQuery("#thumbnails-slider>div")[pageNumber-1]);
-      jQuery(window).resize();
-    /*}
-  });*/
+  
+  jQuery("#current-page").attr("src", fileName);
+  jQuery("#menubottom-input").val(pageNumber);
+  jQuery("#thumbnails-slider>div").removeClass("current");
+  jQuery(jQuery("#thumbnails-slider>div")[pageNumber-1]).addClass("current");
+  
+  // Slider hanler
+  /*if(!this.thumbsBar.sliding)
+    jQuery("#thumbnails-slider-handler").appendTo(jQuery("#thumbnails-slider>div")[pageNumber-1]);*/
+    
+  jQuery(window).resize();
 
+  // Disable previous button if the current page is 1
   if(pageNumber === 1){
     jQuery("#menu-button-previous").unbind("click");
     jQuery("#board-button-previous").unbind("click");
-  }else{ 
+  }else{ // Enable previous button if it has no click event
     if(jQuery("#menu-button-previous").data("events") === null){
       jQuery("#menu-button-previous").bind("click", function(){that.goToPage("PREVIOUS")});
       jQuery("#board-button-previous").bind("click", function(){that.goToPage("PREVIOUS")});
     }
   }
   
+  // Disable next button if the current page is the last page
   if(pageNumber === this.documentData.numberOfPages){
     jQuery("#menu-button-next").unbind("click");
     jQuery("#board-button-next").unbind("click");
-  }else{ 
+  }else{ // Enable previous button if it hasn't any click event
     if(jQuery("#menu-button-next").data("events") === null){
       jQuery("#menu-button-next").bind("click", function(){that.goToPage("NEXT")});
       jQuery("#board-button-next").bind("click", function(){that.goToPage("NEXT")});
