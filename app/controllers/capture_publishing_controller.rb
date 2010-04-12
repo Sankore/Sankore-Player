@@ -10,7 +10,7 @@ class CapturePublishingController < ApplicationController
     token_uuid = request.headers["Token-UUID"]
     token_encrypted_base64 = request.headers["Token-Encrypted"]
     
-    if true # PublishingTokenHelper.burn_token(token_uuid, token_encrypted_base64)
+    if PublishingTokenHelper.burn_token(token_uuid, token_encrypted_base64)
       
       published_capture = PublishedCapture.new();
     
