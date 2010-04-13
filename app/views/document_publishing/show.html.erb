@@ -59,15 +59,34 @@
         jQuery("body").append('<link rel=stylesheet type="text/css" href="/uniboard-player/stylesheets/master.css">');
         jQuery("#menu-share-dropdown").appendTo("#document-links");
       }
-	    
+
   	  jQuery(window).resize(function(){
-        var ratioWh = 1.66;
-        jQuery(".page").width(jQuery(".page").height() * ratioWh);
+  	    var ratioWh = 1.66;
+  	    var paddingTop = jQuery("#body").css("padding-top");
+  	    var paddingBottom = jQuery("#body").css("padding-bottom");
+        
+  	    if(jQuery(window).width() < (jQuery(".page").width() + 76) && myUbPlayer.resizeMode === "V"){
+  	      myUbPlayer.resizeMode = "H";
+  	    }else if(jQuery(window).height() < (jQuery(".page").height() + 
+  	                                        parseInt(paddingTop.substring(0, paddingTop.length-2)) + 
+  	                                        parseInt(paddingBottom.substring(0, paddingBottom.length-2))) && myUbPlayer.resizeMode === "H"){
+  	      myUbPlayer.resizeMode = "V";
+  	    }
+  	    
+  	    if(myUbPlayer.resizeMode === "V"){
+  	      jQuery(".page").css({ height:"100%" });
+  	      jQuery(".page").width(jQuery(".page").height() * ratioWh);
+  	    }else if(myUbPlayer.resizeMode === "H"){
+  	      jQuery(".page").width(jQuery(window).width() - 76);
+  	      jQuery(".page").height(jQuery(".page").width() * (0.60));
+  	    }
+  	    
         jQuery("#app-viewer-c").width(jQuery(".page").width());
         jQuery("#document-links").width(jQuery(".page").width());
       });
       
-      setTimeout(function(){jQuery(window).resize()}, 500);
+      // The current document has to be resized after the stylesheets have been loaded
+      setTimeout(function(){jQuery(window).resize(); jQuery(window).resize()}, 500); 
         	  
   	});
 	
@@ -91,13 +110,11 @@
   </div>
 
   <div id="body">
+    <div id="description-container"></div>
     <div id="boards">
       <!-- Current board -->
       <div class="board" id="board-current">
-        <div class="board-button"></div>
         <iframe class="page" id="current-page" src=""></iframe>
-        <div id="description-container"></div>
-        <div class="board-button"></div>
         <!-- App Viewer -->
         <div id="app-viewer">
           <div id="app-viewer-c"><!-- table -->

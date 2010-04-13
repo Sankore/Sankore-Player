@@ -12,6 +12,7 @@ UbPlayer.Player = function(args) {
   this.currentPage = { number:1, width:0, height:0 };
   this.state = "full";
   this.mode = "normal";
+  this.resizeMode = "V";
   this.adaptPageTimer = null;
   this.sliderTimer = null;
   this.documentData = args.documentData;
@@ -69,10 +70,8 @@ UbPlayer.Player = function(args) {
   jQuery("#menu-button-index-embed").toggle(function(){ that.showIndex() }, function(){ that.hideIndex() });
 
   jQuery("#current-page")
-    .mouseenter(function(){jQuery(".board-button>div").stop().animate({opacity:0})})
     .bind("mouseleave", this.boardButtonOutHandler);
   jQuery("#boards")
-    .mouseleave(function(){jQuery(".board-button>div").stop().animate({opacity:0})})
     .bind("mouseenter", this.boardButtonOutHandler);
 
   jQuery("#thumbnail-next").click(function(){that.thumbnails.next()});
@@ -242,7 +241,6 @@ UbPlayer.Player = function(args) {
     }
   });
   jQuery("#menu-share-twitter>a").attr("href", "http://twitter.com/home?status=Currently reading " + this.documentData.pagesBaseUrl);
-  jQuery(".board-button>div").animate({opacity: 0}, 3000);
   jQuery("#description-text").append("<a href='mailto:" + this.documentData.authorEmail + "'>" + this.documentData.author + 
                                       "</a><br/>" + this.documentData.title + 
                                       "<br/>" + this.formatDate(this.documentData.publishedAt) + 
@@ -305,22 +303,21 @@ UbPlayer.Player.prototype.goToPage = function(pageNumber){
 	  
 	this.viewer.hide();
 	
-  jQuery("#board-current").stop().animate(
+  jQuery("#boards").stop().animate(
     {marginLeft:checkPoint.finish},
     300,
     "easeInQuint",
     function(){
     	jQuery("#thumbnails").css({width: jQuery("#thumbnails").width()});
-      jQuery("#board-current").css({ marginLeft:checkPoint.start });
+      jQuery("#boards").css({ marginLeft:checkPoint.start });
       that.openPage(that.currentPage.number);
-      jQuery("#board-current").animate(
+      jQuery("#boards").animate(
         {marginLeft:"0"},
         300,
         "easeOutQuint",
         function(){
           jQuery("#thumbnails").css({width: "auto"});
           jQuery("#current-page")
-            .mouseenter(function(){jQuery(".board-button>div").animate({opacity:0})})
             .bind("mouseleave", that.boardButtonOutHandler);
         }
       );
@@ -334,7 +331,6 @@ UbPlayer.Player.prototype.adaptPage = function(){
 }
 
 UbPlayer.Player.prototype.switchToFullMode = function(){
-  jQuery(".board-button").css("display", "inline-block");
   jQuery(".board-button-unit").css("display", "block");
   jQuery("#head-button-close").show();
   jQuery("#foot").hide();
@@ -346,7 +342,6 @@ UbPlayer.Player.prototype.switchToFullMode = function(){
 }
 
 UbPlayer.Player.prototype.switchToNormalMode = function(){
-  jQuery(".board-button").css("display", "none");
   jQuery(".board-button-unit").css("display", "none");
   jQuery("#head-button-close").hide();
   jQuery("#foot").show();
@@ -369,21 +364,11 @@ UbPlayer.Player.prototype.hideSharing = function(){
 }
 
 UbPlayer.Player.prototype.showDescription = function(){
-  jQuery("#description-container").css({width:"300px"});
   jQuery("#description").show();
-  this.mode = "description";
 }
 
 UbPlayer.Player.prototype.hideDescription = function(){
-  jQuery("#boards").animate(
-    {marginTop:"0"}, 
-    function(){
-      jQuery("#boards").show();
-      jQuery("#document-title").show();
-      jQuery("#head-button-close").hide();
-      jQuery("#description").hide();
-    });
-  this.mode = "normal";
+  jQuery("#description").hide();
 }
 
 UbPlayer.Player.prototype.showIndex = function(){
@@ -419,7 +404,7 @@ UbPlayer.Player.prototype.hideIndex = function(){
   jQuery("#index").hide();
   jQuery("#boards")
     .show()
-    .animate({marginTop:"0"});
+    .animate({marginTop:"0px"});
 }
 
 UbPlayer.Player.prototype.drawIndexThumbnails = function(thumbsPerRow){
@@ -472,7 +457,7 @@ UbPlayer.Player.prototype.openPage = function(pageNumber){
   jQuery("#thumbnails-slider>div").removeClass("current");
   jQuery(jQuery("#thumbnails-slider>div")[pageNumber-1]).addClass("current");
   
-  // Slider hanler
+  // Slider handler
   /*if(!this.thumbsBar.sliding)
     jQuery("#thumbnails-slider-handler").appendTo(jQuery("#thumbnails-slider>div")[pageNumber-1]);*/
     
