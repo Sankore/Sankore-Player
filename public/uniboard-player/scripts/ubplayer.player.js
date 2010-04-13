@@ -87,7 +87,12 @@ UbPlayer.Player = function(args) {
    .toggle(
       function(){ jQuery("#menu-share-dropdown").show() },
       function(){ jQuery("#menu-share-dropdown").hide() });
-  jQuery("#quitFullscreen").click(function(){ if(that.mode=="description"){that.hideDescription()}else if(that.mode=="full"){that.switchToNormalMode()} });
+  jQuery("#quitFullscreen")
+    .click(
+      function(){ that.switchToNormalMode() });
+  jQuery("#quitDescription")
+    .click(
+      function(){ jQuery("#menu-button-showdetails").click() });
   jQuery("#menu-button-export")
     .toggle(
       function(){ jQuery("#menu-export-dropdown").show() },
@@ -332,7 +337,6 @@ UbPlayer.Player.prototype.adaptPage = function(){
 
 UbPlayer.Player.prototype.switchToFullMode = function(){
   jQuery(".board-button-unit").css("display", "block");
-  jQuery("#head-button-close").show();
   jQuery("#foot").hide();
   jQuery("#head-list-share").css("display", "none");
   jQuery("#head-list-close").css("display", "inline-block");
@@ -343,7 +347,6 @@ UbPlayer.Player.prototype.switchToFullMode = function(){
 
 UbPlayer.Player.prototype.switchToNormalMode = function(){
   jQuery(".board-button-unit").css("display", "none");
-  jQuery("#head-button-close").hide();
   jQuery("#foot").show();
   jQuery("#head-list-share").css("display", "inline-block");
   jQuery("#head-list-close").css("display", "none");
@@ -364,11 +367,19 @@ UbPlayer.Player.prototype.hideSharing = function(){
 }
 
 UbPlayer.Player.prototype.showDescription = function(){
+  jQuery("#boards").hide();
   jQuery("#description").show();
+  jQuery("#head-list-share").css("display", "none");
+  jQuery("#head-list-closeDescription").css("display", "inline-block");
 }
 
 UbPlayer.Player.prototype.hideDescription = function(){
   jQuery("#description").hide();
+  jQuery("#boards").show();
+  jQuery("#head-list-share").css("display", "inline-block");
+  jQuery("#head-list-closeDescription").css("display", "none");
+  jQuery(window).resize();
+  jQuery(window).resize();
 }
 
 UbPlayer.Player.prototype.showIndex = function(){

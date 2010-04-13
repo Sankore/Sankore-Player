@@ -44,7 +44,7 @@
     	    hasPdf:'<%= @published_document.has_pdf %>',
     	    hasUbz:'<%= @published_document.has_ubz %>',
     	    numberOfPages:parseInt('<%= @published_document.page_count %>'),
-    	    pagesBaseUrl:'<%= @published_document.persistence_url %>' // public_url
+    	    pagesBaseUrl:'<%= @published_document.public_url %>' // persistence_url
     	  }
   	  };
 	    
@@ -107,12 +107,15 @@
     <ul class="menu-list">
       <li id="head-list-share"><a id="shareDoc" href="#">Share this document</a></li>
       <li id="head-list-close"><a id="quitFullscreen" href="#">Exit full-screen view</a></li>
+      <li id="head-list-closeDescription"><a id="quitDescription" href="#">Close</a></li>
     </ul>
     </div>
   </div>
 
   <div id="body">
-    <div id="description-container"></div>
+    <div id="description">
+      <div id="description-text"></div>
+    </div><!--description-->
     <div id="boards">
       <!-- Current board -->
       <div class="board" id="board-current">
@@ -134,9 +137,6 @@
     <div class="board-button-unit" id="board-button-next"></div>
     <div id="index">
     </div><!--index-->
-    <div id="description">
-      <div id="description-text"></div>
-    </div><!--description-->
     <div id="sharing">
       <div id="sharing-button-close"></div>
       <div id="sharing-text">

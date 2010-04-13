@@ -119,6 +119,7 @@ label{ display:block; margin-top:15px; }
 #menu-list-full{ background:url(../images/head-button-full.embed.png) no-repeat 0px 0px }
 #menu-list-share{ background:url(../images/head-button-share.embed.png) no-repeat 0px 0px }
 #head-list-close{ background:url(../images/head-button-close.png) no-repeat 0px 0px; display:none }
+#head-list-closeDescription{ background:url(../images/head-button-close.png) no-repeat 0px 0px; display:none }
 #head-list-infos{ background:url(../images/head-button-infos.png) no-repeat 0px 0px }
 #head-list-share{ background:url(../images/head-button-share.embed.png) no-repeat 0px 0px }
 
@@ -287,35 +288,28 @@ label{ display:block; margin-top:15px; }
 
 #index{ position:relative; width:100%; height:auto; overflow:auto; text-align:center; vertical-align:middle; display:none; margin:auto }
 #description{ 
-  position:absolute;
-  top:85px;
-  left: 100%;
-  display:none; 
+  position:relative;
+  display:none;
   margin:auto;
-  margin-left:-330px;
-  width:200px;
+  width:400px;
   height:auto;
   overflow:auto;
   text-align:left;
   line-height:30px;
   color:#333;
-  font-size:12px;
+  font-size:14px;
   padding:30px 30px 30px 30px;
   background-color:white;
   border:1px solid rgb(210, 211, 212);
+  box-shadow: 2px 2px 10px #bbb;
+  -webkit-box-shadow: 2px 2px 10px #bbb;
+  -moz-box-shadow: 2px 2px 10px #bbb;
 }
 
 #description-text{
   background:url(../images/board-description-background.png);
-  width:170px;
-  min-height:400px;
-  padding:0px 15px 0px 15px;
-}
-
-#description-container{
-  width:0px;
-  height:99%; 
-  display:inline-block; position:absolute;
+  width:370px;
+  padding:5px 15px 0px 15px;
 }
 
 #sharing{
