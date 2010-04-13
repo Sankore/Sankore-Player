@@ -44,13 +44,13 @@
     	    hasPdf:'<%= @published_document.has_pdf %>',
     	    hasUbz:'<%= @published_document.has_ubz %>',
     	    numberOfPages:parseInt('<%= @published_document.page_count %>'),
-    	    pagesBaseUrl:'<%= @published_document.public_url %>' // persistence_url
+    	    pagesBaseUrl:'<%= @published_document.persistence_url %>' // public_url
     	  }
   	  };
 	    
 	    myUbPlayer = new UbPlayer.Player(args);
 	    
-	    // load specific css according to the window width
+	    // load specific stylesheets according to the window width
 	    if(jQuery(window).width() < 800){        
         myUbPlayer.state = "embedded";
         jQuery("body").append('<link rel=stylesheet type="text/css" href="/uniboard-player/stylesheets/master.css">');
@@ -64,14 +64,6 @@
   	    var ratioWh = 1.66;
   	    var paddingTop = jQuery("#body").css("padding-top");
   	    var paddingBottom = jQuery("#body").css("padding-bottom");
-        
-  	    if(jQuery(window).width() < (jQuery(".page").width() + 76) && myUbPlayer.resizeMode === "V"){
-  	      myUbPlayer.resizeMode = "H";
-  	    }else if(jQuery(window).height() < (jQuery(".page").height() + 
-  	                                        parseInt(paddingTop.substring(0, paddingTop.length-2)) + 
-  	                                        parseInt(paddingBottom.substring(0, paddingBottom.length-2))) && myUbPlayer.resizeMode === "H"){
-  	      myUbPlayer.resizeMode = "V";
-  	    }
   	    
   	    if(myUbPlayer.resizeMode === "V"){
   	      jQuery(".page").css({ height:"100%" });
@@ -81,12 +73,22 @@
   	      jQuery(".page").height(jQuery(".page").width() * (0.60));
   	    }
   	    
+  	    if(jQuery(window).width() < (jQuery(".page").width() + 76) && myUbPlayer.resizeMode === "V"){
+  	      myUbPlayer.resizeMode = "H";
+  	      jQuery(window).resize();
+  	    }else if(jQuery(window).height() < (jQuery(".page").height() + 
+  	                                        parseInt(paddingTop.substring(0, paddingTop.length-2)) + 
+  	                                        parseInt(paddingBottom.substring(0, paddingBottom.length-2))) && myUbPlayer.resizeMode === "H"){
+  	      myUbPlayer.resizeMode = "V";
+  	      jQuery(window).resize();
+  	    }
+  	    
         jQuery("#app-viewer-c").width(jQuery(".page").width());
         jQuery("#document-links").width(jQuery(".page").width());
       });
       
       // The current document has to be resized after the stylesheets have been loaded
-      setTimeout(function(){jQuery(window).resize(); jQuery(window).resize()}, 500); 
+      setTimeout(function(){jQuery(window).resize()}, 500); 
         	  
   	});
 	
