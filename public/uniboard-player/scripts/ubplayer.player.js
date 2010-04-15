@@ -192,8 +192,8 @@ UbPlayer.Player = function(args) {
 
   jQuery(".thumbnail")
     .hover(
-      function(){ jQuery(this).addClass("current") },
-      function(){ jQuery(this).removeClass("current") })
+      function(){ jQuery(this).addClass("selected") },
+      function(){ jQuery(this).removeClass("selected") })
     .click(function(){
       that.goToPage(jQuery(this).index()+1);
     });
@@ -467,6 +467,8 @@ UbPlayer.Player.prototype.openPage = function(pageNumber){
   jQuery("#menubottom-input").val(pageNumber);
   jQuery("#thumbnails-slider>div").removeClass("current");
   jQuery(jQuery("#thumbnails-slider>div")[pageNumber-1]).addClass("current");
+  jQuery("#thumbnails-canvas>div").removeClass("current");
+  jQuery(jQuery("#thumbnails-canvas>div")[pageNumber-1]).addClass("current");
   
   // Slider handler
   /*if(!this.thumbsBar.sliding)
