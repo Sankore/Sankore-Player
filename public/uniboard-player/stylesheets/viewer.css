@@ -9,6 +9,10 @@ rect.out{
   fill:none;
 }
 
+image.app{
+  cursor:pointer;
+}
+
 foreignObject.app{
   display:none;
 }

@@ -5,16 +5,6 @@ UbPlayer.Page.svgNS = 'http://www.w3.org/2000/svg';
 UbPlayer.Page.uniboardNS = 'http://uniboard.mnemis.com/document';
 UbPlayer.Page.xlinkNS = 'http://www.w3.org/1999/xlink';
 
-/*UbPlayer.Page.reduceDomain = function()
-{
-  var allDomainsParts = document.domain.split(".");
-  
-  if (allDomainsParts.length > 2)
-    document.domain = allDomainsParts[allDomainsParts.length - 2] + "." + allDomainsParts[allDomainsParts.length - 1];
-    
-  console.log(document.domain);
-}*/
-
 UbPlayer.Page.updateForeignObjects = function()
 {
   var foreignObjects = document.getElementsByTagName('foreignObject'); 
@@ -44,8 +34,9 @@ UbPlayer.Page.updateForeignObjects = function()
     appview.setAttributeNS(null, 'width', fo.attributes['width'].value);
     appview.setAttributeNS(null, 'height', fo.attributes['height'].value);
     appview.setAttributeNS(null, 'transform', fo.attributes['transform'].value);
+    appview.setAttributeNS(null, 'class', 'app');
     
-    this.testImage(appview, appbody, widgetImg);
+    this.testImage(appview, appbody, widgetImg); // If the app image doesn't exist, it will be replaced by a grey rectangle
     appview.setAttributeNS(UbPlayer.Page.xlinkNS, 'href', widgetImg);
 
     appborder.setAttributeNS(null, 'x', fo.attributes['x'].value - 10);
@@ -58,7 +49,7 @@ UbPlayer.Page.updateForeignObjects = function()
     appborder.setAttributeNS(null, 'id', widgetUuid);
     appborder.setAttributeNS(null, 'class', 'out');
         
-    if(window.parent.myUbPlayer.state !== "embedded"){
+    if(window.parent.myUbPlayer.state !== "embedded"){ // The apps remain in firefox, as window.parent cannot be reached
       appview.setAttributeNS(null, 'onclick', "window.parent.myUbPlayer.viewer.show('" + widgetUrl + "')");
       appview.setAttributeNS(null, 'onmouseover', "UbPlayer.Page.highlight('" + widgetUuid + "')");
       appview.setAttributeNS(null, 'onmouseout', "document.getElementById('" + widgetUuid + "').setAttributeNS(null, 'class', 'out')");
@@ -74,7 +65,7 @@ UbPlayer.Page.updateForeignObjects = function()
 
 UbPlayer.Page.init = function() 
 {
-  UbPlayer.reduceDomain();
+  UbPlayer.reduceDomain(); // As document.domain hasn't any setter in an SVG file on firefox, the iframe domain remains assets.getuniboard.com
   UbPlayer.Page.updateForeignObjects();
 }
 
