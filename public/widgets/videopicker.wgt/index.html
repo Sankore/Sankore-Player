@@ -15,29 +15,38 @@
 <body>
     <script type="text/javascript">
 
+		var oembedUrl = "";
+		var language = "en";
+
+		function initialize() {
+			if(window.uniboard){
+				oembedUrl = window.uniboard.preference("oembedUrl", "");
+			}else{
+				oembedUrl = "";
+			};
+									
+			if(oembedUrl.length > 0){
+				$("#textbox").val(oembedUrl);	
+				$("#search-button").trigger("click");
+			}else{
+				//var language = navigator.userAgent.split(";");
+				//language = language[3].replace(/\s/g, "").substr(0, 2);	
+				$("#embeded-content").load("locales/" + language + "/howto.html"); // Welcome note with some explanations
+			};
+		};
+		
 		$(document).ready(function(){
 			var resizer; // Timer
 			var resizerIndex;
-			var language;
-			var oembedUrl;
 			
 			resizerIndex = 0;
-									
-			if(window.uniboard){
-				/*language = window.uniboard.lang;
-				language = language.substring(0, 2);*/
-				oembedUrl = window.uniboard.preference("oembedUrl", "");
-			}else{
-				//language = "fr";
-				oembedUrl = "";
-			};			
 			
-			language = navigator.userAgent.split(";");
-			language = language[3].replace(/\s/g, "").substr(0, 2);
+			//language = navigator.userAgent.split(";");
+			//language = language[3].replace(/\s/g, "").substr(0, 2);
 			
 			$("#search-button")
 				.click(function(){
-					window.resizeTo(383, 80);
+					window.resizeTo(385, 80);
 					$("#container")
 						.removeClass("welcome")
 						.removeClass("change")
@@ -48,6 +57,10 @@
 					$("#arrow")
 						.hide();
 					$("#embeded-content")
+						.css({
+							marginLeft:-9000,
+							marginTop:-9000
+						})
 						.empty()
 						.oembed($("#textbox").val());
 					checkcontent();
@@ -61,22 +74,29 @@
 						.removeClass("over");
 				});
 			
-			if(oembedUrl.length > 0){
-				$("#textbox").val(oembedUrl);	
-				$("#search-button").trigger("click");
-			}else{
-				$("#embeded-content").load("locales/" + language + "/howto.html"); // Welcome screen with some explanations
-			};
+			/*$("#ubwidget").mouseenter(function(){
+				$("#show-area").fadeIn(1000);
+			});
+			
+			$("#ubwidget").mouseout(function(){
+				$("#show-area").fadeOut(600);
+			});*/
+			
+			$('#textbox').keypress(function(e){
+				if (e.which == 13){
+					$('#search-button').click();
+				};
+			});
 			
 			$("#show-inputfield-button")
 				.click(
 					function(){
-						$("#show-area").hide();
+						$("#show-area").fadeOut(0);
 						$("#inputfield").show();
 						$("#shadow").show();
 						$("#container")
 							.removeClass("show").addClass("change");
-						adaptWidgetSize(18, 82);
+						adaptWidgetSize(18, 88);
 					})
 					.mouseenter(function(){
 						$(this)
@@ -88,7 +108,7 @@
 					});
 							
 			function checkcontent(){
-				if($("#embeded-content").html().length != 0){
+				if($("#embeded-content").html().length != 0 && $("#embeded-content").children(":first").width() > 0){
 					clearTimeout(resizer);
 					resizerIndex = 0;
 															
@@ -101,16 +121,23 @@
 					$("#shadow")
 						.hide();
 					$("#embeded-content")
-						.show()
+						.css({
+							marginLeft:0,
+							marginTop:0
+						})
 						.width($("#embeded-content").children(":first").width())
 						.height($("#embeded-content").children(":first").height());
 						
 					$("#container")
 						.removeClass("load").addClass("show");
 					$("#show-area")
-						.show();
+						.fadeIn(2000)
+						.css({
+							left:$("#embeded-content").children(":first").width()-25,
+							top:($("#embeded-content").children(":first").height()-35)/2
+						});
 										
-					adaptWidgetSize($("#show-area").width() + 20, 0);
+					adaptWidgetSize(5, 13);
 					
 					return false;
 				};
@@ -122,9 +149,14 @@
 					$("#arrow")
 						.show();
 					$("#embeded-content")
+						.css({
+							marginTop:0,
+							marginLeft:0
+						})
+						.width(395)
 						.load("locales/" + language + "/error.html", 
 							function(){
-								adaptWidgetSize(13, 87);
+								adaptWidgetSize(20, 125);
 							});
 					$("#container-shadow")
 						.show();
@@ -134,6 +166,27 @@
 				};
 			};
 			
+			function checkForceWMode(html) {
+          var regexp = new RegExp("<embed[^>]*(/>|>(.*?)>)", "g");
+                    
+            if(html.match(regexp)) {
+              // Contains embed tag, must force its wmode attrib to transparent
+              var arrMatch = regexp.exec(html);
+              while(arrMatch) {
+                var wrapper = $('<div>').append(arrMatch[0]);
+                var embedNode = $('embed', wrapper);
+                if(embedNode.length > 0 && (embedNode.attr("type") == "application/x-shockwave-flash" || embedNode.attr("src").indexOf('.swf') != -1)) {
+                  $('embed', wrapper).attr("wmode", "opaque");
+                  replacedValue = wrapper.html();
+                  html = html.replace(arrMatch[0], replacedValue);
+                  console.log(html)
+                }
+                arrMatch = regexp.exec(html);
+              }
+            }
+            return html;
+        }
+			
 			function adaptWidgetSize(adjustmentX, adjustmentY){
 				var margins = {
 					top: cssToInt($("body").css("margin-top")), 
@@ -141,16 +194,30 @@
 					bottom: cssToInt($("body").css("margin-bottom")),
 					left: cssToInt($("body").css("margin-left"))
 				};
-				var widgetWidth = $("#container").width() + margins.right + margins.left + adjustmentX;
-				var widgetHeight = $("#container").position().top + $("#container").height() + margins.bottom + adjustmentY;
+				var widgetWidth = $("#embeded-content").width() + margins.right + margins.left + adjustmentX;
+				var widgetHeight = $("#embeded-content").position().top + $("#embeded-content").height() + margins.bottom + adjustmentY;
+				
+				$("#embeded-content").html(checkForceWMode($("#embeded-content").html()));
 				
 				window.resizeTo(widgetWidth, $(window).height());
 				window.resizeTo($(window).width(), widgetHeight);
+				window.uniboard.resize(widgetWidth, widgetHeight);
 			};
 				
 			function cssToInt(cssvalue){
 				return(parseInt(cssvalue.replace("px", "")));
 			};
+			
+			if (window.widget) {
+			   window.widget.onremove = function(){
+			   		//$("#show-inputfield-button").trigger("click");
+					$("#embeded-content")
+						.empty()
+						.oembed($("#textbox").val());
+			   }
+			}
+			
+			window.initialize();
 		});
     </script>
 
@@ -159,7 +226,7 @@
 	
     	<div id="inputfield">
     		<input id="textbox" type="text">
-    		<div id="search-button" class="button">Afficher</div>
+    		<div id="search-button" class="button">Show</div>
     	</div>
 
    		<div id="container" class="welcome">
@@ -168,11 +235,9 @@
 			<div id="show-container">
 				<div id="embeded-content"></div>
 			
-				<table id="show-area">
-					<tr>
-						<td><div id="show-inputfield-button" class="button">Retour</div></td>
-					</tr>
-				</table>
+				<div id="show-area">
+						<img id="show-inputfield-button" src="imgs/bts.png">
+				</div>
 			</div>
 		
 			<table cellspacing="0" cellpadding="0" id="container-shadow">

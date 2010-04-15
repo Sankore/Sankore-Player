@@ -30,6 +30,7 @@ body{
 	width:360px;
 	height:58px;
 	background-color:rgb(230,230,233);
+	border:1px solid rgb(220, 220, 220);
 }
 
 .button{
@@ -116,9 +117,11 @@ body{
 }
 
 #show-area{
-	width:80px;
-	height:100%;
 	display:none;
+	position:absolute;
+	top:150px;
+	left:400px;
+	z-index:999;
 }
 
 #show-area .icon-container{
