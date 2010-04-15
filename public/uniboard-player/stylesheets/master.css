@@ -251,6 +251,7 @@ label{ display:block; margin-top:15px; }
 .thumbnails-slider-page.last{ background-position: center left } 
 .thumbnails-slider-page.current{ background-image:url(../images/thumbnails-slider-current.png) }
 .thumbnail{
+  cursor:pointer;
   height:80px;
   width:auto;
   display:inline-block;
@@ -272,9 +273,9 @@ label{ display:block; margin-top:15px; }
   width:auto;
 }
 
-#thumbnail-previous{ background:url(../images/thumbnails-previous.png) center center no-repeat}
+#thumbnail-previous{ cursor:pointer; background:url(../images/thumbnails-previous.png) center center no-repeat}
 #thumbnail-previous.disabled{ background-image:none}
-#thumbnail-next{ background:url(../images/thumbnails-next.png) center center no-repeat }
+#thumbnail-next{ cursor:pointer; background:url(../images/thumbnails-next.png) center center no-repeat }
 #thumbnail-next.disabled{ background-image:none }
 
 .thumbnail.current{ border:2px solid red }

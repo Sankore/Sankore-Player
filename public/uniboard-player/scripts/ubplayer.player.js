@@ -367,19 +367,27 @@ UbPlayer.Player.prototype.hideSharing = function(){
 }
 
 UbPlayer.Player.prototype.showDescription = function(){
-  jQuery("#boards").hide();
-  jQuery("#description").show();
-  jQuery("#head-list-share").css("display", "none");
-  jQuery("#head-list-closeDescription").css("display", "inline-block");
+  jQuery("#boards").animate({marginTop:"-100%"}, function(){
+    jQuery(this).hide();
+    jQuery("#description").show();
+    jQuery("#head-list-share").css("display", "none");
+    jQuery("#head-list-closeDescription").css("display", "inline-block");
+  });
 }
 
 UbPlayer.Player.prototype.hideDescription = function(){
-  jQuery("#description").hide();
-  jQuery("#boards").show();
-  jQuery("#head-list-share").css("display", "inline-block");
-  jQuery("#head-list-closeDescription").css("display", "none");
-  jQuery(window).resize();
-  jQuery(window).resize();
+  jQuery("#description").animate({marginTop:"100%"}, function(){
+    jQuery(this)
+      .hide()
+      .css({marginTop:0});
+    jQuery("#boards")
+      .show()
+      .animate({marginTop:"0px"});
+    jQuery("#head-list-share").css("display", "inline-block");
+    jQuery("#head-list-closeDescription").css("display", "none");
+    jQuery(window).resize();
+    jQuery(window).resize();
+  });
 }
 
 UbPlayer.Player.prototype.showIndex = function(){
@@ -467,8 +475,8 @@ UbPlayer.Player.prototype.openPage = function(pageNumber){
   jQuery("#menubottom-input").val(pageNumber);
   jQuery("#thumbnails-slider>div").removeClass("current");
   jQuery(jQuery("#thumbnails-slider>div")[pageNumber-1]).addClass("current");
-  jQuery("#thumbnails-canvas>div").removeClass("current");
-  jQuery(jQuery("#thumbnails-canvas>div")[pageNumber-1]).addClass("current");
+  //jQuery("#thumbnails-canvas>div").removeClass("current");
+  //jQuery(jQuery("#thumbnails-canvas>div")[pageNumber-1]).addClass("current");
   
   // Slider handler
   /*if(!this.thumbsBar.sliding)
