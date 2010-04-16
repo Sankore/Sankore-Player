@@ -27,8 +27,11 @@ UbPlayer.Viewer = function() {
         .width(app.width + 20)
         .height(app.height + 35)
         
+      jQuery("#app-viewer-background").show();
       jQuery("#app-viewer").show();
       jQuery("#app-viewer-app").show();
+      jQuery("#app-viewer-background").animate({opacity:"0.8"},600);
+      jQuery("#app-viewer").animate({opacity:"1"});
     }
   );
 };
@@ -42,5 +45,16 @@ UbPlayer.Viewer.prototype.show = function(appUrl){
 }
 
 UbPlayer.Viewer.prototype.hide = function(){
-  jQuery("#app-viewer").hide();
+  jQuery("#app-viewer-background").animate(
+      {opacity:"0"}, 
+      500, 
+      function(){
+        jQuery(this).hide()
+      });
+  jQuery("#app-viewer").animate(
+    {opacity:"0"}, 
+    function(){
+      jQuery(this).hide();
+      jQuery("#app-viewer-app").hide();
+    });
 }

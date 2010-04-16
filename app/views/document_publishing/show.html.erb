@@ -83,7 +83,7 @@
   	      jQuery(window).resize();
   	    }
   	    
-        jQuery("#app-viewer-c").width(jQuery(".page").width());
+        //jQuery("#app-viewer-c").width(jQuery(".page").width());
         jQuery("#document-links").width(jQuery(".page").width());
       });
       
@@ -120,17 +120,6 @@
       <!-- Current board -->
       <div class="board" id="board-current">
         <iframe class="page" id="current-page" src=""></iframe>
-        <!-- App Viewer -->
-        <div id="app-viewer">
-          <div id="app-viewer-c"><!-- table -->
-            <div id="app-viewer-appcanvas"><!-- table-cell -->
-              <div id="app-viewer-appborder">
-                <iframe id="app-viewer-app" src=""></iframe>
-                <div id="app-viewer-menu"><div id="app-viewer-button-close-canvas"><div id="app-viewer-button-close"></div></div><a href="#">close</a></div>
-              </div><!-- vertical and horizontal centered iframe -->
-            </div>
-          </div>
-        </div>
       </div>
     </div><!--boards-->
     <div class="board-button-unit" id="board-button-previous"></div>
@@ -202,6 +191,20 @@
     </div>
     </div>
   </div>
+  
+  <!-- App Viewer -->
+  <div id="app-viewer-background"></div>
+  <div id="app-viewer">
+    <div id="app-viewer-c"><!-- table -->
+      <div id="app-viewer-appcanvas"><!-- table-cell -->
+        <div id="app-viewer-appborder">
+          <iframe id="app-viewer-app" src=""></iframe>
+          <div id="app-viewer-menu"><div id="app-viewer-button-close-canvas"><div id="app-viewer-button-close"></div></div><a href="#">close</a></div>
+        </div><!-- vertical and horizontal centered iframe -->
+      </div>
+    </div>
+  </div>
+  
   <iframe name="getAppConf" id="getAppConf" src="http://assets.getuniboard.com/publishing/proxy/get-app-config.html" style="display:none"></iframe>
 </body>
 </html>

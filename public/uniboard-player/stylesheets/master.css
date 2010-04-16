@@ -171,22 +171,37 @@ label{ display:block; margin-top:15px; }
   width:100%;
 }
 
+#app-viewer-background{
+  width:100%;
+  height:100%;
+  position:absolute;
+  top:0px;
+  left:0px;
+  z-index:2;
+  background-color:black;
+  opacity:0;
+  display:none;
+}
+
 #app-viewer{
   width:100%;
   height:100%;
   position:absolute;
   top:0px;
+  left:0px;
+  z-index:3;
   letter-spacing:normal;
   font-size:12px;
 }
 
 #app-viewer-c{
   height:100%;
+  width:100%;
   position:relative;
   margin:auto;
   top:0px;
+  text-align:center;
   display:table;
-  background:url(../images/app-viewer-background.png) ;
 }
 
 #app-viewer-appcanvas{
