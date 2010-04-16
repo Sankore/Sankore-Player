@@ -42,7 +42,7 @@ UbPlayer.Viewer = function() {
 UbPlayer.Viewer.prototype.show = function(appUrl, width, height){
   this.appWidth = width;
   this.appHeight = height;
-  alert("!!");
+  
   // Ask for app config.xml
   YAHOO.util.CrossFrame.send(
     "http://assets.getuniboard.com/publishing/proxy/proxy.html",

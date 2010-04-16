@@ -68,7 +68,7 @@ UbPlayer.Page.updateForeignObjects = function()
 
 UbPlayer.Page.init = function() 
 {
-  //UbPlayer.reduceDomain(); // As document.domain hasn't any setter in an SVG file on firefox, the iframe domain remains assets.getuniboard.com
+  UbPlayer.reduceDomain(); // As document.domain hasn't any setter in an SVG file on firefox, the iframe domain remains assets.getuniboard.com
   UbPlayer.Page.updateForeignObjects();
 }
 

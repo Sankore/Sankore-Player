@@ -252,7 +252,6 @@ UbPlayer.Player = function(args) {
                                       "<br/><br/>" + this.documentData.description);
   jQuery("#menubottom-input").after("/" + this.documentData.numberOfPages);
   UbPlayer.reduceDomain();
-  document.domain = "assets.getuniboard.com";
   this.openPage(1);
 };
 
