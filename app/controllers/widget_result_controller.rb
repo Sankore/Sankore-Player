@@ -11,6 +11,8 @@ class WidgetResultController < ApplicationController
     test_result[:student_name] = params[:student_name]
     test_result[:score] = params[:score]
     
+    @redirect_url = params[:redirect_url]
+    
     WidgetResultMailer.deliver_notify(test_result)
     
     respond_to do |format|
