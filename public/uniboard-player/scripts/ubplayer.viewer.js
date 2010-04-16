@@ -2,6 +2,9 @@
 UbPlayer.Viewer = function() {
   var that = this;
   
+  this.appWidth = 0;
+  this.appHeight = 0;
+  
   jQuery("#app-viewer").hide();
   jQuery("#app-viewer").click(function(){
     that.hide();
@@ -21,11 +24,11 @@ UbPlayer.Viewer = function() {
             
       jQuery("#app-viewer-app")
         .attr("src", app.index)
-        .width(app.width)
-        .height(app.height);
+        .width(that.appWidth)
+        .height(that.appHeight);
       jQuery("#app-viewer-appborder")
-        .width(app.width + 20)
-        .height(app.height + 35)
+        .width(that.appWidth + 20)
+        .height(that.appHeight + 35)
         
       jQuery("#app-viewer-background").show();
       jQuery("#app-viewer").show();
@@ -36,7 +39,10 @@ UbPlayer.Viewer = function() {
   );
 };
 
-UbPlayer.Viewer.prototype.show = function(appUrl){  
+UbPlayer.Viewer.prototype.show = function(appUrl, width, height){
+  this.appWidth = width;
+  this.appHeight = height;
+  
   // Ask for app config.xml
   YAHOO.util.CrossFrame.send(
     "http://assets.getuniboard.com/publishing/proxy/proxy.html",

@@ -13,6 +13,9 @@ UbPlayer.Page.updateForeignObjects = function()
   {
     
     if(foreignObjects[i].getAttributeNS(UbPlayer.Page.uniboardNS, "source").length===0) continue;
+
+    var width = foreignObjects[i].getAttributeNS(null, "width");
+    var height = foreignObjects[i].getAttributeNS(null, "height");
     
     var fo = foreignObjects[i];
     var appbody = document.createElementNS(UbPlayer.Page.svgNS, 'rect');
@@ -50,7 +53,7 @@ UbPlayer.Page.updateForeignObjects = function()
     appborder.setAttributeNS(null, 'class', 'out');
         
     if(window.parent.myUbPlayer.state !== "embedded"){ // The apps remain in firefox, as window.parent cannot be reached
-      appview.setAttributeNS(null, 'onclick', "window.parent.myUbPlayer.viewer.show('" + widgetUrl + "')");
+      appview.setAttributeNS(null, 'onclick', "window.parent.myUbPlayer.viewer.show('" + widgetUrl + "'," + width + "," + height + ")");
       appview.setAttributeNS(null, 'onmouseover', "UbPlayer.Page.highlight('" + widgetUuid + "')");
       appview.setAttributeNS(null, 'onmouseout', "document.getElementById('" + widgetUuid + "').setAttributeNS(null, 'class', 'out')");
     }
