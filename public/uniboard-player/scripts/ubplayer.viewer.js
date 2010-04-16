@@ -60,9 +60,9 @@ UbPlayer.Viewer.prototype.hide = function(){
   jQuery("#app-viewer").animate(
     {opacity:"0"}, 
     function(){
-      jQuery(this)
+      jQuery(this).hide();
+      jQuery("#app-viewer-app")
         .src("")
         .hide();
-      jQuery("#app-viewer-app").hide();
     });
 }
