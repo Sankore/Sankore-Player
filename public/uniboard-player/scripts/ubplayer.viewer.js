@@ -62,7 +62,7 @@ UbPlayer.Viewer.prototype.hide = function(){
     function(){
       jQuery(this).hide();
       jQuery("#app-viewer-app")
-        .src("")
+        .attr("src", "")
         .hide();
     });
 }
