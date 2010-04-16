@@ -9,21 +9,21 @@
 	<link rel="image_src" href="<%= @published_document.public_url %>/page001.thumbnail.jpg">
 	<link rel="icon" type="image/png" href="/uniboard-player/images/favicon.png">
 
-  <!-- Stylesheets (imported after window.width test)-->
+    <!-- Stylesheets (imported after window.width test)-->
 	<style type="text/css">
-	  @import url(/uniboard-player/stylesheets/reset.css);
+	    @import url(/uniboard-player/stylesheets/reset.css);
 	</style>
 	
-	<!-- Jquery -->
-  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
-  <script type="text/javascript" src="/uniboard-player/scripts/jquery-ui-1.8rc3.custom.min.js"></script>
-  <script type="text/javascript" src="/uniboard-player/scripts/jquery.easing.1.3.js"></script>
+    <!-- Jquery -->
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+    <script type="text/javascript" src="/uniboard-player/scripts/jquery-ui-1.8rc3.custom.min.js"></script>
+    <script type="text/javascript" src="/uniboard-player/scripts/jquery.easing.1.3.js"></script>
   
-  <!-- Cross-frame -->
-  <script type="text/javascript" src="http://yui.yahooapis.com/2.3.1/build/yahoo-dom-event/yahoo-dom-event.js"></script>
-  <script type="text/javascript" src="/uniboard-player/scripts/cross-frame.js"></script>
+    <!-- Cross-frame -->
+    <script type="text/javascript" src="http://yui.yahooapis.com/2.3.1/build/yahoo-dom-event/yahoo-dom-event.js"></script>
+    <script type="text/javascript" src="/uniboard-player/scripts/cross-frame.js"></script>
   
-  <!-- Uniboard-player -->
+    <!-- Uniboard-player -->
 	<script type="text/javascript" src="/uniboard-player/scripts/ubplayer.js"></script>
 	<script type="text/javascript" src="/uniboard-player/scripts/ubplayer.player.js"></script>
 	<script type="text/javascript" src="/uniboard-player/scripts/ubplayer.viewer.js"></script>
@@ -31,66 +31,65 @@
 	
   	var myUbPlayer = null;
 	
-  	jQuery(document).ready(function(){
+	jQuery(document).ready(function(){
   	  
-  	  var args = {
-  	    documentData:{
-    	    author:'<%= @published_document.author %>',
-    	    authorEmail:'<%= @published_document.author_email %>',
-    	    title:'<%= @published_document.title %>',
-    	    description:'<%= @published_document.description %>',
-    	    publishedAt:'<%= @published_document.created_at %>',
-    	    uuid:'<%= @published_document.publishing_uuid %>',
-    	    hasPdf:'<%= @published_document.has_pdf %>',
-    	    hasUbz:'<%= @published_document.has_ubz %>',
-    	    numberOfPages:parseInt('<%= @published_document.page_count %>'),
-    	    pagesBaseUrl:'<%= @published_document.public_url %>' // persistence_url
-    	  }
-  	  };
+        var args = {
+  	        documentData:{
+                author:'<%= @published_document.author %>',
+                authorEmail:'<%= @published_document.author_email %>',
+                title:'<%= @published_document.title %>',
+                description:'<%= @published_document.description %>',
+                publishedAt:'<%= @published_document.created_at %>',
+                uuid:'<%= @published_document.publishing_uuid %>',
+                hasPdf:'<%= @published_document.has_pdf %>',
+                hasUbz:'<%= @published_document.has_ubz %>',
+                numberOfPages:parseInt('<%= @published_document.page_count %>'),
+                pagesBaseUrl:'<%= @published_document.public_url %>' // persistence_url
+            }
+        };
 	    
 	    myUbPlayer = new UbPlayer.Player(args);
 	    
 	    // load specific stylesheets according to the window width
-	    if(jQuery(window).width() < 800){        
-        myUbPlayer.state = "embedded";
-        jQuery("body").append('<link rel=stylesheet type="text/css" href="/uniboard-player/stylesheets/master.css">');
-        jQuery("body").append('<link rel=stylesheet type="text/css" href="/uniboard-player/stylesheets/master_embed.css">');
-      }else{
-        jQuery("body").append('<link rel=stylesheet type="text/css" href="/uniboard-player/stylesheets/master.css">');
-        jQuery("#menu-share-dropdown").appendTo("#document-links");
-      }
+        if(jQuery(window).width() < 800){ 
+            myUbPlayer.state = "embedded";
+            jQuery("body").append('<link rel=stylesheet type="text/css" href="/uniboard-player/stylesheets/master.css">');
+            jQuery("body").append('<link rel=stylesheet type="text/css" href="/uniboard-player/stylesheets/master_embed.css">');
+        }else{
+            jQuery("body").append('<link rel=stylesheet type="text/css" href="/uniboard-player/stylesheets/master.css">');
+            jQuery("#menu-share-dropdown").appendTo("#document-links");
+        }
 
-  	  jQuery(window).resize(function(){
-  	    var ratioWh = 1.66;
-  	    var paddingTop = jQuery("#body").css("padding-top");
-  	    var paddingBottom = jQuery("#body").css("padding-bottom");
+        jQuery(window).resize(function(){
+            var ratioWh = 1.66;
+  	        var paddingTop = jQuery("#body").css("padding-top");
+  	        var paddingBottom = jQuery("#body").css("padding-bottom");
   	    
-  	    if(myUbPlayer.resizeMode === "V"){
-  	      jQuery(".page").css({ height:"100%" });
-  	      jQuery(".page").width(jQuery(".page").height() * ratioWh);
-  	    }else if(myUbPlayer.resizeMode === "H"){
-  	      jQuery(".page").width(jQuery(window).width() - 76);
-  	      jQuery(".page").height(jQuery(".page").width() * (0.60));
-  	    }
+  	        if(myUbPlayer.resizeMode === "V"){
+  	            jQuery(".page").css({ height:"100%" });
+  	            jQuery(".page").width(jQuery(".page").height() * ratioWh);
+  	        }else if(myUbPlayer.resizeMode === "H"){
+  	            jQuery(".page").width(jQuery(window).width() - 76);
+  	            jQuery(".page").height(jQuery(".page").width() * (0.60));
+  	        }
   	    
-  	    if(jQuery(window).width() < (jQuery(".page").width() + 76) && myUbPlayer.resizeMode === "V"){
-  	      myUbPlayer.resizeMode = "H";
-  	      jQuery(window).resize();
-  	    }else if(jQuery(window).height() < (jQuery(".page").height() + 
+  	        if(jQuery(window).width() < (jQuery(".page").width() + 76) && myUbPlayer.resizeMode === "V"){
+  	            myUbPlayer.resizeMode = "H";
+  	            jQuery(window).resize();
+  	        }else if(jQuery(window).height() < (jQuery(".page").height() + 
   	                                        parseInt(paddingTop.substring(0, paddingTop.length-2)) + 
   	                                        parseInt(paddingBottom.substring(0, paddingBottom.length-2))) && myUbPlayer.resizeMode === "H"){
-  	      myUbPlayer.resizeMode = "V";
-  	      jQuery(window).resize();
-  	    }
+  	            myUbPlayer.resizeMode = "V";
+  	            jQuery(window).resize();
+  	        }
   	    
-        //jQuery("#app-viewer-c").width(jQuery(".page").width());
-        jQuery("#document-links").width(jQuery(".page").width());
-      });
+            //jQuery("#app-viewer-c").width(jQuery(".page").width());
+            jQuery("#document-links").width(jQuery(".page").width());
+        });
       
-      // The current document has to be resized after the stylesheets have been loaded
-      setTimeout(function(){jQuery(window).resize()}, 500); 
-        	  
-  	});
+        // The current document has to be resized after the stylesheets have been loaded
+        setTimeout(function(){jQuery(window).resize()}, 500); 
+    });
 	
 	</script>
 	
