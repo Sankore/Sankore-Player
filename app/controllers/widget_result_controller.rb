@@ -10,6 +10,7 @@ class WidgetResultController < ApplicationController
     test_result[:student_email] = params[:student_email]
     test_result[:student_name] = params[:student_name]
     test_result[:score] = params[:score]
+    test_result[:redirect_url] = params[:redirect_url]
     
     WidgetResultMailer.deliver_notify(test_result)
     
