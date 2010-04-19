@@ -77,8 +77,8 @@
   	            myUbPlayer.resizeMode = "H";
   	            jQuery(window).resize();
   	        }else if(jQuery(window).height() < (jQuery(".page").height() + 
-  	                                        parseInt(paddingTop.substring(0, paddingTop.length-2)) + 
-  	                                        parseInt(paddingBottom.substring(0, paddingBottom.length-2))) && myUbPlayer.resizeMode === "H"){
+  	                    parseInt(paddingTop.substring(0, paddingTop.length-2)) + 
+  	                    parseInt(paddingBottom.substring(0, paddingBottom.length-2))) && myUbPlayer.resizeMode === "H"){
   	            myUbPlayer.resizeMode = "V";
   	            jQuery(window).resize();
   	        }
@@ -97,113 +97,155 @@
 
 <body>
 
-  <div id="head-embed">
-    <div id="head-embed-box-left"><a href="http://www.getuniboard.com" target="_blank"><img src="/uniboard-player/images/logo-uniboard-small.png"></a></div>
-  </div>
-
-  <div id="head">
-    <div id="document-links">
-    <ul class="menu-list">
-      <li id="head-list-share"><a id="shareDoc" href="#">Share this document</a></li>
-      <li id="head-list-close"><a id="quitFullscreen" href="#">Exit full-screen view</a></li>
-      <li id="head-list-closeDescription"><a id="quitDescription" href="#">Close</a></li>
-    </ul>
-    </div>
-  </div>
-
-  <div id="body">
-    <div id="description">
-      <div id="description-text"></div>
-    </div><!--description-->
-    <div id="boards">
-      <!-- Current board -->
-      <div class="board" id="board-current">
-        <iframe class="page" id="current-page" src=""></iframe>
-      </div>
-    </div><!--boards-->
-    <div class="board-button-unit" id="board-button-previous"></div>
-    <div class="board-button-unit" id="board-button-next"></div>
-    <div id="index">
-    </div><!--index-->
-    <div id="sharing">
-      <div id="sharing-button-close"></div>
-      <div id="sharing-text">
-        <label>Your E-mail address</label>
-        <input type="text">
-        <label>Recipient E-mail address</label>
-        <input type="text">
-        <label>Your message</label>
-        <textarea>I've been watching a document and thought you might like to see it. Here's an link towards this document.</textarea>
-        <input type="button" value="send" style="margin-top:10px; height:20px">
-      </div>
-    </div><!--sharing-->
-  </div>
-
-  <div id="foot">
-    <div style="position:relative; height:100%">
-   <div id="thumbnails">
-      <div id="thumbnails-slider-handler"></div>
-      <div id="thumbnails-slider"><div class="thumbnails-slider-page"></div></div>
-      <div style="width:40px; height:80px; position:absolute; top:45px; left:0px; color:red; font-size:10px; line-height:80px; text-decoration:underline; letter-spacing:normal" id="thumbnail-previous" class="disabled"></div>
-      <div id="thumbnails-canvas">
-        <div class="thumbnail"><img src="" alt="thumbnail" height="100%" width="auto"/></div>
-      </div>
-      <div style="width:40px; height:80px; position:absolute; top:45px; left:100%; margin-left:-41px; color:red; font-size:10px; line-height:80px; text-decoration:underline; letter-spacing:normal" id="thumbnail-next"></div>
-    </div><!--thumbnails-->
-    <div id="menu-bottom" class="menu bottom">
-      <div class="menu-box-left menu-box">
-        <div id="menu-export-dropdown" class="dropdown">
-          <ul>
-            <li id="menu-export-hasPdf"><a href="#">.Pdf</a></li>
-            <li id="menu-export-hasUbz"><a href="#">.Ubz</a></li>
-          </ul>
+    <div id="head-embed">
+        <div id="head-embed-box-left"><a href="http://www.getuniboard.com" target="_blank">
+            <img src="/uniboard-player/images/logo-uniboard-small.png"></a>
         </div>
-        <div class="menu-button" id="menu-button-export" title="Export this document as…" alt="Export button">
-          <div id="menu-button-export-right"></div>
-          <div id="menu-button-export-center">Export as…</div>
-          <div id="menu-button-export-left"></div>
-        </div>
-        <div class="menu-button" id="menu-button-showthumbnails" title="Show the thumbnails" alt="Show thumbnails button"></div>
-        <div class="menu-button" id="menu-button-showdetails" title="Show the details" alt="Show details button"></div>
-        <div class="menu-button" id="menu-button-full" title="Switch to full mode" alt="Full mode button"></div>
-        <div style="display:none; float:right; height:31px; margin-left:10px; line-height:42px"><input id="menubottom-input" type="text"></div>
-      </div>
-      <div class="menu-box-center menu-box">
-        <div class="menu-button" id="menu-button-previous" title="Previous page" alt="Previous page button"></div>
-        <div class="menu-button" id="menu-button-index" title="Show the index" alt="Show index button"></div>
-        <div class="menu-button" id="menu-button-next" title="Next page" alt="Next page button"></div>
-      </div>
-      <div class="menu-box-right menu-box">
-        <a href="http://www.getuniboard.com"><img src="/uniboard-player/images/logo-uniboard-small.png" id="logo-uniboard"></a>
-        <ul class="menu-list" id="embed-menu-list">
-          <li id="menu-list-share"><a href="#">Share&hellip;</a></li>
-          <li id="menu-list-full"><a href="#" target="_blank">Full document</a></li>
-        </ul>
-        <div id="menu-share-dropdown" class="dropdown">
-          <ul>
-            <li id="menu-share-email"><a href="#">E-mail</a></li>
-            <li id="menu-share-facebook"><a href="http://www.facebook.com/sharer.php" target="_blank">Facebook</a></li>
-            <li id="menu-share-twitter"><a href="#" target="_blank">Twitter</a></li>
-          </ul>
-        </div>
-      </div>
     </div>
+
+    <div id="head">
+        <div id="document-links">
+            <ul class="menu-list">
+                <li id="head-list-share"><a id="shareDoc" href="#">Share this document</a></li>
+                <li id="head-list-close"><a id="quitFullscreen" href="#">Exit full-screen view</a></li>
+                <li id="head-list-closeDescription"><a id="quitDescription" href="#">Close</a></li>
+            </ul>
+        </div>
     </div>
-  </div>
+
+    <div id="body">
+        
+        <div id="description">
+            <div id="description-text"></div>
+        </div><!--description-->
+        
+        <div id="boards">
+            <!-- Current board -->
+            <div class="board" id="board-current">
+                <iframe class="page" id="current-page" src=""></iframe>
+            </div>
+        </div><!--boards-->
+        
+        <div class="board-button-unit" id="board-button-previous"></div>
+        <div class="board-button-unit" id="board-button-next"></div>
+        
+        <div id="index"></div><!--index-->
+        
+        <div id="sharing">
+            <div id="sharing-button-close"></div>
+            <div id="sharing-text">
+                <label>Your E-mail address</label>
+                <input type="text">
+                <label>Recipient E-mail address</label>
+                <input type="text">
+                <label>Your message</label>
+                <textarea>I've been watching a document and thought you might like to see it. 
+                    Here's an link towards this document.</textarea>
+                <input type="button" value="send" style="margin-top:10px; height:20px">
+            </div>
+        </div><!--sharing-->
+    
+    </div><!--body-->
+        
+    <div id="foot">
+        <div style="position:relative; height:100%">
+            
+            <div id="thumbnails">
+                <div id="thumbnails-slider-handler"></div>
+                <div id="thumbnails-slider"><div class="thumbnails-slider-page"></div></div>
+                <div style="width:40px; height:80px; position:absolute; top:45px; left:0px; 
+                color:red; font-size:10px; line-height:80px; text-decoration:underline; 
+                letter-spacing:normal" id="thumbnail-previous" class="disabled"></div>
+                <div id="thumbnails-canvas">
+                    <div class="thumbnail"><img src="" alt="thumbnail" height="100%" width="auto"/></div>
+                </div>
+                <div style="width:40px; height:80px; position:absolute; top:45px; left:100%; 
+                margin-left:-41px; color:red; font-size:10px; line-height:80px; 
+                text-decoration:underline; letter-spacing:normal" id="thumbnail-next"></div>
+            </div><!--thumbnails-->
+            
+            <div id="menu-bottom" class="menu bottom">
+                
+                <div class="menu-box-left menu-box">
+                    <div id="menu-export-dropdown" class="dropdown">
+                        <ul>
+                            <li id="menu-export-hasPdf"><a href="#">.Pdf</a></li>
+                            <li id="menu-export-hasUbz"><a href="#">.Ubz</a></li>
+                        </ul>
+                    </div>
+                    <div class="menu-button" id="menu-button-export" 
+                        title="Export this document as…" alt="Export button">
+                        <div id="menu-button-export-right"></div>
+                        <div id="menu-button-export-center">Export as…</div>
+                        <div id="menu-button-export-left"></div>
+                    </div>
+                    <div class="menu-button" id="menu-button-showthumbnails" 
+                        title="Show the thumbnails" alt="Show thumbnails button"></div>
+                    <div class="menu-button" id="menu-button-showdetails" 
+                        title="Show the details" alt="Show details button"></div>
+                    <div class="menu-button" id="menu-button-full" 
+                        title="Switch to full mode" alt="Full mode button"></div>
+                    <div style="display:none; float:right; height:31px; margin-left:10px; 
+                    line-height:42px"><input id="menubottom-input" type="text"></div>
+                </div>
+                
+                <div class="menu-box-center menu-box">
+                    <div class="menu-button" id="menu-button-previous" title="Previous page" alt="Previous page button"></div>
+                    <div class="menu-button" id="menu-button-index" title="Show the index" alt="Show index button"></div>
+                    <div class="menu-button" id="menu-button-next" title="Next page" alt="Next page button"></div>
+                </div>
+                
+                <div class="menu-box-right menu-box">
+                    <a href="http://www.getuniboard.com">
+                        <img src="/uniboard-player/images/logo-uniboard-small.png" id="logo-uniboard">
+                    </a>
+                    <ul class="menu-list" id="embed-menu-list">
+                        <li id="menu-list-share">
+                            <a href="#">Share&hellip;</a>
+                        </li>
+                        <li id="menu-list-full">
+                            <a href="#" target="_blank">Full document</a>
+                        </li>
+                    </ul>
+                    <div id="menu-share-dropdown" class="dropdown">
+                        <ul>
+                            <li id="menu-share-email">
+                                <a href="#">E-mail</a>
+                            </li>
+                            <li id="menu-share-facebook">
+                                <a href="http://www.facebook.com/sharer.php" target="_blank">Facebook</a>
+                            </li>
+                            <li id="menu-share-twitter">
+                                <a href="#" target="_blank">Twitter</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+            </div><!--menu-bottom-->
+        </div>
+    </div><!--foot-->
   
-  <!-- App Viewer -->
-  <div id="app-viewer-background"></div>
-  <div id="app-viewer">
-    <div id="app-viewer-c"><!-- table -->
-      <div id="app-viewer-appcanvas"><!-- table-cell -->
-        <div id="app-viewer-appborder">
-          <iframe id="app-viewer-app" src=""></iframe>
-          <div id="app-viewer-menu"><div id="app-viewer-button-close-canvas"><div id="app-viewer-button-close"></div></div><a href="#">close</a></div>
-        </div><!-- vertical and horizontal centered iframe -->
-      </div>
+    <!-- App Viewer -->
+    <div id="app-viewer-background"></div>
+    <div id="app-viewer">
+        <div id="app-viewer-c"><!-- table -->
+            <div id="app-viewer-appcanvas"><!-- table-cell -->
+                <div id="app-viewer-appborder">
+                    <iframe id="app-viewer-app" src=""></iframe>
+                    <div id="app-viewer-menu">
+                        <div id="app-viewer-button-close-canvas">
+                            <div id="app-viewer-button-close"></div>
+                        </div>
+                        <a href="#">close</a>
+                    </div>
+                </div><!-- vertical and horizontal centered iframe -->
+            </div>
+        </div>
     </div>
-  </div>
   
-  <iframe name="getAppConf" id="getAppConf" src="http://assets.getuniboard.com/publishing/proxy/get-app-config.html" style="display:none"></iframe>
+  <iframe name="getAppConf" id="getAppConf" 
+    src="http://assets.getuniboard.com/publishing/proxy/get-app-config.html" 
+    style="display:none"></iframe>
 </body>
 </html>
