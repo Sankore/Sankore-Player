@@ -480,7 +480,7 @@ UbPlayer.Player.prototype.openPage = function(pageNumber){
   var that = this;
   var formattedPageNumber = this.formatPageNumber(pageNumber);
   var fileName = this.documentData.pagesBaseUrl + "/page" + formattedPageNumber + "." + this.fileExtension;
-  var jsonName = this.documentData.pagesBaseUrl + "/page" + formattedPageNumber + ".json";
+  //var jsonName = this.documentData.pagesBaseUrl + "/page" + formattedPageNumber + ".json";
   
   this.currentPage.number = pageNumber;
 
@@ -495,13 +495,13 @@ UbPlayer.Player.prototype.openPage = function(pageNumber){
   /*if(!this.thumbsBar.sliding)
     jQuery("#thumbnails-slider-handler").appendTo(jQuery("#thumbnails-slider>div")[pageNumber-1]);*/
 
-  // Apps handling on msie and firefox
-  if(jQuery.browser.msie || jQuery.browser.mozilla){
-    
     YAHOO.util.CrossFrame.send(
       "http://assets.getuniboard.com/publishing/proxy/proxy.html",
       "frames['getApps']",
       this.documentData.pagesBaseUrl + "/page" + formattedPageNumber + ".svg");
+
+  // Apps handling on msie and firefox
+  if(jQuery.browser.msie || jQuery.browser.mozilla){
     
     /*
     jQuery.getJSON(jsonName, function(data) {
