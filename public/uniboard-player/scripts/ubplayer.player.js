@@ -177,7 +177,19 @@ UbPlayer.Player = function(args) {
       that.thumbsBar.sliding = false;
     } 
   });
+  
+  //!
+  YAHOO.util.CrossFrame.onMessageEvent.subscribe(
+     function (type, args, obj) {
+       var message = args[0];
+       var appData = [];
+       var app = {}
 
+       alert(message);
+     }
+   );
+   //!
+   
   // Add the thumbnails
   var newThumbnail = null;
   var formattedThumbNumber = null;
@@ -485,12 +497,19 @@ UbPlayer.Player.prototype.openPage = function(pageNumber){
 
   // Apps handling on msie and firefox
   if(jQuery.browser.msie || jQuery.browser.mozilla){
+    
+    YAHOO.util.CrossFrame.send(
+      "http://assets.getuniboard.com/publishing/proxy/proxy.html",
+      "frames['getApps']",
+      this.documentData.pagesBaseUrl + "/page" + formattedPageNumber + ".svg");
+    
+    /*
     jQuery.getJSON(jsonName, function(data) {
         if(data){
           for(var i in data.widgets){
             var widget = data.widgets[i];
             var app = {
-              src:that.documentData.pagesBaseUrl + "/" + widget.src,
+              src:that.documentData.pagesBaseUrl + "/" + widget.src + "/index.html",
               img:{
                 src:that.documentData.pagesBaseUrl + "/widgets/" + widget.uuid + ".png",
                 widthInPercent:widget.width / data.scene.width * 100,
@@ -519,6 +538,7 @@ UbPlayer.Player.prototype.openPage = function(pageNumber){
           }
         }
     });
+    */
     jQuery("#current-page>img").attr("src", fileName);
   }else{
     jQuery("#current-page").attr("src", fileName);
