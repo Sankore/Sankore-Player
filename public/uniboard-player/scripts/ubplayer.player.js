@@ -16,6 +16,7 @@ UbPlayer.Player = function(args) {
   this.adaptPageTimer = null;
   this.sliderTimer = null;
   this.documentData = args.documentData;
+  this.fileExtension = args.fileExtension;
   this.thumbnails = {
     thumbsToHide:[],
     firstVisibleThumb:null,
@@ -466,12 +467,12 @@ UbPlayer.Player.prototype.formatDate = function(date){
 UbPlayer.Player.prototype.openPage = function(pageNumber){
   var that = this;
   var formattedPageNumber = this.formatPageNumber(pageNumber);
-  var fileExtension = jQuery.browser.msie ? "jpg" : "svg";
-  var fileName = this.documentData.pagesBaseUrl + "/page" + formattedPageNumber + "." + fileExtension;
+  var fileName = this.documentData.pagesBaseUrl + "/page" + formattedPageNumber + "." + this.fileExtension;
+  var jsonName = this.documentData.pagesBaseUrl + "/page" + formattedPageNumber + ".json";
   
   this.currentPage.number = pageNumber;
-  
-  jQuery("#current-page").attr("src", fileName);
+
+  jQuery(".appImg").remove();
   jQuery("#menubottom-input").val(pageNumber);
   jQuery("#thumbnails-slider>div").removeClass("current");
   jQuery(jQuery("#thumbnails-slider>div")[pageNumber-1]).addClass("current");
@@ -481,7 +482,48 @@ UbPlayer.Player.prototype.openPage = function(pageNumber){
   // Slider handler
   /*if(!this.thumbsBar.sliding)
     jQuery("#thumbnails-slider-handler").appendTo(jQuery("#thumbnails-slider>div")[pageNumber-1]);*/
-    
+
+  // Apps handling on msie and firefox
+  if(jQuery.browser.msie || jQuery.browser.mozilla){
+    jQuery.getJSON(jsonName, function(data) {
+        if(data){
+          for(var i in data.widgets){
+            var widget = data.widgets[i];
+            var app = {
+              src:that.documentData.pagesBaseUrl + "/" + widget.src,
+              img:{
+                src:that.documentData.pagesBaseUrl + "/widgets/" + widget.uuid + ".png",
+                widthInPercent:widget.width / data.scene.width * 100,
+                heightInPercent:widget.height /data.scene.height * 100,
+                leftInPercent:(widget.x + Math.abs(data.scene.x)) / data.scene.width * 100,
+                topInPercent:(widget.y + Math.abs(data.scene.y)) / data.scene.height * 100,
+                node:jQuery("<div class='appImg'></div>")
+              }
+            };
+                    
+            app.img.node
+              .css({
+                position:"absolute",
+                width:app.img.widthInPercent + "%",
+                height:app.img.heightInPercent + "%",
+                top:app.img.topInPercent + "%",
+                left:app.img.leftInPercent + "%"})
+              .append("<img src='" + app.img.src + "' width='100%' height='100%'>")
+              .click(function(app, widget){
+                return function(e){
+                  that.viewer.show(app.src, widget.width, widget.height);
+                }
+              }(app, widget));
+            
+            jQuery("#current-page").append(app.img.node);
+          }
+        }
+    });
+    jQuery("#current-page>img").attr("src", fileName);
+  }else{
+    jQuery("#current-page").attr("src", fileName);
+  }
+  
   jQuery(window).resize();
 
   // Disable previous button if the current page is 1

@@ -44,10 +44,21 @@
                 hasPdf:'<%= @published_document.has_pdf %>',
                 hasUbz:'<%= @published_document.has_ubz %>',
                 numberOfPages:parseInt('<%= @published_document.page_count %>'),
-                pagesBaseUrl:'<%= @published_document.public_url %>' // persistence_url
-            }
+                pagesBaseUrl:'<%= @published_document.persistence_url %>' // public_url
+            },
+            fileExtension:"svg"
         };
 	    
+	    // Since Firefox and msie doesn't handle svg properly, it is replaced by an image.
+	    if(jQuery.browser.msie || jQuery.browser.mozilla){
+	        args.fileExtension = "jpg";
+	        
+	        // The iframe tag becomes an img tag
+	        jQuery("#current-page")
+	            .after("<div class='page' id='current-page'><img src='' width='400px' heigth='100%'></div>")
+                .remove();
+        }
+        
 	    myUbPlayer = new UbPlayer.Player(args);
 	    
 	    // load specific stylesheets according to the window width
@@ -59,31 +70,39 @@
             jQuery("body").append('<link rel=stylesheet type="text/css" href="/uniboard-player/stylesheets/master.css">');
             jQuery("#menu-share-dropdown").appendTo("#document-links");
         }
-
+        
         jQuery(window).resize(function(){
             var ratioWh = 1.66;
-  	        var paddingTop = jQuery("#body").css("padding-top");
-  	        var paddingBottom = jQuery("#body").css("padding-bottom");
+  	        var paddingTop = parseInt(jQuery("#body").css("padding-top").substring(0, jQuery("#body").css("padding-top").length-2));
+  	        var paddingBottom = parseInt(jQuery("#body").css("padding-bottom").substring(0, jQuery("#body").css("padding-bottom").length-2));
   	    
   	        if(myUbPlayer.resizeMode === "V"){
-  	            jQuery(".page").css({ height:"100%" });
-  	            jQuery(".page").width(jQuery(".page").height() * ratioWh);
+  	            /*if(jQuery.browser.msie || jQuery.browser.mozilla){
+  	                jQuery(".page").height(jQuery(window).height() - paddingTop - paddingBottom);
+  	                jQuery(".page").css("width", "auto");
+  	            }else{*/
+  	                jQuery(".page").css({ height:"100%" });
+  	                jQuery(".page").width(jQuery(".page").height() * ratioWh);
+                //}
   	        }else if(myUbPlayer.resizeMode === "H"){
-  	            jQuery(".page").width(jQuery(window).width() - 76);
-  	            jQuery(".page").height(jQuery(".page").width() * (0.60));
+  	            /*if(jQuery.browser.msie || jQuery.browser.mozilla){
+  	                jQuery(".page").width(jQuery(window).width() - 76);
+  	                jQuery(".page").css("height", "auto");
+  	            }else{*/
+  	                jQuery(".page").width(jQuery(window).width() - 76);
+  	                jQuery(".page").height(jQuery(".page").width() * (0.60));
+  	            //}
   	        }
   	    
   	        if(jQuery(window).width() < (jQuery(".page").width() + 76) && myUbPlayer.resizeMode === "V"){
   	            myUbPlayer.resizeMode = "H";
   	            jQuery(window).resize();
-  	        }else if(jQuery(window).height() < (jQuery(".page").height() + 
-  	                    parseInt(paddingTop.substring(0, paddingTop.length-2)) + 
-  	                    parseInt(paddingBottom.substring(0, paddingBottom.length-2))) && myUbPlayer.resizeMode === "H"){
+  	        }else if(jQuery(window).height() < (jQuery(".page").height() + paddingTop + paddingBottom) && 
+  	        myUbPlayer.resizeMode === "H"){
   	            myUbPlayer.resizeMode = "V";
   	            jQuery(window).resize();
   	        }
   	    
-            //jQuery("#app-viewer-c").width(jQuery(".page").width());
             jQuery("#document-links").width(jQuery(".page").width());
         });
       
@@ -243,9 +262,10 @@
             </div>
         </div>
     </div>
-  
-  <iframe name="getAppConf" id="getAppConf" 
-    src="http://assets.getuniboard.com/publishing/proxy/get-app-config.html" 
-    style="display:none"></iframe>
+    
+    <!-- hidden iframe used for cross-domain requests-->
+    <iframe name="getAppConf" id="getAppConf" 
+        src="http://assets.getuniboard.com/publishing/proxy/get-app-config.html" 
+        style="display:none"></iframe>
 </body>
 </html>
