@@ -266,7 +266,7 @@ UbPlayer.Player = function(args) {
   jQuery("#menubottom-input").after("/" + this.documentData.numberOfPages);
   
   UbPlayer.reduceDomain();
-  setTimeout(function(){this.openPage(1)}, 2000);
+  setTimeout(function(){that.openPage(1)}, 2000);
 };
 
 UbPlayer.Player.prototype.sliderListener = function(currentPageNmbr){
