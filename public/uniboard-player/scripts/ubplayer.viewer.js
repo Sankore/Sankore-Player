@@ -10,6 +10,7 @@ UbPlayer.Viewer = function() {
     that.hide();
   });
   
+  // Get the response from app config.xml
   YAHOO.util.CrossFrame.onMessageEvent.subscribe(
     function (type, args, obj) {
       var message = args[0];
@@ -19,8 +20,8 @@ UbPlayer.Viewer = function() {
             
       appData = message.split(",");
       app.index = appData[0];
-      app.width = parseInt(appData[1]);
-      app.height = parseInt(appData[2]);
+      //app.width = parseInt(appData[1]);
+      //app.height = parseInt(appData[2]);
             
       jQuery("#app-viewer-app")
         .attr("src", app.index)
@@ -28,7 +29,7 @@ UbPlayer.Viewer = function() {
         .height(that.appHeight);
       jQuery("#app-viewer-appborder")
         .width(that.appWidth + 20)
-        .height(that.appHeight + 35)
+        .height(that.appHeight + 35);
         
       jQuery("#app-viewer-background").show();
       jQuery("#app-viewer").show();

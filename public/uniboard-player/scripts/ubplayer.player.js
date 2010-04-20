@@ -264,8 +264,9 @@ UbPlayer.Player = function(args) {
                                       "<br/>" + this.formatDate(this.documentData.publishedAt) + 
                                       "<br/><br/>" + this.documentData.description);
   jQuery("#menubottom-input").after("/" + this.documentData.numberOfPages);
+  
   UbPlayer.reduceDomain();
-  this.openPage(1);
+  setTimeout(function(){this.openPage(1)}, 2000);
 };
 
 UbPlayer.Player.prototype.sliderListener = function(currentPageNmbr){
@@ -519,7 +520,7 @@ UbPlayer.Player.prototype.openPage = function(pageNumber){
                 node:jQuery("<div class='appImg'></div>")
               }
             };
-                    
+            
             app.img.node
               .css({
                 position:"absolute",
@@ -533,7 +534,7 @@ UbPlayer.Player.prototype.openPage = function(pageNumber){
                   that.viewer.show(app.src, widget.width, widget.height);
                 }
               }(app, widget));
-            
+              
             jQuery("#current-page").append(app.img.node);
           }
         }
