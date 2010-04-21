@@ -47,11 +47,11 @@ UbPlayer.Viewer.prototype.show = function(appUrl, width, height){
   if(jQuery.browser.msie || jQuery.browser.mozilla){
       jQuery("#app-viewer-app")
         .attr("src", appUrl)
-        .width(that.appWidth)
-        .height(that.appHeight);
+        .width(this.appWidth)
+        .height(this.appHeight);
       jQuery("#app-viewer-appborder")
-        .width(that.appWidth + 20)
-        .height(that.appHeight + 35);
+        .width(this.appWidth + 20)
+        .height(this.appHeight + 35);
         
       jQuery("#app-viewer-background").show();
       jQuery("#app-viewer").show();
