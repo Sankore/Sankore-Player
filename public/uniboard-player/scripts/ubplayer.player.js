@@ -177,18 +177,6 @@ UbPlayer.Player = function(args) {
       that.thumbsBar.sliding = false;
     } 
   });
-  
-  //!
-  YAHOO.util.CrossFrame.onMessageEvent.subscribe(
-     function (type, args, obj) {
-       var message = args[0];
-       var appData = [];
-       var app = {}
-
-       alert(message);
-     }
-   );
-   //!
    
   // Add the thumbnails
   var newThumbnail = null;
@@ -266,7 +254,7 @@ UbPlayer.Player = function(args) {
   jQuery("#menubottom-input").after("/" + this.documentData.numberOfPages);
   
   UbPlayer.reduceDomain();
-  setTimeout(function(){that.openPage(1)}, 2000);
+  this.openPage(1);
 };
 
 UbPlayer.Player.prototype.sliderListener = function(currentPageNmbr){
@@ -495,11 +483,6 @@ UbPlayer.Player.prototype.openPage = function(pageNumber){
   // Slider handler
   /*if(!this.thumbsBar.sliding)
     jQuery("#thumbnails-slider-handler").appendTo(jQuery("#thumbnails-slider>div")[pageNumber-1]);*/
-
-    YAHOO.util.CrossFrame.send(
-      "http://assets.getuniboard.com/publishing/proxy/proxy.html",
-      "frames['getApps']",
-      this.documentData.pagesBaseUrl + "/page" + formattedPageNumber + ".svg");
 
   // Apps handling on msie and firefox
   if(jQuery.browser.msie || jQuery.browser.mozilla){
