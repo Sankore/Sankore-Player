@@ -44,7 +44,7 @@
                 hasPdf:'<%= @published_document.has_pdf %>',
                 hasUbz:'<%= @published_document.has_ubz %>',
                 numberOfPages:parseInt('<%= @published_document.page_count %>'),
-                pagesBaseUrl:'<%= @published_document.public_url %>' // persistence_url
+                pagesBaseUrl:'<%= @published_document.persistence_url %>' // public_url
             },
             fileExtension:"svg"
         };
@@ -139,7 +139,6 @@
         </div><!--description-->
         
         <div id="boards">
-            <!-- Current board -->
             <div class="board" id="board-current">
                 <iframe class="page" id="current-page" src=""></iframe>
             </div>
@@ -148,7 +147,7 @@
         <div class="board-button-unit" id="board-button-previous"></div>
         <div class="board-button-unit" id="board-button-next"></div>
         
-        <div id="index"></div><!--index-->
+        <div id="index"></div>
         
         <div id="sharing">
             <div id="sharing-button-close"></div>
@@ -184,7 +183,6 @@
             </div><!--thumbnails-->
             
             <div id="menu-bottom" class="menu bottom">
-                
                 <div class="menu-box-left menu-box">
                     <div id="menu-export-dropdown" class="dropdown">
                         <ul>
@@ -243,8 +241,8 @@
                         </ul>
                     </div>
                 </div>
-                
             </div><!--menu-bottom-->
+            
         </div>
     </div><!--foot-->
   
@@ -266,7 +264,7 @@
         </div>
     </div>
     
-    <!-- hidden iframes used for cross-domain requests-->
+    <!-- hidden iframe used for cross-domain requests-->
     <iframe name="getAppConf" id="getAppConf" 
         src="http://assets.getuniboard.com/publishing/proxy/get-app-config.html" 
         style="display:none"></iframe>

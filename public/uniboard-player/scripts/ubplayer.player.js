@@ -469,8 +469,9 @@ UbPlayer.Player.prototype.openPage = function(pageNumber){
   var that = this;
   var formattedPageNumber = this.formatPageNumber(pageNumber);
   var fileName = this.documentData.pagesBaseUrl + "/page" + formattedPageNumber + "." + this.fileExtension;
-  //var jsonName = this.documentData.pagesBaseUrl + "/page" + formattedPageNumber + ".json";
-  
+  var jsonName = this.documentData.pagesBaseUrl.replace("assets.getuniboard.com", "web.getuniboard.com/assets-proxy") + 
+                    "/page" + formattedPageNumber + ".json";
+                        
   this.currentPage.number = pageNumber;
 
   jQuery(".appImg").remove();
@@ -487,7 +488,6 @@ UbPlayer.Player.prototype.openPage = function(pageNumber){
   // Apps handling on msie and firefox
   if(jQuery.browser.msie || jQuery.browser.mozilla){
     
-    /*
     jQuery.getJSON(jsonName, function(data) {
         if(data){
           for(var i in data.widgets){
@@ -522,7 +522,7 @@ UbPlayer.Player.prototype.openPage = function(pageNumber){
           }
         }
     });
-    */
+
     jQuery("#current-page>img").attr("src", fileName);
   }else{
     jQuery("#current-page").attr("src", fileName);
