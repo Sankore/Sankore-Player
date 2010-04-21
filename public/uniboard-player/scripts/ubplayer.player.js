@@ -493,7 +493,7 @@ UbPlayer.Player.prototype.openPage = function(pageNumber){
           for(var i in data.widgets){
             var widget = data.widgets[i];
             var app = {
-              src:that.documentData.pagesBaseUrl + "/" + widget.src + "/index.html",
+              src:that.documentData.pagesBaseUrl + "/" + widget.src + "/" + widget.start-file,
               img:{
                 src:that.documentData.pagesBaseUrl + "/widgets/" + widget.uuid + ".png",
                 widthInPercent:widget.width / data.scene.width * 100,
@@ -503,7 +503,7 @@ UbPlayer.Player.prototype.openPage = function(pageNumber){
                 node:jQuery("<div class='appImg'></div>")
               }
             };
-            
+            console.log(app.src);
             app.img.node
               .css({
                 position:"absolute",
