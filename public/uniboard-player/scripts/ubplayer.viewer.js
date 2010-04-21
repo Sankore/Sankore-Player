@@ -44,11 +44,27 @@ UbPlayer.Viewer.prototype.show = function(appUrl, width, height){
   this.appWidth = width;
   this.appHeight = height;
   
+  if(jQuery.browser.msie || jQuery.browser.mozilla){
+      jQuery("#app-viewer-app")
+        .attr("src", appUrl)
+        .width(that.appWidth)
+        .height(that.appHeight);
+      jQuery("#app-viewer-appborder")
+        .width(that.appWidth + 20)
+        .height(that.appHeight + 35);
+        
+      jQuery("#app-viewer-background").show();
+      jQuery("#app-viewer").show();
+      jQuery("#app-viewer-app").show();
+      jQuery("#app-viewer-background").animate({opacity:"0.8"},600);
+      jQuery("#app-viewer").animate({opacity:"1"});
+  }else{
   // Ask for app config.xml
   YAHOO.util.CrossFrame.send(
     "http://assets.getuniboard.com/publishing/proxy/proxy.html",
     "frames['getAppConf']",
     appUrl);
+  }
 }
 
 UbPlayer.Viewer.prototype.hide = function(){
