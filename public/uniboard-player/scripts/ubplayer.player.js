@@ -514,7 +514,7 @@ UbPlayer.Player.prototype.openPage = function(pageNumber){
               .append("<img src='" + app.img.src + "' width='100%' height='100%'>")
               .click(function(app, widget){
                 return function(e){
-                  that.viewer.show(app.src, widget.width, widget.height);
+                  that.viewer.show(app.src, widget.nominalWidth, widget.nominalHeight);
                 }
               }(app, widget));
               
