@@ -484,51 +484,55 @@ UbPlayer.Player.prototype.openPage = function(pageNumber){
   // Slider handler
   /*if(!this.thumbsBar.sliding)
     jQuery("#thumbnails-slider-handler").appendTo(jQuery("#thumbnails-slider>div")[pageNumber-1]);*/
-
-  // Apps handling on msie and firefox
-  if(jQuery.browser.msie || jQuery.browser.mozilla){
     
-    jQuery.getJSON(jsonName, function(data) {
-        if(data){
-          for(var i in data.widgets){
-            var widget = data.widgets[i];
-            var app = {
-              src:that.documentData.pagesBaseUrl + "/" + widget.src + "/" + widget.startFile,
-              img:{
-                src:that.documentData.pagesBaseUrl + "/widgets/" + widget.uuid + ".png",
-                widthInPercent:widget.width / data.scene.width * 100,
-                heightInPercent:widget.height /data.scene.height * 100,
-                leftInPercent:(widget.x + Math.abs(data.scene.x)) / data.scene.width * 100,
-                topInPercent:(widget.y + Math.abs(data.scene.y)) / data.scene.height * 100,
-                node:jQuery("<div class='appImg'></div>")
+  jQuery.getJSON(jsonName, function(data) {
+      if(data){
+        for(var i in data.widgets){
+          var widget = data.widgets[i];
+          var app = {
+            src:that.documentData.pagesBaseUrl + "/" + widget.src + "/" + widget.startFile,
+            img:{
+              src:that.documentData.pagesBaseUrl + "/widgets/" + widget.uuid + ".png",
+              widthInPercent:widget.width / data.scene.width * 100,
+              heightInPercent:widget.height /data.scene.height * 100,
+              leftInPercent:(widget.x + Math.abs(data.scene.x)) / data.scene.width * 100,
+              topInPercent:(widget.y + Math.abs(data.scene.y)) / data.scene.height * 100,
+              node:jQuery("<div class='appImg'></div>")
+            }
+          };
+
+          app.img.node
+            .css({
+              position:"absolute",
+              width:app.img.widthInPercent + "%",
+              height:app.img.heightInPercent + "%",
+              top:app.img.topInPercent + "%",
+              left:app.img.leftInPercent + "%"})
+            //.append("<img src='" + app.img.src + "' width='100%' height='100%'>")
+            .click(function(app, widget){
+              return function(e){
+                that.viewer.show(app.src, widget.nominalWidth, widget.nominalHeight);
               }
-            };
-
-            app.img.node
-              .css({
-                position:"absolute",
-                width:app.img.widthInPercent + "%",
-                height:app.img.heightInPercent + "%",
-                top:app.img.topInPercent + "%",
-                left:app.img.leftInPercent + "%"})
-              .append("<img src='" + app.img.src + "' width='100%' height='100%'>")
-              .click(function(app, widget){
-                return function(e){
-                  that.viewer.show(app.src, widget.nominalWidth, widget.nominalHeight);
-                }
-              }(app, widget));
-              
-            jQuery("#current-page").append(app.img.node);
+            }(app, widget))
+            .hover(
+              function(){
+                jQuery("#app-border")
+                  .show()
+                  .appendTo(jQuery(this));
+              },
+              function(){
+                jQuery("#app-border").hide();
+              }
+            );
             
-            that.currentPage.ratio = data.scene.width / data.scene.height;
-          }
+          jQuery("#current-page").append(app.img.node);
+          
+          that.currentPage.ratio = data.scene.width / data.scene.height;
         }
-    });
+      }
+  });
 
-    jQuery("#current-page>img").attr("src", fileName);
-  }else{
-    jQuery("#current-page").attr("src", fileName);
-  }
+  jQuery("#current-page>img").attr("src", fileName);
   
   jQuery(window).resize();
 

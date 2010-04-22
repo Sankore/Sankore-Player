@@ -14,14 +14,10 @@
 	    @import url(/uniboard-player/stylesheets/reset.css);
 	</style>
 	
-    <!-- Jquery -->
+    <!-- jQuery -->
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
     <script type="text/javascript" src="/uniboard-player/scripts/jquery-ui-1.8rc3.custom.min.js"></script>
     <script type="text/javascript" src="/uniboard-player/scripts/jquery.easing.1.3.js"></script>
-  
-    <!-- Cross-frame -->
-    <script type="text/javascript" src="http://yui.yahooapis.com/2.3.1/build/yahoo-dom-event/yahoo-dom-event.js"></script>
-    <script type="text/javascript" src="/uniboard-player/scripts/cross-frame.js"></script>
   
     <!-- Uniboard-player -->
 	<script type="text/javascript" src="/uniboard-player/scripts/ubplayer.js"></script>
@@ -44,20 +40,10 @@
                 hasPdf:'<%= @published_document.has_pdf %>',
                 hasUbz:'<%= @published_document.has_ubz %>',
                 numberOfPages:parseInt('<%= @published_document.page_count %>'),
-                pagesBaseUrl:'<%= @published_document.public_url %>' // persistence_url
+                pagesBaseUrl:'<%= @published_document.persistence_url %>' // public_url
             },
-            fileExtension:"svg"
+            fileExtension:"jpg"
         };
-	    
-	    // Since Firefox and msie doesn't handle svg properly, it is replaced by an image.
-	    if(jQuery.browser.msie || jQuery.browser.mozilla){
-	        args.fileExtension = "jpg";
-	        
-	        // The iframe tag becomes an img tag
-	        jQuery("#current-page")
-	            .after("<div class='page' id='current-page'><img src=''></div>")
-                .remove();
-        }
         
 	    myUbPlayer = new UbPlayer.Player(args);
 	    
@@ -77,23 +63,22 @@
   	        var paddingBottom = parseInt(jQuery("#body").css("padding-bottom").substring(0, jQuery("#body").css("padding-bottom").length-2));
   	    
   	        if(myUbPlayer.resizeMode === "V"){
-  	                jQuery(".page").css({ height:"100%" });
+  	                jQuery(".page").height(jQuery(window).height()-paddingTop-paddingBottom);
+  	                //jQuery(".page").css({ height:"100%" });
   	                jQuery(".page").width(jQuery(".page").height() * ratioWh);
   	        }else if(myUbPlayer.resizeMode === "H"){
   	                jQuery(".page").width(jQuery(window).width() - 76);
-  	                jQuery(".page").height(jQuery(".page").width() * (0.6));
+  	                jQuery(".page").height(jQuery(".page").width() * (1/ratioWh));
   	        }
   	    
   	        if(jQuery(window).width() < (jQuery(".page").width() + 76) && myUbPlayer.resizeMode === "V"){
   	            myUbPlayer.resizeMode = "H";
   	            jQuery(window).resize();
-  	        }else if(jQuery(window).height() < (jQuery(".page").height() + paddingTop + paddingBottom) && 
-  	                                                                        myUbPlayer.resizeMode === "H"){
+  	        }else if(jQuery(window).height() < (jQuery(".page").height() + paddingTop + paddingBottom) && myUbPlayer.resizeMode === "H"){
   	            myUbPlayer.resizeMode = "V";
   	            jQuery(window).resize();
-  	        }
+  	        };
   	        
-  	        //jQuery("#current-page>img").width(jQuery("#current-page").width());
             jQuery("#document-links").width(jQuery(".page").width());
         });
       
@@ -131,7 +116,27 @@
         
         <div id="boards">
             <div class="board" id="board-current">
-                <iframe class="page" id="current-page" src=""></iframe>
+                <div class='page' id='current-page'>
+                    <img id="page-img" src=''/>
+                    
+                    <div id="app-border" style="position:absolute;width:100%; height:100%;display:none;top:0px">
+                        <div id="app-border-top">
+                            <div class="corner" style="background:url(/uniboard-player/images/top-corner-left.png)"></div>
+                            <div class="middle top"></div>
+                            <div class="corner right" style="background:url(/uniboard-player/images/top-corner-right.png)"></div>
+                        </div>
+                        <div id="app-border-middle">
+                            <div class="middle-left"></div>
+                            <img style="position:absolute;left:50%;margin-left:-10px; top:100%; margin-top:-20px" src="/uniboard-player/images/app-view.png">
+                            <div class="middle-right"></div>
+                        </div>
+                        <div id="app-border-bottom">
+                            <div class="corner" style="background:url(/uniboard-player/images/bottom-corner-left.png)"></div>
+                            <div class="middle bottom"></div>
+                            <div class="corner right" style="background:url(/uniboard-player/images/bottom-corner-right.png)"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div><!--boards-->
         
@@ -255,9 +260,5 @@
         </div>
     </div>
     
-    <!-- hidden iframe used for cross-domain requests-->
-    <iframe name="getAppConf" id="getAppConf" 
-        src="http://assets.getuniboard.com/publishing/proxy/get-app-config.html" 
-        style="display:none"></iframe>
 </body>
 </html>

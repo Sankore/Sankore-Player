@@ -140,10 +140,9 @@ label{ display:block; margin-top:15px; }
   position:relative;
 }
 
-#current-page>img{
-    border:1px solid grey;
-    width:400px;
-    height:auto;
+#page-img{
+    width:100%;
+    height:100%;
 }
 
 #document-title span{
@@ -175,10 +174,6 @@ label{ display:block; margin-top:15px; }
   padding-bottom:110px;
   height:100%;
   width:100%;
-}
-
-.appImg:hover{
-  border:1px solid red;
 }
 
 #app-viewer-background{
@@ -409,3 +404,18 @@ label{ display:block; margin-top:15px; }
   font-size:12px;
   font-family:helvetica, arial, sans-serif;
 }
+
+/*  App border  */
+#app-border-top{width:100%;height:7px}
+    .middle.top{background:url(../images/top.png)}
+
+#app-border-middle{height:100%;width:100%}
+    .middle-left{position:absolute;width:7px;height:100%;background:url(../images/middle-left.png)}
+    .middle-right{position:absolute;width:7px;height:100%;left:100%;margin-left:-7px;background:url(../images/middle-right.png)}
+
+#app-border-bottom{width:100%;position:absolute;height:7px;left:0px;margin-top:7px;top:100%}
+    .middle.bottom{background:url(../images/bottom.png)}
+
+.middle{height:7px;margin-left:7px;margin-right:7px}
+.corner{position:absolute;width:7px;height:7px}
+.corner.right{top:0px;left:100%;margin-left:-7px}
