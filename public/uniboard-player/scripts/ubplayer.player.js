@@ -517,11 +517,13 @@ UbPlayer.Player.prototype.openPage = function(pageNumber){
             .hover(
               function(){
                 jQuery("#app-border")
-                  .show()
-                  .appendTo(jQuery(this));
+                  .appendTo(jQuery(this))
+                  .show();
               },
               function(){
-                jQuery("#app-border").hide();
+                jQuery("#app-border")
+                  .hide()
+                  .appendTo(jQuery("#current-page"));
               }
             );
             
