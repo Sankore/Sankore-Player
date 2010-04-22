@@ -40,7 +40,7 @@
                 hasPdf:'<%= @published_document.has_pdf %>',
                 hasUbz:'<%= @published_document.has_ubz %>',
                 numberOfPages:parseInt('<%= @published_document.page_count %>'),
-                pagesBaseUrl:'<%= @published_document.persistence_url %>' // public_url
+                pagesBaseUrl:'<%= @published_document.public_url %>' // persistence_url
             },
             fileExtension:"jpg"
         };
