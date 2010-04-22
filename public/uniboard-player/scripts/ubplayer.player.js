@@ -9,7 +9,7 @@ UbPlayer.Player = function(args) {
     sliding:false
   };
   this.viewer = new UbPlayer.Viewer();
-  this.currentPage = { number:1, width:0, height:0 };
+  this.currentPage = { number:1, ratio:1.6 };
   this.state = "full";
   this.mode = "normal";
   this.resizeMode = "V";
@@ -503,7 +503,7 @@ UbPlayer.Player.prototype.openPage = function(pageNumber){
                 node:jQuery("<div class='appImg'></div>")
               }
             };
-            console.log(app.src);
+
             app.img.node
               .css({
                 position:"absolute",
@@ -519,6 +519,8 @@ UbPlayer.Player.prototype.openPage = function(pageNumber){
               }(app, widget));
               
             jQuery("#current-page").append(app.img.node);
+            
+            that.currentPage.ratio = data.scene.width / data.scene.height;
           }
         }
     });

@@ -55,7 +55,7 @@
 	        
 	        // The iframe tag becomes an img tag
 	        jQuery("#current-page")
-	            .after("<div class='page' id='current-page'><img src='' width='400px' heigth='100%'></div>")
+	            .after("<div class='page' id='current-page'><img src=''></div>")
                 .remove();
         }
         
@@ -72,37 +72,28 @@
         }
         
         jQuery(window).resize(function(){
-            var ratioWh = 1.66;
+            var ratioWh = myUbPlayer.currentPage.ratio;
   	        var paddingTop = parseInt(jQuery("#body").css("padding-top").substring(0, jQuery("#body").css("padding-top").length-2));
   	        var paddingBottom = parseInt(jQuery("#body").css("padding-bottom").substring(0, jQuery("#body").css("padding-bottom").length-2));
   	    
   	        if(myUbPlayer.resizeMode === "V"){
-  	            /*if(jQuery.browser.msie || jQuery.browser.mozilla){
-  	                jQuery(".page").height(jQuery(window).height() - paddingTop - paddingBottom);
-  	                jQuery(".page").css("width", "auto");
-  	            }else{*/
   	                jQuery(".page").css({ height:"100%" });
   	                jQuery(".page").width(jQuery(".page").height() * ratioWh);
-                //}
   	        }else if(myUbPlayer.resizeMode === "H"){
-  	            /*if(jQuery.browser.msie || jQuery.browser.mozilla){
   	                jQuery(".page").width(jQuery(window).width() - 76);
-  	                jQuery(".page").css("height", "auto");
-  	            }else{*/
-  	                jQuery(".page").width(jQuery(window).width() - 76);
-  	                jQuery(".page").height(jQuery(".page").width() * (0.60));
-  	            //}
+  	                jQuery(".page").height(jQuery(".page").width() * (0.6));
   	        }
   	    
   	        if(jQuery(window).width() < (jQuery(".page").width() + 76) && myUbPlayer.resizeMode === "V"){
   	            myUbPlayer.resizeMode = "H";
   	            jQuery(window).resize();
   	        }else if(jQuery(window).height() < (jQuery(".page").height() + paddingTop + paddingBottom) && 
-  	        myUbPlayer.resizeMode === "H"){
+  	                                                                        myUbPlayer.resizeMode === "H"){
   	            myUbPlayer.resizeMode = "V";
   	            jQuery(window).resize();
   	        }
-  	    
+  	        
+  	        //jQuery("#current-page>img").width(jQuery("#current-page").width());
             jQuery("#document-links").width(jQuery(".page").width());
         });
       

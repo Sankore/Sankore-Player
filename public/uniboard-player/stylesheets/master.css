@@ -140,6 +140,12 @@ label{ display:block; margin-top:15px; }
   position:relative;
 }
 
+#current-page>img{
+    border:1px solid grey;
+    width:400px;
+    height:auto;
+}
+
 #document-title span{
   font-weight:bold;
 }
