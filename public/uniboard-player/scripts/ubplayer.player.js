@@ -438,7 +438,7 @@ UbPlayer.Player.prototype.drawIndexThumbnails = function(thumbsPerRow){
   var that = this;
   var newIndex = jQuery("#index>div").length + 1;
   var newIndexThumbnailNumber = this.formatPageNumber(newIndex);
-  var newIndexThumbnail = jQuery("<div class='thumbnail index'><img src='" + this.documentData.pagesBaseUrl + "/page" + 
+  var newIndexThumbnail = jQuery("<div class='thumbnail index'><img class='thumb-img' src='" + this.documentData.pagesBaseUrl + "/page" + 
                           newIndexThumbnailNumber + 
                           ".thumbnail.jpg' width='auto' height='100%'/></div>");
   newIndexThumbnail
@@ -533,10 +533,9 @@ UbPlayer.Player.prototype.openPage = function(pageNumber){
                   .hide()
                   .appendTo(jQuery("#current-page"));
               }
-            );
-            
-          jQuery("#current-page").append(app.img.node);
-          
+            )
+            .appendTo(jQuery("#current-page"));
+                      
           that.currentPage.ratio = data.scene.width / data.scene.height;
         }
       }

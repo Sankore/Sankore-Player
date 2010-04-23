@@ -50,10 +50,27 @@
 	    // load specific stylesheets according to the window width
         if(jQuery(window).width() < 800){ 
             myUbPlayer.state = "embedded";
-            jQuery("body").append('<link rel=stylesheet type="text/css" href="/uniboard-player/stylesheets/master.css">');
-            jQuery("body").append('<link rel=stylesheet type="text/css" href="/uniboard-player/stylesheets/master_embed.css">');
+            if(!jQuery.browser.msie){
+                jQuery("body").append('<link rel=stylesheet type="text/css" href="/uniboard-player/stylesheets/master.css">');
+                jQuery("body").append('<link rel=stylesheet type="text/css" href="/uniboard-player/stylesheets/master_embed.css">');
+            }else{
+                
+            }
         }else{
-            jQuery("body").append('<link rel=stylesheet type="text/css" href="/uniboard-player/stylesheets/master.css">');
+            if(!jQuery.browser.msie){
+                jQuery("body").append('<link rel=stylesheet type="text/css" href="/uniboard-player/stylesheets/master.css">');
+            }else{
+                jQuery("body").append('<link rel=stylesheet type="text/css" href="/uniboard-player/stylesheets/master_ie.css">');
+                if(jQuery.browser.version !== "8.0"){
+                    jQuery("#alert").css({display: "table"});
+                    jQuery("#alert-background").animate({opacity:0.9},500);
+                    jQuery("#alert-box").html('<p>You are running an old version of Internet Explorer. Please update your browser.</p><br/><br/><p><a href="http://www.microsoft.com">Microsoft Internet Explorer webpage</a></p></div>');
+                }else{
+                    jQuery("#alert").css({display: "table"});
+                    jQuery("#alert-background").animate({opacity:0.5},500);
+                    jQuery("#alert-box").html('<p>Using Unboard Player under Microsoft Internet Explorer…</p><br/><br/><p><a href="http://www.microsoft.com">Google Chrome, Firefox, Safari</a></p><br/><br/><p><a href="#">close</a></p></div>');
+                }
+            }
             jQuery("#menu-share-dropdown").appendTo("#document-links");
         }
         
@@ -81,7 +98,11 @@
   	        
             jQuery("#document-links").width(jQuery(".page").width());
         });
-      
+        
+        jQuery("#alert").click(function(){
+            jQuery(this).hide();
+        });
+        
         // The current document has to be resized after the stylesheets have been loaded
         setTimeout(function(){jQuery(window).resize();jQuery("#body").css({visibility:"visible"})}, 500);
     });
@@ -171,7 +192,7 @@
                 color:red; font-size:10px; line-height:80px; text-decoration:underline; 
                 letter-spacing:normal" id="thumbnail-previous" class="disabled"></div>
                 <div id="thumbnails-canvas">
-                    <div class="thumbnail"><img src="" alt="thumbnail" height="100%" width="auto"/></div>
+                    <div class="thumbnail"><img class="thumb-img" src="" alt="thumbnail" height="100%" width="auto"/></div>
                 </div>
                 <div style="width:40px; height:80px; position:absolute; top:45px; left:100%; 
                 margin-left:-41px; color:red; font-size:10px; line-height:80px; 
@@ -258,6 +279,11 @@
                 </div><!-- vertical and horizontal centered iframe -->
             </div>
         </div>
+    </div>
+    
+    <div id="alert" style="display:none">
+        <div id="alert-background" style="filter:alpha(opacity=0);"></div>
+        <div id="alert-box"></div>
     </div>
     
 </body>
