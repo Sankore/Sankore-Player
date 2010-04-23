@@ -180,9 +180,8 @@ UbPlayer.Player = function(args) {
   
   // Load the images
   for(var i=1; i<=this.numberOfPages; i++){
-    this.pagesImg[i] = new Image(100, 100);
+    this.pagesImg[i] = new Image();
     this.pagesImg[i].src = this.documentData.pagesBaseUrl + "/page" + formatPageNumber(i) + ".jpg";
-    jQuery("body").append(this.pagesImg[i]);
   }
   
   // Add the thumbnails
