@@ -16,7 +16,7 @@ UbPlayer.Player = function(args) {
   this.adaptPageTimer = null;
   this.sliderTimer = null;
   this.documentData = args.documentData;
-  this.fileExtension = args.fileExtension;
+  this.pagesImg = args.pagesImg;
   this.thumbnails = {
     thumbsToHide:[],
     firstVisibleThumb:null,
@@ -177,7 +177,14 @@ UbPlayer.Player = function(args) {
       that.thumbsBar.sliding = false;
     } 
   });
-   
+  
+  // Load the images
+  for(var i=1; i<=this.numberOfPages; i++){
+    this.pagesImg[i] = new Image(100, 100);
+    this.pagesImg[i].src = this.documentData.pagesBaseUrl + "/page" + formatPageNumber(i) + ".jpg";
+    jQuery("body").append(this.pagesImg[i]);
+  }
+  
   // Add the thumbnails
   var newThumbnail = null;
   var formattedThumbNumber = null;
@@ -468,7 +475,7 @@ UbPlayer.Player.prototype.formatDate = function(date){
 UbPlayer.Player.prototype.openPage = function(pageNumber){
   var that = this;
   var formattedPageNumber = this.formatPageNumber(pageNumber);
-  var fileName = this.documentData.pagesBaseUrl + "/page" + formattedPageNumber + "." + this.fileExtension;
+  var fileName = this.documentData.pagesBaseUrl + "/page" + formattedPageNumber + ".jpg";
   var jsonName = this.documentData.pagesBaseUrl.replace("assets.getuniboard.com", "web.getuniboard.com/assets-proxy") + 
                     "/page" + formattedPageNumber + ".json";
                         

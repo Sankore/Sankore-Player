@@ -42,7 +42,7 @@
                 numberOfPages:parseInt('<%= @published_document.page_count %>'),
                 pagesBaseUrl:'<%= @published_document.public_url %>' // persistence_url
             },
-            fileExtension:"jpg"
+            pagesImg:[]
         };
         
 	    myUbPlayer = new UbPlayer.Player(args);
