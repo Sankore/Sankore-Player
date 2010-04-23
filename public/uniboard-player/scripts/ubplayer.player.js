@@ -321,9 +321,9 @@ UbPlayer.Player.prototype.goToPage = function(pageNumber){
     300,
     "easeInQuint",
     function(){
-    	jQuery("#thumbnails").css({width: jQuery("#thumbnails").width()});
-      jQuery("#boards").css({ marginLeft:checkPoint.start });
       that.openPage(that.currentPage.number);
+      jQuery("#thumbnails").css({width: jQuery("#thumbnails").width()});
+      jQuery("#boards").css({ marginLeft:checkPoint.start });
       jQuery("#boards").animate(
         {marginLeft:"0"},
         300,
@@ -487,6 +487,8 @@ UbPlayer.Player.prototype.openPage = function(pageNumber){
   //jQuery("#thumbnails-canvas>div").removeClass("current");
   //jQuery(jQuery("#thumbnails-canvas>div")[pageNumber-1]).addClass("current");
   
+  jQuery("#current-page>img").attr("src", fileName);
+  
   // Slider handler
   /*if(!this.thumbsBar.sliding)
     jQuery("#thumbnails-slider-handler").appendTo(jQuery("#thumbnails-slider>div")[pageNumber-1]);*/
@@ -539,8 +541,6 @@ UbPlayer.Player.prototype.openPage = function(pageNumber){
         }
       }
   });
-
-  jQuery("#current-page>img").attr("src", fileName);
   
   jQuery(window).resize();
 
