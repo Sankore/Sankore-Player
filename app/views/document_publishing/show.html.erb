@@ -83,7 +83,7 @@
         });
       
         // The current document has to be resized after the stylesheets have been loaded
-        setTimeout(function(){jQuery(window).resize()}, 500);
+        setTimeout(function(){jQuery(window).resize();jQuery("#body").css({visibility:"visible"})}, 500);
     });
 	
 	</script>
@@ -108,7 +108,7 @@
         </div>
     </div>
 
-    <div id="body">
+    <div id="body" style="visibility:hidden">
         
         <div id="description">
             <div id="description-text"></div>
