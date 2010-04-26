@@ -501,10 +501,10 @@ UbPlayer.Player.prototype.openPage = function(pageNumber){
             src:that.documentData.pagesBaseUrl + "/" + widget.src + "/" + widget.startFile,
             img:{
               src:that.documentData.pagesBaseUrl + "/widgets/" + widget.uuid + ".png",
-              widthInPercent:widget.width / data.scene.width * 100,
-              heightInPercent:widget.height /data.scene.height * 100,
-              leftInPercent:(widget.x + Math.abs(data.scene.x)) / data.scene.width * 100,
-              topInPercent:(widget.y + Math.abs(data.scene.y)) / data.scene.height * 100,
+              widthInPercent:widget.width / parseFloat(data.scene.width) * 100,
+              heightInPercent:widget.height / parseFloat(data.scene.height) * 100,
+              leftInPercent:(widget.x + Math.abs(parseFloat(data.scene.x))) / parseFloat(data.scene.width) * 100,
+              topInPercent:(widget.y + Math.abs(parseFloat(data.scene.y))) / parseFloat(data.scene.height) * 100,
               node:jQuery("<div class='appImg'></div>")
             }
           };
