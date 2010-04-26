@@ -495,16 +495,25 @@ UbPlayer.Player.prototype.openPage = function(pageNumber){
     
   jQuery.getJSON(jsonName, function(data) {
       if(data){
+        var scene = {
+          x:parseFloat(data.scene.x),
+          y:parseFloat(data.scene.y),
+          width:parseFloat(data.scene.width),
+          height:parseFloat(data.scence.height)
+        }
+        var widget = {};
+        var app = {};
+        
         for(var i in data.widgets){
-          var widget = data.widgets[i];
-          var app = {
+          widget = data.widgets[i];
+          app = {
             src:that.documentData.pagesBaseUrl + "/" + widget.src + "/" + widget.startFile,
             img:{
               src:that.documentData.pagesBaseUrl + "/widgets/" + widget.uuid + ".png",
-              widthInPercent:widget.width / parseFloat(data.scene.width) * 100,
-              heightInPercent:widget.height / parseFloat(data.scene.height) * 100,
-              leftInPercent:(widget.x + Math.abs(parseFloat(data.scene.x))) / parseFloat(data.scene.width) * 100,
-              topInPercent:(widget.y + Math.abs(parseFloat(data.scene.y))) / parseFloat(data.scene.height) * 100,
+              widthInPercent:parseFloat(widget.width) / scene.width * 100,
+              heightInPercent:parseFloat(widget.height) / scene.height * 100,
+              leftInPercent:(parseFloat(widget.x) + Math.abs(scene.x)) / scene.width * 100,
+              topInPercent:(parseFloat(widget.y) + Math.abs(scene.y)) / scene.height * 100,
               node:jQuery("<div class='appImg'></div>")
             }
           };
@@ -536,7 +545,7 @@ UbPlayer.Player.prototype.openPage = function(pageNumber){
             )
             .appendTo(jQuery("#current-page"));
                       
-          that.currentPage.ratio = data.scene.width / data.scene.height;
+          that.currentPage.ratio = scene.width / scene.height;
         }
       }
   });
