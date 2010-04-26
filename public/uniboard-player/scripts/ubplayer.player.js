@@ -499,7 +499,7 @@ UbPlayer.Player.prototype.openPage = function(pageNumber){
           x:parseFloat(data.scene.x),
           y:parseFloat(data.scene.y),
           width:parseFloat(data.scene.width),
-          height:parseFloat(data.scence.height)
+          height:parseFloat(data.scene.height)
         }
         var widget = {};
         var app = {};
