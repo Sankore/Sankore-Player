@@ -62,13 +62,13 @@
             }else{
                 jQuery("body").append('<link rel=stylesheet type="text/css" href="/uniboard-player/stylesheets/master_ie.css">');
                 if(jQuery.browser.version !== "8.0"){
-                    jQuery("#alert").css({display: "table"});
+                    jQuery("#alert").css({display: "block"});
                     jQuery("#alert-background").animate({opacity:0.9},500);
-                    jQuery("#alert-box").html('<p>You are running an old version of Internet Explorer. Please update your browser.</p><br/><br/><p><a href="http://www.microsoft.com">Microsoft Internet Explorer webpage</a></p></div>');
+                    jQuery("#alert-box").html('<p>You are running an old version of Internet Explorer. Please update your browser or install Google Chrome Frame.</p><br/><br/><p><a href="http://www.google.com/chromeframe">Download Google Chrome Frame</a></p></div>');
                 }else{
                     jQuery("#alert").css({display: "table"});
                     jQuery("#alert-background").animate({opacity:0.5},500);
-                    jQuery("#alert-box").html('<p>Using Unboard Player under Microsoft Internet Explorer…</p><br/><br/><p><a href="http://www.microsoft.com">Google Chrome, Firefox, Safari</a></p><br/><br/><p><a href="#">close</a></p></div>');
+                    jQuery("#alert-box").html('<p>For the best experience with Uniboard player, please install Google Chrome Frame.</p><br/><br/><p><a href="http://www.google.com/chromeframe">Download Google Chrome Frame</a></p><br/><br/><p><a href="#">close</a></p></div>');
                 }
             }
             jQuery("#menu-share-dropdown").appendTo("#document-links");
