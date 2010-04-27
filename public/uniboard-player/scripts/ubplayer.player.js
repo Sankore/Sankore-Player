@@ -507,7 +507,8 @@ UbPlayer.Player.prototype.openPage = function(pageNumber){
         for(var i in data.widgets){
           widget = data.widgets[i];
           app = {
-            src:that.documentData.pagesBaseUrl + "/" + widget.src + "/" + widget.startFile,
+            src:widget.startFile.indexOf("http://") === -1 ? that.documentData.pagesBaseUrl
+                + "/" + widget.src + "/" + widget.startFile : widget.startFile,
             img:{
               src:that.documentData.pagesBaseUrl + "/widgets/" + widget.uuid + ".png",
               widthInPercent:parseFloat(widget.width) / scene.width * 100,
@@ -525,7 +526,6 @@ UbPlayer.Player.prototype.openPage = function(pageNumber){
               height:app.img.heightInPercent + "%",
               top:app.img.topInPercent + "%",
               left:app.img.leftInPercent + "%"})
-            //.append("<img src='" + app.img.src + "' width='100%' height='100%'>")
             .click(function(app, widget){
               return function(e){
                 that.viewer.show(app.src, widget.nominalWidth, widget.nominalHeight);
