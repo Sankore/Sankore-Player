@@ -179,9 +179,9 @@ UbPlayer.Player = function(args) {
   });
   
   // Load the images
-  for(var i=1; i<=this.numberOfPages; i++){
+  for(var i=1; i<=this.documentData.numberOfPages; i++){
     this.pagesImg[i] = new Image();
-    this.pagesImg[i].src = this.documentData.pagesBaseUrl + "/page" + formatPageNumber(i) + ".jpg";
+    this.pagesImg[i].src = this.documentData.pagesBaseUrl + "/page" + this.formatPageNumber(i) + ".jpg";
   }
   
   // Add the thumbnails
