@@ -160,7 +160,7 @@ UbPlayer.Player = function(args) {
 
   // Slider handler
   jQuery("#thumbnails-slider>div:first").append(jQuery("#thumbnails-slider-handler"));
-  jQuery("#thumbnails-slider-handler").draggable({
+  /*jQuery("#thumbnails-slider-handler").draggable({
     axis: 'x',
     containment:[ jQuery("#thumbnails-slider>div:first-child").offset().left, 0, 
                   jQuery("#thumbnails-slider>div:first-child").offset().left + jQuery("#thumbnails-slider>div:first-child").width()*this.documentData.numberOfPages-20, 0  ],
@@ -176,7 +176,7 @@ UbPlayer.Player = function(args) {
       jQuery(this).appendTo(jQuery("#thumbnails-slider>div")[that.currentPage.number-1]);
       that.thumbsBar.sliding = false;
     } 
-  });
+  });*/
   
   // Load the images
   for(var i=1; i<=this.documentData.numberOfPages; i++){
@@ -490,8 +490,10 @@ UbPlayer.Player.prototype.openPage = function(pageNumber){
   jQuery("#current-page>img").attr("src", fileName);
   
   // Slider handler
-  /*if(!this.thumbsBar.sliding)
-    jQuery("#thumbnails-slider-handler").appendTo(jQuery("#thumbnails-slider>div")[pageNumber-1]);*/
+  if(!this.thumbsBar.sliding)
+    jQuery("#thumbnails-slider-handler")
+      .appendTo(jQuery("#thumbnails-slider>div")[pageNumber-1])
+      .html(pageNumber);
     
   jQuery.getJSON(jsonName, function(data) {
       if(data){
@@ -533,14 +535,26 @@ UbPlayer.Player.prototype.openPage = function(pageNumber){
             }(app, widget))
             .hover(
               function(){
+                jQuery(this)
+                  .css({
+                    background:"url(/uniboard-player/images/app-img-bck.png)",
+                  })
                 jQuery("#app-border")
                   .appendTo(jQuery(this))
                   .show();
+                jQuery("#app-border-middle>img")
+                  .animate({opacity:1});
               },
               function(){
+                jQuery(this)
+                  .css({
+                    background:"none",
+                  })
                 jQuery("#app-border")
                   .hide()
                   .appendTo(jQuery("#current-page"));
+                jQuery("#app-border-middle>img")
+                  .css({opacity:0});
               }
             )
             .appendTo(jQuery("#current-page"));
