@@ -178,12 +178,6 @@ UbPlayer.Player = function(args) {
     } 
   });*/
   
-  // Load the images
-  for(var i=1; i<=this.documentData.numberOfPages; i++){
-    this.pagesImg[i] = new Image();
-    this.pagesImg[i].src = this.documentData.pagesBaseUrl + "/page" + this.formatPageNumber(i) + ".jpg";
-  }
-  
   // Add the thumbnails
   var newThumbnail = null;
   var formattedThumbNumber = null;
@@ -261,6 +255,11 @@ UbPlayer.Player = function(args) {
   
   UbPlayer.reduceDomain();
   this.openPage(1);
+  // Load the images
+  for(var i=1; i<=this.documentData.numberOfPages; i++){
+    this.pagesImg[i] = new Image();
+    this.pagesImg[i].src = this.documentData.pagesBaseUrl + "/page" + this.formatPageNumber(i) + ".jpg";
+  }
 };
 
 UbPlayer.Player.prototype.sliderListener = function(currentPageNmbr){
@@ -506,6 +505,8 @@ UbPlayer.Player.prototype.openPage = function(pageNumber){
         var widget = {};
         var app = {};
         
+        that.currentPage.ratio = scene.width / scene.height;
+        
         for(var i in data.widgets){
           widget = data.widgets[i];
           app = {
@@ -558,8 +559,28 @@ UbPlayer.Player.prototype.openPage = function(pageNumber){
               }
             )
             .appendTo(jQuery("#current-page"));
-                      
-          that.currentPage.ratio = scene.width / scene.height;
+            
+          var showAppImg = jQuery("<img/>");
+          showAppImg
+            .attr("src", "/uniboard-player/images/app-view-start.png")
+            .css({
+              opacity:0,
+              position:"absolute",
+              top:-18,
+              left:"50%",
+              marginLeft:-10})
+            .appendTo(app.img.node);
+          
+            setTimeout(
+              function(showAppImg){
+                return function(){
+                  showAppImg.animate({opacity:1},function(){
+                    setTimeout(function(){showAppImg.animate({opacity:0},function(){showAppImg.remove()})},2000);
+                  })
+                }
+              }(showAppImg)
+              ,(parseInt(i)+1)*1000
+            );          
         }
       }
   });
