@@ -575,11 +575,11 @@ UbPlayer.Player.prototype.openPage = function(pageNumber){
               function(showAppImg){
                 return function(){
                   showAppImg.animate({opacity:1},function(){
-                    setTimeout(function(){showAppImg.animate({opacity:0},function(){showAppImg.remove()})},2000);
+                    setTimeout(function(){showAppImg.animate({opacity:0},function(){showAppImg.remove()})},1000);
                   })
                 }
               }(showAppImg)
-              ,(parseInt(i)+1)*1000
+              ,(parseInt(i)+1)*500
             );          
         }
       }
