@@ -1,3 +1,5 @@
+body{ height:100%; width:100%; overflow:hidden; display:table; font-family:helvetica, arial, sans-serif; background-color:rgb(236, 237, 238) }
+#boards{ background-color:rgb(236, 237, 238) }
 
 #head{ display:none }
 #thumbnails{ display:none }
