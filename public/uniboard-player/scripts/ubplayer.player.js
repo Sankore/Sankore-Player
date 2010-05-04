@@ -474,7 +474,7 @@ UbPlayer.Player.prototype.openPage = function(pageNumber){
   var that = this;
   var formattedPageNumber = this.formatPageNumber(pageNumber);
   var fileName = this.documentData.pagesBaseUrl + "/page" + formattedPageNumber + ".jpg";
-  var jsonName = this.documentData.pagesBaseUrl.replace("migration.getuniboard.com.s3.amazonaws.com", "web.getuniboard.com/assets-proxy") + 
+  var jsonName = this.documentData.pagesBaseUrl.replace("assets.getuniboard.com", "web.getuniboard.com/assets-proxy") + 
                     "/page" + formattedPageNumber + ".json";
                         
   this.currentPage.number = pageNumber;
