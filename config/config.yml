@@ -1,24 +1,23 @@
 development:
 
-  publishing_s3_bucket: 'assets.getuniboard.com'
-  publishing_s3_access_key_id: 'AKIAJSQQ2RDIXG2UOZ5Q'
-  publishing_s3_secret_access_key: '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'
+  publishing_s3_bucket: 'migration.getuniboard.com'
+  publishing_s3_access_key_id: 'AKIAJZTZHGFWXCS2KZPQ'
+  publishing_s3_secret_access_key: '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'
 
-  publishing_s3_document_endpoint: 'http://assets.getuniboard.com'
+  publishing_s3_document_endpoint: 'http://migration.getuniboard.com.s3.amazonaws.com'
 
 test:
 
-  publishing_s3_bucket: 'assets.getuniboard.com'
-  publishing_s3_access_key_id: 'AKIAJSQQ2RDIXG2UOZ5Q'
-  publishing_s3_secret_access_key: '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'
+  publishing_s3_bucket: 'migration.getuniboard.com'
+  publishing_s3_access_key_id: 'AKIAJZTZHGFWXCS2KZPQ'
+  publishing_s3_secret_access_key: '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'
 
-  publishing_s3_document_endpoint: 'http://assets.getuniboard.com'
+  publishing_s3_document_endpoint: 'http://migration.getuniboard.com.s3.amazonaws.com'
   
 production:
 
-  publishing_s3_bucket: 'assets.getuniboard.com'
-  publishing_s3_access_key_id: 'AKIAJSQQ2RDIXG2UOZ5Q'
-  publishing_s3_secret_access_key: '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'
+  publishing_s3_bucket: 'migration.getuniboard.com'
+  publishing_s3_access_key_id: 'AKIAJZTZHGFWXCS2KZPQ'
+  publishing_s3_secret_access_key: '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'
 
-  publishing_s3_document_endpoint: 'http://assets.getuniboard.com'
-
+  publishing_s3_document_endpoint: 'http://migration.getuniboard.com.s3.amazonaws.com'
