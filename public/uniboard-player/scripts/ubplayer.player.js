@@ -340,18 +340,14 @@ UbPlayer.Player.prototype.goToPage = function(pageNumber){
     function boardsAnimStart(){
       that.openPage(that.currentPage.number);
       jQuery("#thumbnails").css({width: jQuery("#thumbnails").width()});
-      jQuery("#boards").css("-webkit-transition-duration", "1ms");
+      jQuery("#boards").css("-webkit-transition-duration", "0ms");
       jQuery("#boards").css({marginLeft:checkPoint.start});
-      jQuery("#boards").get(0).removeEventListener("webkitTransitionEnd",boardsAnimStart, false);
-      jQuery("#boards").get(0).addEventListener("webkitTransitionEnd",boardsAnimStop, false);
     }
     
     function boardsAnimStop(){
-      jQuery("#boards").css("-webkit-transition-duration", "1ms");
+      jQuery("#boards").css("-webkit-transition-duration", "0ms");
       jQuery("#boards").css("-webkit-transition-timing", "ease-out");
       jQuery("#boards").css({marginLeft:0});
-      jQuery("#boards").get(0).removeEventListener("webkitTransitionEnd",boardsAnimStop, false);
-      jQuery("#boards").get(0).addEventListener("webkitTransitionEnd",boardsAnimEnd, false); 
     }
     
     function boardsAnimEnd(){
@@ -361,7 +357,9 @@ UbPlayer.Player.prototype.goToPage = function(pageNumber){
     }
     
     jQuery("#boards").css({marginLeft:checkPoint.finish});
-    jQuery("#boards").get(0).addEventListener("webkitTransitionEnd",boardsAnimStart, false);
+    boardAnimStart();
+    boardAnimStop();
+    boardAnimEnd();
   }
 }
 
