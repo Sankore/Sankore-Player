@@ -347,7 +347,7 @@ UbPlayer.Player.prototype.goToPage = function(pageNumber){
     }
     
     function boardsAnimStop(){
-      jQuery("#boards").css("-webkit-transition-duration", "300ms");
+      jQuery("#boards").css("-webkit-transition-duration", "1ms");
       jQuery("#boards").css("-webkit-transition-timing", "ease-out");
       jQuery("#boards").css({marginLeft:0});
       jQuery("#boards").get(0).removeEventListener("webkitTransitionEnd",boardsAnimStop, false);

@@ -1,5 +1,5 @@
 .boardsEnableAnimation{
     -webkit-transition-property:margin-left;
-    -webkit-transition-duration:300ms;
+    -webkit-transition-duration:1ms;
     -webkit-transition-timing:ease-in;
 }
