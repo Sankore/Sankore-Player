@@ -357,9 +357,9 @@ UbPlayer.Player.prototype.goToPage = function(pageNumber){
     }
     
     jQuery("#boards").css({marginLeft:checkPoint.finish});
-    boardAnimStart();
-    boardAnimStop();
-    boardAnimEnd();
+    boardsAnimStart();
+    boardsAnimStop();
+    boardsAnimEnd();
   }
 }
 
