@@ -160,7 +160,7 @@ UbPlayer.Player = function(args) {
 
   // Slider handler
   jQuery("#thumbnails-slider>div:first").append(jQuery("#thumbnails-slider-handler"));
-  /*jQuery("#thumbnails-slider-handler").draggable({
+  jQuery("#thumbnails-slider-handler").draggable({
     axis: 'x',
     containment:[ jQuery("#thumbnails-slider>div:first-child").offset().left, 0, 
                   jQuery("#thumbnails-slider>div:first-child").offset().left + jQuery("#thumbnails-slider>div:first-child").width()*this.documentData.numberOfPages-20, 0  ],
@@ -176,7 +176,7 @@ UbPlayer.Player = function(args) {
       jQuery(this).appendTo(jQuery("#thumbnails-slider>div")[that.currentPage.number-1]);
       that.thumbsBar.sliding = false;
     } 
-  });*/
+  });
   
   // Add the thumbnails
   var newThumbnail = null;
@@ -315,26 +315,55 @@ UbPlayer.Player.prototype.goToPage = function(pageNumber){
 	  
 	this.viewer.hide();
 	
-  jQuery("#boards").stop().animate(
-    {marginLeft:checkPoint.finish},
-    300,
-    "easeInQuint",
-    function(){
+	if(!jQuery.browser.safari){ // JS animation if not safari
+    jQuery("#boards").stop().animate(
+      {marginLeft:checkPoint.finish},
+      300,
+      "easeInQuint",
+      function(){
+        that.openPage(that.currentPage.number);
+        jQuery("#thumbnails").css({width: jQuery("#thumbnails").width()});
+        jQuery("#boards").css({ marginLeft:checkPoint.start });
+        jQuery("#boards").animate(
+          {marginLeft:"0"},
+          300,
+          "easeOutQuint",
+          function(){
+            jQuery("#thumbnails").css({width: "auto"});
+            jQuery("#current-page")
+              .bind("mouseleave", that.boardButtonOutHandler);
+          }
+        );
+      }
+    );
+  }else{ // CSS animations if safari
+    
+    function boardsAnimStart(){
       that.openPage(that.currentPage.number);
       jQuery("#thumbnails").css({width: jQuery("#thumbnails").width()});
-      jQuery("#boards").css({ marginLeft:checkPoint.start });
-      jQuery("#boards").animate(
-        {marginLeft:"0"},
-        300,
-        "easeOutQuint",
-        function(){
-          jQuery("#thumbnails").css({width: "auto"});
-          jQuery("#current-page")
-            .bind("mouseleave", that.boardButtonOutHandler);
-        }
-      );
+      jQuery("#boards").css("-webkit-transition-duration", "1ms");
+      jQuery("#boards").css({marginLeft:checkPoint.start});
+      jQuery("#boards").get(0).removeEventListener("webkitTransitionEnd",boardsAnimStart, false);
+      jQuery("#boards").get(0).addEventListener("webkitTransitionEnd",boardsAnimStop, false);
     }
-  );
+    
+    function boardsAnimStop(){
+      jQuery("#boards").css("-webkit-transition-duration", "300ms");
+      jQuery("#boards").css("-webkit-transition-timing", "ease-out");
+      jQuery("#boards").css({marginLeft:0});
+      jQuery("#boards").get(0).removeEventListener("webkitTransitionEnd",boardsAnimStop, false);
+      jQuery("#boards").get(0).addEventListener("webkitTransitionEnd",boardsAnimEnd, false); 
+    }
+    
+    function boardsAnimEnd(){
+      jQuery("#thumbnails").css({width: "auto"});
+      jQuery("#current-page")
+        .bind("mouseleave", that.boardButtonOutHandler);
+    }
+    
+    jQuery("#boards").css({marginLeft:checkPoint.finish});
+    jQuery("#boards").get(0).addEventListener("webkitTransitionEnd",boardsAnimStart, false);
+  }
 }
 
 UbPlayer.Player.prototype.adaptPage = function(){
