@@ -66,9 +66,9 @@
                     jQuery("body").append('<link rel=stylesheet type="text/css" href="/uniboard-player/stylesheets/master_ipad.css">');
                     addSwipeListener(document.body, function(e) {
                         if(e.direction=="right"){
-                            myUbPlayer.player.gotoPage("PREVIOUS");
+                            myUbPlayer.player.goToPage("PREVIOUS");
                         }else if(e.direction=="left"){
-                            myUbPlayer.player.gotoPage("NEXT");
+                            myUbPlayer.player.goToPage("NEXT");
                         }
                     });
                     jQuery("#boards").addClass("boardsEnableAnimation");
