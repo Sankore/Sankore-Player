@@ -52,7 +52,7 @@ function addSwipeListener(el, listener)
  {
   if (Math.abs(dx) > 100)
   {
-   listener({ target: el, direction: dx > 0 ? 'right '+dx : 'left '+dx });
+   listener({ target: el, direction: dx > 0 ? 'right ' : 'left ' });
   }
   cancelTouch();
  }
