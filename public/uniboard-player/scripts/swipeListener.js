@@ -23,6 +23,7 @@ function addSwipeListener(el, listener)
   startX = null;
   startY = null;
   direction = null;
+  dx = null;
  }
  
  function onTouchMove(e)
