@@ -337,7 +337,7 @@ UbPlayer.Player.prototype.goToPage = function(pageNumber){
       }
     );
   }else{ // CSS animations if safari
-    
+    alert("safari");
     function boardsAnimStart(){
       that.openPage(that.currentPage.number);
       jQuery("#thumbnails").css({width: jQuery("#thumbnails").width()});
