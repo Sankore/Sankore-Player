@@ -197,6 +197,10 @@ UbPlayer.Player = function(args) {
       function(){ jQuery(this).removeClass("selected") })
     .click(function(){
       that.goToPage(jQuery(this).index()+1);
+      if(jQuery("#description").css("display") != "none"){
+        jQuery("#menu-button-showdetails").click();
+        jQuery(window).resize();
+      }
     });
 
   if(!this.documentData.hasPdf){ 
@@ -406,9 +410,22 @@ UbPlayer.Player.prototype.showDescription = function(){
     jQuery("#head-list-share").css("display", "none");
     jQuery("#head-list-closeDescription").css("display", "inline-block");
   });
+  
+  jQuery("#menu-button-previous")
+    .addClass("disabled")
+    .unbind("click");
+  jQuery("#menu-button-next")
+    .addClass("disabled")
+    .unbind("click");
+  jQuery("#menu-button-index")
+    .addClass("disabled")
+    .unbind("toggle")
+    .unbind("click");
 }
 
 UbPlayer.Player.prototype.hideDescription = function(){
+  var that = this;
+  
   jQuery("#description").animate({marginTop:"100%"}, function(){
     jQuery(this)
       .hide()
@@ -421,6 +438,16 @@ UbPlayer.Player.prototype.hideDescription = function(){
     jQuery(window).resize();
     jQuery(window).resize();
   });
+  
+  jQuery("#menu-button-previous")
+    .removeClass("disabled")
+    .bind("click", function(){that.goToPage("PREVIOUS")});
+  jQuery("#menu-button-next")
+    .removeClass("disabled")
+    .bind("click", function(){that.goToPage("NEXT")});
+  jQuery("#menu-button-index")
+    .removeClass("disabled")
+    .toggle(function(){ that.showIndex() }, function(){ that.hideIndex() });
 }
 
 UbPlayer.Player.prototype.showIndex = function(){
