@@ -52,6 +52,7 @@ label{ display:block; margin-top:15px; }
 #menu-button-previous.disabled{ background:url(../images/menu-button-previous-disabled.embed.png) }
 #menu-button-index{ background:url(../images/menu-button-index.png); width:35px }
 #menu-button-index:hover{ background:url(../images/menu-button-index-over.png) }
+#menu-button-index.disabled{ background:url(../images/menu-button-index-disabled.png) }
 #menu-button-showdetails{ background:url(../images/menu-button-showdetails.png); width:33px }
 #menu-button-showdetails:hover{ background:url(../images/menu-button-showdetails-over.png) }
 #menu-button-next{ background:url(../images/menu-button-next.embed.png); width:32px }
@@ -65,6 +66,7 @@ label{ display:block; margin-top:15px; }
 #menu-button-export-right{ background:url(../images/menu-button-export-right.png); width:5px; height:100%; float:left }
 #menu-button-full{ background:url(../images/menu-button-full.png); margin-right:10px; }
 #menu-button-full:hover{ background:url(../images/menu-button-full-over.png) }
+#menu-button-full.disabled{ background:url(../images/menu-button-full-disabled.png) }
 #menu-export-dropdown{ display:none; position:absolute; top:-55px; left:0; margin-left:0px; width:90px; z-index:2; text-indent:30px; }
 #menu-share-dropdown{ display:none; font-size:12px; position:absolute; top:28px; left:100%; margin-left:-122px; width:100px; z-index:2; text-indent:30px; }
 

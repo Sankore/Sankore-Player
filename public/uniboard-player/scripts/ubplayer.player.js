@@ -387,7 +387,12 @@ UbPlayer.Player.prototype.switchToNormalMode = function(){
   jQuery("#foot").show();
   jQuery("#head-list-share").css("display", "inline-block");
   jQuery("#head-list-close").css("display", "none");
-  jQuery("#body").css({paddingTop:40, paddingBottom:110});
+  jQuery("#body").css({paddingTop:40});
+  if(this.thumbsBar.state === "full"){
+    jQuery("#body").css({paddingBottom:110+this.thumbsBar.fullHeightVal});
+  }else{
+    jQuery("#body").css({paddingBottom:110});
+  }
   jQuery(window).resize();
   this.mode = "normal";
 }
@@ -411,6 +416,9 @@ UbPlayer.Player.prototype.showDescription = function(){
     jQuery("#head-list-closeDescription").css("display", "inline-block");
   });
   
+  jQuery("#menu-button-full")
+    .addClass("disabled")
+    .unbind("click");
   jQuery("#menu-button-previous")
     .addClass("disabled")
     .unbind("click");
@@ -439,6 +447,9 @@ UbPlayer.Player.prototype.hideDescription = function(){
     jQuery(window).resize();
   });
   
+  jQuery("#menu-button-full")
+    .removeClass("disabled")
+    .bind("click", function(){that.switchToFullMode()});
   jQuery("#menu-button-previous")
     .removeClass("disabled")
     .bind("click", function(){that.goToPage("PREVIOUS")});
