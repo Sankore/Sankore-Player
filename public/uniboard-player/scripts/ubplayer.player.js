@@ -602,7 +602,7 @@ UbPlayer.Player.prototype.openPage = function(pageNumber){
               function(){
                 jQuery(this)
                   .css({
-                    background:"url(/uniboard-player/images/app-img-bck.png)",
+                    backgroundImage:"url(/uniboard-player/images/app-img-bck.png)",
                   })
                 jQuery("#app-border")
                   .appendTo(jQuery(this))
@@ -613,7 +613,7 @@ UbPlayer.Player.prototype.openPage = function(pageNumber){
               function(){
                 jQuery(this)
                   .css({
-                    background:"none",
+                    backgroundImage:"none",
                   })
                 jQuery("#app-border")
                   .hide()
