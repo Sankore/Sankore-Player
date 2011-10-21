@@ -1,9 +1,0 @@
-Redirect 307 /software/installer/ http://assets.getuniboard.com.s3.amazonaws.com/installer/
-Redirect 307 /software/library/ http://assets.getuniboard.com.s3.amazonaws.com/library/
-Redirect 307 /software/home/ http://www.google.com
-Redirect 307 /software/purchase/ http://getuniboard.com/buy?utm_source=uniboardApp&utm_medium=banner&utm_campaign=banner_remove_this&show_free_download=false
-Redirect 307 /software/free/messages/ http://getuniboard.com/freeVersionPages/message.html
-Redirect 307 /software/wacom/messages/ http://getuniboard.com/wacom/message.html
-Redirect 307 /widgets/VideoPicker /widgets/videopicker
-
-

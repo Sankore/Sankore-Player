@@ -1,2 +1,0 @@
-module PublishedDocumentsHelper
-end

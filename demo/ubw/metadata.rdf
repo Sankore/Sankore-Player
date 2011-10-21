@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:ub="http://uniboard.mnemis.com/document">
+    <Description about="http://uniboard.mnemis.com/document/f7215053-786f-4093-9c64-fa5f332d98bf">
+        <dc:title>abécédaire français</dc:title>
+        <dc:type></dc:type>
+        <dc:date>2011-09-05</dc:date>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:identifier>http://uniboard.mnemis.com/document/f7215053-786f-4093-9c64-fa5f332d98bf</dc:identifier>
+        <ub:version>4.4.0</ub:version>
+        <ub:size>1280x960</ub:size>
+        <ub:updated-at>2011-03-01T10:00:52Z</ub:updated-at>
+    </Description>
+</RDF>
