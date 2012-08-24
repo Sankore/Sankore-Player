@@ -43,6 +43,7 @@ UbPlayer.Player = function(args) {
     previous:function(){
       var thumbIndex = 0;
       var currentThumb = null;
+      if (that.thumbnails.firstVisibleThumb) {
       jQuery("#thumbnails>#thumbnails-canvas>.thumbnail").each(function(){
         thumbIndex++;
         currentThumb = jQuery(jQuery("#thumbnails>#thumbnails-canvas>.thumbnail")[that.thumbnails.firstVisibleThumb.index()-thumbIndex]);
@@ -58,9 +59,9 @@ UbPlayer.Player = function(args) {
           return false;
         }
       });
+     }
     }
   }
-  
   // Events binding  
   jQuery("#menu-button-previous").click(function(){ that.goToPage("PREVIOUS") });
   jQuery("#menu-button-index").toggle(function(){ that.showIndex() }, function(){ that.hideIndex() });
@@ -107,39 +108,7 @@ UbPlayer.Player = function(args) {
   jQuery("#menu-button-full").click(function(){ 
     that.switchToFullMode();
   });
-  jQuery("#menu-button-showthumbnails").click(function(){
-    var newFootHeight = 0;
-    var easing = "";
-        
-    if(that.thumbsBar.state === "min"){
-      newFootHeight = that.thumbsBar.fullHeightVal;
-      that.thumbsBar.state = "full";
-      easing = "easeOutBack";
-    } else {
-      newFootHeight = that.thumbsBar.minHeightVal;
-      that.thumbsBar.state = "min";
-      easing = "easeInQuint";
-    }
-  
-    if(that.thumbsBar.state === "full"){
-      jQuery("#body").css({paddingBottom:110 + newFootHeight });
-      jQuery(window).resize();
-    }
-    jQuery("#thumbnails").animate(
-      {height:32 + newFootHeight},
-      400,
-      easing,
-      function(){ 
-        jQuery("#body").css({paddingBottom:110 + newFootHeight });
-        jQuery(window).resize();
-      }
-    );
-    jQuery("#foot").animate(
-      {height:96 + newFootHeight, marginTop:-96 -newFootHeight},
-      400,
-      easing
-    );
-  });
+  jQuery("#menu-button-showthumbnails").click(function() { that.showHideThumbnails(); });
 
   // Constructs the slider
   var sliderPage = jQuery("#thumbnails-slider>div:first").clone();
@@ -265,6 +234,46 @@ UbPlayer.Player = function(args) {
     this.pagesImg[i].src = this.documentData.pagesBaseUrl + "/page" + this.formatPageNumber(i) + ".thumbnail.jpg";
   }
 };
+
+UbPlayer.Player.prototype.showHideThumbnails = function() {
+    var newFootHeight = 0;
+    var easing = "";
+    var that = this;
+    var thumbnailBaseHeight = 0;
+    var footerBaseHeight = 64;
+    var footerWidth = 400;
+    var bodyBasePadding;
+ 
+    if(that.thumbsBar.state === "min"){
+      newFootHeight = that.thumbsBar.fullHeightVal;
+      that.thumbsBar.state = "full";
+      easing = "easeOutBack";
+    } else {
+      newFootHeight = that.thumbsBar.minHeightVal;
+      that.thumbsBar.state = "min";
+      easing = "easeInQuint";
+    }
+  
+    if(that.thumbsBar.state === "full"){
+      jQuery("#body").css({paddingBottom: bodyBasePadding + newFootHeight });
+      jQuery(window).resize();
+    }
+    jQuery("#thumbnails").animate(
+      {height: thumbnailBaseHeight + newFootHeight},
+      footerWidth,
+      easing,
+      function(){ 
+        jQuery("#body").css({paddingBottom: bodyBasePadding + newFootHeight });
+        jQuery(window).resize();
+      }
+    );
+
+    jQuery("#foot").animate(
+      {height: footerBaseHeight + newFootHeight, marginTop:-footerBaseHeight - newFootHeight},
+      footerWidth,
+      easing
+    );
+}
 
 UbPlayer.Player.prototype.sliderListener = function(currentPageNmbr){
   var that = this;

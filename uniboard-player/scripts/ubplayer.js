@@ -1,16 +1,19 @@
 var UbPlayer = {};
 
 UbPlayer.playerprefix = "./uniboard-player";
-
+UbPlayer.mode = "fs";
 
 UbPlayer.init = function(playerprefix) {
    UbPlayer.playerprefix = playerprefix;
 }
 
-UbPlayer.launchPlayer = function(file, nbpages) {
+UbPlayer.launchPlayer = function(file, nbpages, mode) {
         console.log("Player opening");    
 
         var myUbPlayer = null;
+
+        // set the mode to be used
+        UbPlayer.mode = mode;
 
         jQuery(document).ready(function(){
 
@@ -32,7 +35,8 @@ UbPlayer.launchPlayer = function(file, nbpages) {
 
         myUbPlayer = new UbPlayer.Player(args);
 
-            // load specific stylesheets according to the window width
+        // load specific stylesheets according to the window width
+        jQuery("body").append('<link rel=stylesheet type="text/css" href="' + UbPlayer.playerprefix + 'stylesheets/master_' + mode + '.css">');
 
         if(jQuery("body").width() < 1000){
             console.log("Player mode embedded");    
@@ -77,6 +81,7 @@ UbPlayer.launchPlayer = function(file, nbpages) {
         }
 
         jQuery(window).resize(function(){
+            if (UbPlayer.mode=="fs") {
                 console.log("Player resize started");    
                 var ratioWh = myUbPlayer.currentPage.ratio;
                 console.log("Player image ratio: " + ratioWh);    
@@ -124,6 +129,7 @@ UbPlayer.launchPlayer = function(file, nbpages) {
                 console.log("switch to V mode");
                     jQuery(window).resize();
                 };
+             } // end if mode
         });
 
         jQuery("#alert").click(function(){
@@ -136,6 +142,8 @@ UbPlayer.launchPlayer = function(file, nbpages) {
         jQuery("#head-embed-box-left").remove();
         jQuery("#menu-button-export").remove();
         jQuery(".menu-box-right").remove();
+
+        myUbPlayer.showHideThumbnails();
 
         // The current document has to be resized after the stylesheets have been loaded
         setTimeout(function() {

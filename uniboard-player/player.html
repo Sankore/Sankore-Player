@@ -16,9 +16,8 @@ if (typeof console == "undefined") {
 }
 UbPlayer.init('./');
 jQuery(document).ready(function() {
-   var i = location.hash.indexOf(",");
-   if (i!=-1)
-     UbPlayer.launchPlayer(location.hash.substring(i + 1), location.hash.substring(1, i));
+   var params = location.hash.substring(1).split(",");
+   UbPlayer.launchPlayer(params[0], params[1], params[2]);
    });
 </script>
 <link href="stylesheets/master.css" type="text/css" rel="stylesheet" type="text/css" />
@@ -39,23 +38,6 @@ jQuery(document).ready(function() {
             <div class="board" id="board-current">
                 <div class='page' id='current-page'>
                     <img id="page-img" src='images/logo-uniboard.png' />
-                    <div id="app-border" style="position:absolute;width:100%;height:100%;display:none;top:0">
-                        <!--<div id="app-border-top">
-                            <div class="corner" style="background:url(images/top-corner-left.png)"></div>
-                            <div class="middle top"></div>
-                            <div class="corner right" style="background:url(images/top-corner-right.png)"></div>
-                        </div>-->
-                        <div id="app-border-middle">
-                            <!--<div class="middle-left"></div>-->
-                            <img style="opacity:0;position:absolute;left:50%;margin-left:-10px; top:-18px;" src="images/app-view-start.png">
-                            <!--<div class="middle-right"></div>-->
-                        </div>
-                        <!--<div id="app-border-bottom">
-                            <div class="corner" style="background:url(images/bottom-corner-left.png)"></div>
-                            <div class="middle bottom"></div>
-                            <div class="corner right" style="background:url(bottom-corner-right.png)"></div>
-                        </div>-->
-                    </div>
                 </div>
             </div>
         </div><!--boards-->
@@ -64,19 +46,15 @@ jQuery(document).ready(function() {
         <div id="index"></div>
    </div>
  <div id="foot">
-        <div style="position:relative; height:100%">
+        <div id="foot-inner">
             <div id="thumbnails">
                 <div id="thumbnails-slider-handler"></div>
                 <div id="thumbnails-slider"><div class="thumbnails-slider-page"></div></div>
-                <div style="width:40px; height:80px; position:absolute; top:45px; left:0px;
-                color:red; font-size:10px; line-height:80px; text-decoration:underline;
-                letter-spacing:normal" id="thumbnail-previous" class="disabled"></div>
+                <div id="thumbnail-previous" class="disabled"></div>
                 <div id="thumbnails-canvas">
                     <div class="thumbnail"><img class="thumb-img" src="" alt="thumbnail" height="100%" width="auto"/></div>
                 </div>
-                <div style="width:40px; height:80px; position:absolute; top:45px; left:100%;
-                margin-left:-41px; color:red; font-size:10px; line-height:80px;
-                text-decoration:underline; letter-spacing:normal" id="thumbnail-next"></div>
+                <div id="thumbnail-next"></div>
             </div><!--thumbnails-->
             <div id="menu-bottom" class="menu bottom">
                 <div class="menu-box-left menu-box">

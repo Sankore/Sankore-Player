@@ -1,0 +1,12 @@
+
+#thumbnails {
+/*  background:url(../images/menu-slider-background.png) repeat-x center 10px; */
+}
+
+#thumbnails-slider {
+ display: none;
+}
+
+.board {
+ padding-bottom: 185px;
+}
