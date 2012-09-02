@@ -13,8 +13,10 @@ UbPlayer.launchPlayer = function(file, nbpages, mode) {
         var myUbPlayer = null;
 
         // set the mode to be used
+        UbPlayer.startMode = mode;
         UbPlayer.mode = mode;
 
+        console.log("Player doc ready");    
         jQuery(document).ready(function(){
 
         var args = {
@@ -33,7 +35,9 @@ UbPlayer.launchPlayer = function(file, nbpages, mode) {
             pagesImg:[]
         };
 
+        console.log("Player initial load start");    
         myUbPlayer = new UbPlayer.Player(args);
+        console.log("Player initial load done");    
 
         // load specific stylesheets according to the window width
         jQuery("body").append('<link rel=stylesheet type="text/css" href="' + UbPlayer.playerprefix + 'stylesheets/master_' + mode + '.css">');
@@ -86,9 +90,10 @@ UbPlayer.launchPlayer = function(file, nbpages, mode) {
                 var ratioWh = myUbPlayer.currentPage.ratio;
                 console.log("Player image ratio: " + ratioWh);    
 
-                var paddingTop = jQuery("#head").height();
-                var paddingBottom = jQuery("#foot").height();
+                var paddingTop = jQuery("#head").is(":visible") ? jQuery("#head").height() : 0;
+                var paddingBottom = jQuery("#foot").is(":visible") ? jQuery("#foot").height() : 0;
 
+                console.log("Player start log");    
                 console.log("Player paddingTop: " + paddingTop);    
                 console.log("Player paddingBottom: " + paddingBottom);    
                 console.log("Player resizeMode: " + myUbPlayer.resizeMode);    
@@ -103,7 +108,8 @@ UbPlayer.launchPlayer = function(file, nbpages, mode) {
 
                 if(myUbPlayer.resizeMode === "V"){
                 console.log("before height: " + jQuery(".page").height());    
-                jQuery(".page").height(jQuery("body").height()-paddingTop-paddingBottom-50);
+                jQuery(".page").height(jQuery("body").height() - paddingTop - paddingBottom - 50);
+                jQuery(".page").css("margin-top", paddingTop + 25);
                 console.log("after height: " + jQuery(".page").height());    
                 jQuery(".page").width(jQuery(".page").height() * ratioWh);
                 }else if(myUbPlayer.resizeMode === "H"){
@@ -140,8 +146,8 @@ UbPlayer.launchPlayer = function(file, nbpages, mode) {
         jQuery("#head-list-closeDescription").remove();
         jQuery("#head-list-share").remove();
         jQuery("#head-embed-box-left").remove();
-        jQuery("#menu-button-export").remove();
-        jQuery(".menu-box-right").remove();
+     //   jQuery("#menu-button-export").remove();
+     //   jQuery(".menu-box-right").remove();
 
         myUbPlayer.showHideThumbnails();
 

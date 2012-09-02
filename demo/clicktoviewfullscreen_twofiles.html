@@ -1,0 +1,31 @@
+<html>
+<head>
+<script type="text/javascript" src="../uniboard-player/scripts/jquery.min.js"></script>
+<script type="text/javascript" src="../uniboard-player/scripts/ubloader.js"></script>
+<script type="text/javascript">
+// This loads the player Javascript code available at ../uniboard-player from where the demo files are located
+// If the demo files are at http://server:port/player/demo/ the player files should be at http://server:port/player/uniboard-player/
+UbLoader.init('../uniboard-player/');
+</script>
+</head>
+<body style="margin: 0; width: 100%; text-align: center;">
+<div class="sankore-preview">
+<!--
+ This loads the UBW file available on http://server:port/player/demo/ubw/
+ You can also specify an absolute URL
+-->
+<a href="javascript:void(0)" onclick="UbLoader.launchPlayer('/player/demo/ubw/', 6, 'fs', 'body'); return false;" title="Click to preview">
+<img src="./ubw/page001.thumbnail.jpg" width="562" height="562" />
+</a>
+</div>
+<div class="sankore-preview">
+<!--
+ This loads the UBW file available on http://server:port/player/demo/ubw2/
+ You can also specify an absolute URL
+-->
+<a href="javascript:void(0)" onclick="UbLoader.launchPlayer('/player/demo/ubw2/', 1, 'fs', 'body'); return false;" title="Click to preview">
+<img src="./ubw2/page001.thumbnail.jpg" width="562" height="562" />
+</a>
+</div>
+</body>
+</html>

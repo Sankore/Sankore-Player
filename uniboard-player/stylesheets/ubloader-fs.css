@@ -1,5 +1,6 @@
 
 #sankoreplayer {
+  display: block;
   position: absolute;
   bottom: 0;
   top: 0;

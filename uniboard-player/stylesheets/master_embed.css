@@ -32,7 +32,6 @@ body {
 }
 
 #page-img {
-  height: 440px;
   height: auto;
   display: table-cell;
   vertical-align: middle;
@@ -45,6 +44,7 @@ body {
 
 .board {
   display: block;
+  padding-bottom: 0px;
 }
 
 

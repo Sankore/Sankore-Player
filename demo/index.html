@@ -1,16 +1,17 @@
 <html>
-<head>
-<script type="text/javascript" src="../uniboard-player/scripts/jquery.min.js"></script>
-<script type="text/javascript" src="../uniboard-player/scripts/ubloader.js"></script>
-<script type="text/javascript">
-UbLoader.init('../uniboard-player/');
-</script>
-</head>
-<body style="margin: 0; width: 100%; text-align: center;">
-<div id="sankore-preview">
-<a href="javascript:void(0)" onclick="UbLoader.launchPlayer('/player2/demo/ubw/', 5, 'fs', 'body'); return false;" title="Click to preview">
-<img src="./ubw/page001.thumbnail.jpg" width="562" height="562" />
-</a>
-</div>
+<body>
+<p>
+To use this demo, you need to use an HTTP server pointing to the parent directory using the /player/ URL of the server. This is necessary to server the sample UBW files used in these demos. You can hos the ubw files in a separate place from the player itself (for this you need to modify the path to the UBW file in the javascript launching the player).
+</p>
+<p>
+The URL for your demo should be: http://host:port/player/demo/index.html
+</p>
+<p>
+This demo contents two different ways to embed UBW files:
+<ul>
+<li>Showing an image preview of the first slide and clicking to launch the player in full screen: <a href="clicktoviewfullscreen.html">one file</a> -  <a href="clicktoviewfullscreen_twofiles.html">two files</a></li>
+<li><a href="viewembed.html">Showing the player in embedded mode</a></li>
+</ul>
+</p>
 </body>
 </html>

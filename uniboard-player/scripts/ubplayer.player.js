@@ -55,7 +55,7 @@ UbPlayer.Player = function(args) {
             return false;
           }
         }else{
-          jQuery("#thumbnail-previous").addClass("disabled");
+          // jQuery("#thumbnail-previous").addClass("disabled");
           return false;
         }
       });
@@ -63,9 +63,11 @@ UbPlayer.Player = function(args) {
     }
   }
   // Events binding  
-  jQuery("#menu-button-previous").click(function(){ that.goToPage("PREVIOUS") });
+  jQuery("#menu-button-first").click(function(){ that.goToPage("FIRST") });
+  jQuery("#menu-button-previous").click(function(){ alert("here"); that.goToPage("PREVIOUS") });
   jQuery("#menu-button-index").toggle(function(){ that.showIndex() }, function(){ that.hideIndex() });
   jQuery("#menu-button-next").click(function(){ that.goToPage("NEXT") });
+  jQuery("#menu-button-last").click(function(){ that.goToPage("LAST") });
   jQuery("#board-button-previous").click(function(){ that.goToPage("PREVIOUS") });
   jQuery("#board-button-next").click(function(){ that.goToPage("NEXT") });
   jQuery("#menu-button-index-embed").toggle(function(){ that.showIndex() }, function(){ that.hideIndex() });
@@ -78,12 +80,13 @@ UbPlayer.Player = function(args) {
   jQuery("#thumbnail-next").click(function(){that.thumbnails.next()});
   jQuery("#thumbnail-previous").click(function(){that.thumbnails.previous()});
   
-  //jQuery("#menu-share-email").click(function(){that.showSharing()});
+  jQuery("#menu-share-email").click(function(){that.showSharing()});
   jQuery("#menubottom-input").change(function(){ that.goToPage(jQuery("#menubottom-input").val()) });
   jQuery("#menu-button-showdetails")
     .toggle(
       function(){ that.showDescription() },
       function(){ that.hideDescription() });
+  
   jQuery("#shareDoc")
    .toggle(
       function(){ jQuery("#menu-share-dropdown").show() },
@@ -173,6 +176,7 @@ UbPlayer.Player = function(args) {
       }
     });
 
+/*
   if(!this.documentData.hasPdf){ 
     jQuery("#menu-export-hasPdf>a").addClass("disabled");
     jQuery("#menu-export-hasPdf").addClass("disabled");
@@ -221,11 +225,12 @@ UbPlayer.Player = function(args) {
     }
   });
   jQuery("#menu-share-twitter>a").attr("href", "http://twitter.com/home?status=Currently reading " + this.documentData.pagesBaseUrl);
+*/
   jQuery("#description-text").append("<a href='mailto:" + this.documentData.authorEmail + "'>" + this.documentData.author + 
                                       "</a><br/>" + this.documentData.title + 
                                       "<br/>" + this.formatDate(this.documentData.publishedAt) + 
                                       "<br/><br/>" + this.documentData.description);
-  jQuery("#menubottom-input").after("/" + this.documentData.numberOfPages);
+//  jQuery("#menubottom-input").after("/" + this.documentData.numberOfPages);
   
   this.openPage(1);
   // Load the images
@@ -300,21 +305,23 @@ UbPlayer.Player.prototype.goToPage = function(pageNumber){
   var that = this;
   
   if(pageNumber === "NEXT"){
-    this.currentPage.number++;
-    checkPoint = { finish:"-200%", start:"100%" };
+    pageNumber = this.currentPage.number + 1;
   }else if(pageNumber === "PREVIOUS"){
-    this.currentPage.number--;
-    checkPoint = { finish:"100%", start:"-200%" };
-  }else{
-    if(pageNumber > this.currentPage.number){
-      checkPoint = { finish:"-200%", start:"100%" };
-    }else if(pageNumber < this.currentPage.number){
-      checkPoint = { finish:"100%", start:"-200%" };
-    }else{
-      return 0;
-    }
-    this.currentPage.number = pageNumber;
+    pageNumber = this.currentPage.number - 1;
+  }else if(pageNumber === "FIRST") {
+    pageNumber = 1;
+  }else if(pageNumber === "LAST") {
+    pageNumber = this.documentData.numberOfPages;
   }
+
+  if(pageNumber > this.currentPage.number){
+      checkPoint = { finish:"-200%", start:"100%" };
+  }else if(pageNumber < this.currentPage.number){
+      checkPoint = { finish:"100%", start:"-200%" };
+  }else{
+      return 0;
+  }
+  this.currentPage.number = pageNumber;
 
   if(this.currentPage.number < 1){
     this.currentPage.number = 1;
@@ -388,6 +395,15 @@ UbPlayer.Player.prototype.switchToFullMode = function(){
   jQuery("#head-list-close").css("display", "inline-block");
   jQuery(window).resize();
   this.mode = "full";
+ 
+  // switching parent to full screen mode
+  if (UbPlayer.startMode=="embed" && parent.UbLoader) {
+     UbPlayer.mode = "fs"; 
+     parent.UbLoader.switchMode("fs");
+     // load full screen css
+     jQuery("body").append('<link rel=stylesheet type="text/css" href="' + UbPlayer.playerprefix + 'stylesheets/master_fs.css">');
+  }
+
 }
 
 UbPlayer.Player.prototype.switchToNormalMode = function(){
@@ -402,6 +418,18 @@ UbPlayer.Player.prototype.switchToNormalMode = function(){
   }
   jQuery(window).resize();
   this.mode = "normal";
+
+  // switching parent back to embed mode
+  if (UbPlayer.startMode=="embed" && parent.UbLoader) {
+     UbPlayer.mode = "embed"; 
+     parent.UbLoader.switchMode("embed");
+
+     // load embed css
+     jQuery("body").append('<link rel=stylesheet type="text/css" href="' + UbPlayer.playerprefix + 'stylesheets/master_embed.css">');
+     // revert manual size setting on current-page div
+     jQuery("#current-page").css("width", "");
+     jQuery("#current-page").css("height", "");
+  }
 }
 
 UbPlayer.Player.prototype.showSharing = function(){
@@ -658,7 +686,7 @@ UbPlayer.Player.prototype.openPage = function(pageNumber){
     jQuery("#menu-button-previous").unbind("click");
     jQuery("#board-button-previous").unbind("click");
   }else{ // Enable previous button if it has no click event
-    if(jQuery("#menu-button-previous").data("events") === null){
+    if(!jQuery("#menu-button-previous").data("events")){
       jQuery("#menu-button-previous").bind("click", function(){that.goToPage("PREVIOUS")});
       jQuery("#board-button-previous").bind("click", function(){that.goToPage("PREVIOUS")});
     }
@@ -669,7 +697,7 @@ UbPlayer.Player.prototype.openPage = function(pageNumber){
     jQuery("#menu-button-next").unbind("click");
     jQuery("#board-button-next").unbind("click");
   }else{ // Enable previous button if it hasn't any click event
-    if(jQuery("#menu-button-next").data("events") === null){
+    if(!jQuery("#menu-button-next").data("events")){
       jQuery("#menu-button-next").bind("click", function(){that.goToPage("NEXT")});
       jQuery("#board-button-next").bind("click", function(){that.goToPage("NEXT")});
     }

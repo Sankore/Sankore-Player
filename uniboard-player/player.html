@@ -50,47 +50,24 @@ jQuery(document).ready(function() {
             <div id="thumbnails">
                 <div id="thumbnails-slider-handler"></div>
                 <div id="thumbnails-slider"><div class="thumbnails-slider-page"></div></div>
-                <div id="thumbnail-previous" class="disabled"></div>
+                <div id="thumbnail-previous"></div>
                 <div id="thumbnails-canvas">
                     <div class="thumbnail"><img class="thumb-img" src="" alt="thumbnail" height="100%" width="auto"/></div>
                 </div>
                 <div id="thumbnail-next"></div>
             </div><!--thumbnails-->
-            <div id="menu-bottom" class="menu bottom">
-                <div class="menu-box-left menu-box">
-                    <div id="menu-export-dropdown" class="dropdown">
-                        <ul>
-                            <li id="menu-export-hasPdf"><a href="#">.Pdf</a></li>
-                            <li id="menu-export-hasUbz"><a href="#">.Ubz</a></li>
-                        </ul>
-                    </div>
-                    <div class="menu-button" id="menu-button-export"
-                        title="Export this document asa~@|" alt="Export button">
-                        <div id="menu-button-export-right"></div>
-                        <div id="menu-button-export-center">Export asa~@|</div>
-                        <div id="menu-button-export-left"></div>
-                    </div>
-                    <div class="menu-button" id="menu-button-showthumbnails"
-                        title="Show the thumbnails" alt="Show thumbnails button"></div>
-                    <div class="menu-button" id="menu-button-showdetails"
-                        title="Show the details" alt="Show details button"></div>
-                    <div class="menu-button" id="menu-button-full"
-                        title="Switch to full mode" alt="Full mode button"></div>
-                    <div style="display:none; float:right; height:31px; margin-left:10px;
-                    line-height:42px"><input id="menubottom-input" type="text"></div>
-                </div>
-
-                <div class="menu-box-center menu-box">
-                    <div class="menu-button" id="menu-button-previous" title="Previous page"
-                        alt="Previous page button"></div>
-                    <div class="menu-button" id="menu-button-index" title="Show the index"
-                        alt="Show index button"></div>
-                    <div class="menu-button" id="menu-button-next" title="Next page"
-                        alt="Next page button"></div>
-                </div>
-    </div><!--menu-bottom-->
-        </div>
-    </div><!--foot-->
+<div id="playerControls">
+  <ul id="playerControlsinner">
+    <li id="pcleftend"><img id="menu-button-first" src="images/playerleftend.png" /></li> 
+    <li id="pcleft"><img id="menu-button-previous" src="images/playerleft.png" /></li>
+    <li id="pcrightend"><img id="menu-button-next" src="images/playerright.png" /></li>
+    <li id="pcrightend"><img id="menu-button-last" src="images/playerrightend.png" /></li>
+    <li id="pccounter"></li>
+    <li id="pcexpand"><img id="menu-button-full" src="images/playerexpand.png" /></li>
+  </ul><!-- / #playerControlsinner -->
+</div><!-- / #playerControls -->
+    </div><!--foot-inner -->
+    </div><!--foot -->
     <!-- App Viewer -->
     <div id="app-viewer-background"></div>
     <div id="app-viewer">
@@ -114,5 +91,4 @@ jQuery(document).ready(function() {
     </div>
  </div>
 </div>
-</body>
-</html>
+

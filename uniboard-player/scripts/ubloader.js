@@ -13,6 +13,7 @@ UbLoader.launchPlayer = function(file, nbpages, mode, elementid) {
         var myUbLoader = null;
 
         UbLoader.mode = mode;
+        UbLoader.elementid = elementid;
         jQuery(document).ready(function() {
                 var el = jQuery(elementid);
   		el.append('<div id="sankoreplayer"><div id="sankoreplayer-header"><div><ul id="sankoreplayer-menulist"><li><a href="javascript:void(0)" onclick="UbLoader.closePlayer(); return false">Close</a></li></ul></div></div><iframe id="sankoreplayer-iframe" src="' + UbLoader.playerprefix + 'player.html#' + file + ',' + nbpages + ',' + mode + '" width="100%" height="100%" border="0" frameborder="0"></iframe></div>');
@@ -40,3 +41,16 @@ UbLoader.closePlayer = function() {
     jQuery("#sankoreplayer").remove();
 }
 
+UbLoader.switchMode = function(mode) {
+    if (mode=="fs") {
+      UbLoader.mode="fs";
+    } else if (mode=="embed") {
+      UbLoader.mode="embed";
+      // reverting iframe manual full screen setting
+      jQuery("#sankoreplayer-iframe").css("height", "");
+    }
+    var el = jQuery(UbLoader.elementid);
+    // reverting css to correct mode
+    el.append('<link rel=stylesheet type="text/css" href="' + UbLoader.playerprefix + 'stylesheets/ubloader-' + UbLoader.mode + '.css">');
+    jQuery(window).resize();
+}
