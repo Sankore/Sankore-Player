@@ -242,8 +242,7 @@ label{ display:block; margin-top:15px; }
   cursor:pointer;
   height:auto;
   width:auto;
-  display:block;
-  float: left;
+  display:inline-block;
   position:relative;
   border:1px solid rgb(210, 211, 212);
   margin-left:4px;
