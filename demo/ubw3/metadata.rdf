@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:ub="http://uniboard.mnemis.com/document">
+    <Description about="http://uniboard.mnemis.com/document/15d811e5-8512-4bd3-9ab1-888b6cbd599c">
+        <dc:title> Maths_CP: Additionner des nombres</dc:title>
+        <dc:type>Maths CP</dc:type>
+        <dc:date>2011-08-23</dc:date>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:identifier>http://uniboard.mnemis.com/document/15d811e5-8512-4bd3-9ab1-888b6cbd599c</dc:identifier>
+        <ub:version>4.4.0</ub:version>
+        <ub:size>1280x960</ub:size>
+        <ub:updated-at>2011-02-11T15:32:47Z</ub:updated-at>
+    </Description>
+</RDF>
