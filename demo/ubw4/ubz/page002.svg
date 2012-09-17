@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ub="http://uniboard.mnemis.com/document" xmlns:xhtml="http://www.w3.org/1999/xhtml" version="1.1" ub:version="4.5.0" ub:uuid="8921c573-5bc5-4c98-b0ba-48639f43a957" viewBox="-690 -530 1380 1060" ub:nominal-size="1280x960" ub:dark-background="false" ub:crossed-background="false">
+    <rect fill="white" x="-690" y="-530" width="1380" height="1060"/>
+    <image xlink:href="images/{ccfff610-e4c6-419b-888a-f7547609204d}.png" x="0" y="0" width="69" height="48" transform="matrix(1, 0, 0, 1, -335.85, -145.424)" ub:z-value="-9999999.000000" ub:background="false" ub:uuid="ccfff610-e4c6-419b-888a-f7547609204d" ub:source="file:///Users/portable/Pictures/Sankore/GetAttachment.aspx.jpg" ub:layer="-1000"/>
+    <foreignObject ub:type="text" x="0" y="0" width="308" height="44" transform="matrix(1, 0, 0, 1, -370.506, -306.584)" ub:z-value="-9999998.000000" ub:background="false" ub:uuid="8e47a080-5831-48a2-bdc9-91158a807aa3" ub:layer="-1000" ub:editable="true" ub:width="308" ub:height="44" ub:fill-on-dark-background="#000000" ub:fill-on-light-background="#000000">
+        <itemTextContent>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Arial'; font-size:31pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Images&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</itemTextContent>
+    </foreignObject>
+    <image xlink:href="images/{40b480a5-df0d-402a-890e-0490e1987b8d}.png" x="0" y="0" width="220" height="201" transform="matrix(1, 0, 0, 1, 13.6073, -174.575)" ub:z-value="-9999997.000000" ub:background="false" ub:uuid="40b480a5-df0d-402a-890e-0490e1987b8d" ub:source="file:///Users/portable/Pictures/Sankore/pomme_nu-1.jpg" ub:layer="-1000"/>
+    <image xlink:href="images/{0b317bd7-d80e-4123-ab47-b519c53f20c8}.svg" x="0" y="0" width="740" height="200" transform="matrix(1.18372, 0, 0, 1.18372, -507.312, 84.6609)" ub:z-value="-9999996.000000" ub:background="false" ub:uuid="0b317bd7-d80e-4123-ab47-b519c53f20c8" ub:source="file:///Applications/Open-Sankore 1.40/Open-Sankore.app/Contents/Resources/library/image/open-sankore.svg" ub:layer="-1000"/>
+</svg>

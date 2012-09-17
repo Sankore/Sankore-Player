@@ -1,0 +1,32 @@
+{
+  "scene": {
+    "x": -640,
+    "y": -480,
+    "width": 1280,
+    "height": 960
+  },
+  "widgets": [
+    {
+      "uuid": "5d83588f-9b3b-4817-b55b-420bea7dd2c8",
+      "id": "http://www.njin.fr/sankore/apps/tableur",
+      "name": "Tableur",
+      "description": "",
+      "author": "njin",
+      "authorEmail": "",
+      "authorHref": "http://www.njin.fr",
+      "version": "http://www.njin.fr",
+      "x": -570.589,
+      "y": -300.163,
+      "width": 952.895,
+      "height": 738.641,
+      "nominalWidth": 805,
+      "nominalHeight": 624,
+      "src": "widgets/{5d83588f-9b3b-4817-b55b-420bea7dd2c8}.wgt",
+      "startFile": "index.html",
+      "preferences": {
+      },
+      "datastore": {
+      }
+    }
+  ]
+}

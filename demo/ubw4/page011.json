@@ -1,0 +1,32 @@
+{
+  "scene": {
+    "x": -640,
+    "y": -480,
+    "width": 1280,
+    "height": 960
+  },
+  "widgets": [
+    {
+      "uuid": "b117ffd4-4166-4419-b735-f2ea30f51432",
+      "id": "5-continents.swf",
+      "name": "5-continents",
+      "description": "",
+      "author": "",
+      "authorEmail": "",
+      "authorHref": "",
+      "version": "",
+      "x": -410.2,
+      "y": -309.425,
+      "width": 867.667,
+      "height": 651.046,
+      "nominalWidth": 733,
+      "nominalHeight": 550,
+      "src": "widgets/{b117ffd4-4166-4419-b735-f2ea30f51432}.wgt",
+      "startFile": "index.htm",
+      "preferences": {
+      },
+      "datastore": {
+      }
+    }
+  ]
+}

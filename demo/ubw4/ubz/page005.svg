@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ub="http://uniboard.mnemis.com/document" xmlns:xhtml="http://www.w3.org/1999/xhtml" version="1.1" ub:version="4.5.0" ub:uuid="2dbf3236-623c-48bf-9cf8-1d79c85ec596" viewBox="-690 -530 1380 1060" ub:nominal-size="1280x960" ub:dark-background="false" ub:crossed-background="false">
+    <rect fill="white" x="-690" y="-530" width="1380" height="1060"/>
+    <foreignObject ub:type="text" x="0" y="0" width="308" height="44" transform="matrix(1, 0, 0, 1, -332.626, -396.547)" ub:z-value="-9999999.000000" ub:background="false" ub:uuid="8caa7548-e094-4f45-a8d0-e37362b8621c" ub:layer="-1000" ub:editable="true" ub:width="308" ub:height="44" ub:fill-on-dark-background="#000000" ub:fill-on-light-background="#000000">
+        <itemTextContent>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Arial'; font-size:31pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Formes en SVG&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</itemTextContent>
+    </foreignObject>
+    <image xlink:href="images/{72aac7ad-9e7e-49ae-a6ca-4cd74db65c52}.svg" x="0" y="0" width="154" height="138" transform="matrix(1.18372, 0, 0, 1.18372, -331.501, -259.58)" ub:z-value="-9999998.000000" ub:background="false" ub:uuid="72aac7ad-9e7e-49ae-a6ca-4cd74db65c52" ub:source="file:///Applications/Open-Sankore 1.40/Open-Sankore.app/Contents/Resources/library/shape/bulle bleue gauche.svg" ub:layer="-1000"/>
+    <image xlink:href="images/{12f55949-9e22-4842-906e-3076def8baa4}.svg" x="0" y="0" width="153" height="138" transform="matrix(1.18372, 0, 0, 1.18372, 32.4026, 32.8002)" ub:z-value="-9999997.000000" ub:background="false" ub:uuid="12f55949-9e22-4842-906e-3076def8baa4" ub:source="file:///Applications/Open-Sankore 1.40/Open-Sankore.app/Contents/Resources/library/shape/bulle grise gauche.svg" ub:layer="-1000"/>
+</svg>

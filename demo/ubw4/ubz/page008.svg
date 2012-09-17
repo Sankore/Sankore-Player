@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ub="http://uniboard.mnemis.com/document" xmlns:xhtml="http://www.w3.org/1999/xhtml" version="1.1" ub:version="4.5.0" ub:uuid="1a867ad6-a822-4a12-a579-85e2d25bbea2" viewBox="-690 -530 1380 1060" ub:nominal-size="1280x960" ub:dark-background="false" ub:crossed-background="false">
+    <rect fill="white" x="-690" y="-530" width="1380" height="1060"/>
+    <foreignObject ub:src="widgets/{a8add349-9c7d-42cc-a7f2-57858d989ce2}.wgt" x="0" y="0" width="631" height="436" transform="matrix(1.18372, 0, 0, 1.18372, -539.309, -224.242)" ub:z-value="-9999999.000000" ub:background="false" ub:uuid="a8add349-9c7d-42cc-a7f2-57858d989ce2" ub:source="file:///Applications/Open-Sankore 1.40/Open-Sankore.app/Contents/Resources/library/interactivities/Contraste.wgt" ub:layer="-1000">
+        <xhtml:iframe style="border: none" width="631" height="436" src="widgets/{a8add349-9c7d-42cc-a7f2-57858d989ce2}.wgt/index.html"/>
+        <ub:preference key="blackYellowData" value="[{&quot;data1&quot;:&quot;3+4&quot;,&quot;data2&quot;:&quot;7&quot;,&quot;width&quot;:240,&quot;height&quot;:70,&quot;top&quot;:142,&quot;left&quot;:53},{&quot;data1&quot;:&quot;45:5&quot;,&quot;data2&quot;:&quot;9&quot;,&quot;width&quot;:240,&quot;height&quot;:70,&quot;top&quot;:138,&quot;left&quot;:352}]"/>
+        <ub:preference key="by_style" value="1"/>
+    </foreignObject>
+    <foreignObject ub:type="text" x="0" y="0" width="308" height="44" transform="matrix(1, 0, 0, 1, -344.464, -350.382)" ub:z-value="-9999998.000000" ub:background="false" ub:uuid="cc6aa07a-7c66-45f5-9dbf-14ddf9695668" ub:layer="-1000" ub:editable="true" ub:width="308" ub:height="44" ub:fill-on-dark-background="#000000" ub:fill-on-light-background="#000000">
+        <itemTextContent>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Arial'; font-size:31pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;interactivités 1&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</itemTextContent>
+    </foreignObject>
+</svg>

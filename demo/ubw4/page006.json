@@ -1,0 +1,35 @@
+{
+  "scene": {
+    "x": -640,
+    "y": -480,
+    "width": 1280,
+    "height": 960
+  },
+  "widgets": [
+    {
+      "uuid": "9e4f60a8-1ced-4542-9c86-56da3dfbd951",
+      "id": "http://uniboard.mnemis.com/widgets/wikipedia",
+      "name": "Wikipedia",
+      "description": "",
+      "author": "Mnemis SA",
+      "authorEmail": "",
+      "authorHref": "http://www.getuniboard.com",
+      "version": "http://www.getuniboard.com",
+      "x": -579.18,
+      "y": -243.798,
+      "width": 525.572,
+      "height": 526.755,
+      "nominalWidth": 444,
+      "nominalHeight": 445,
+      "src": "widgets/{9e4f60a8-1ced-4542-9c86-56da3dfbd951}.wgt",
+      "startFile": "index.html",
+      "preferences": {
+          "historyIndex": "0",
+          "historyList": "xwiki",
+          "historyState": "started"
+      },
+      "datastore": {
+      }
+    }
+  ]
+}

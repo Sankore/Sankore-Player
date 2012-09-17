@@ -1,0 +1,32 @@
+{
+  "scene": {
+    "x": -640,
+    "y": -480,
+    "width": 1280,
+    "height": 960
+  },
+  "widgets": [
+    {
+      "uuid": "cad04794-c039-4f8a-ac00-0c2a13881e90",
+      "id": "Wildlife.swf",
+      "name": "Wildlife",
+      "description": "",
+      "author": "",
+      "authorEmail": "",
+      "authorHref": "",
+      "version": "",
+      "x": -366.402,
+      "y": -296.404,
+      "width": 956.446,
+      "height": 671.169,
+      "nominalWidth": 808,
+      "nominalHeight": 567,
+      "src": "widgets/{cad04794-c039-4f8a-ac00-0c2a13881e90}.wgt",
+      "startFile": "index.htm",
+      "preferences": {
+      },
+      "datastore": {
+      }
+    }
+  ]
+}

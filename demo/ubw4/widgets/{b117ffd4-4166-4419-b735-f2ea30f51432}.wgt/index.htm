@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+    <head>
+
+  <script type="text/javascript">
+    var widget = {};
+    widget.id = '5-continents.swf';
+    widget.name = '5-continents';
+    widget.description = '';
+    widget.author = '';
+    widget.authorEmail = '';
+    widget.authorHref = '';
+    widget.version = '1.0';
+    widget.uuid = 'b117ffd4-4166-4419-b735-f2ea30f51432';
+    widget.width = 1024;
+    widget.height = 768;
+    widget.openUrl = function(url) { window.open(url); }
+    widget.preferences = new Array()
+    widget.preferences.key = function(index) {
+      var currentIndex = 0;
+      for(key in widget.preferences){
+        if (currentIndex == index){ return key;}
+        currentIndex++;
+      }
+      return '';
+    }
+    widget.preferences.getItem = function(key) {
+      return widget.preferences[key];
+    }
+    widget.preferences.setItem = function(key, value) {}
+    widget.preferences.removeItem = function(key) {}
+    widget.preferences.clear = function() {}
+    var uniboard = {};
+    uniboard.pageCount = 12;
+    uniboard.currentPageNumber = 11;
+    uniboard.uuid = 'b117ffd4-4166-4419-b735-f2ea30f51432'
+    uniboard.lang = navigator.language;
+    uniboard.locale = function() {return navigator.language}
+    uniboard.messages = {}
+    uniboard.messages.subscribeToTopic = function(topicName){}
+    uniboard.messages.unsubscribeFromTopic = function(topicName){}
+    uniboard.messages.sendMessage = function(topicName, message){}
+    uniboard.datastore = {};
+    uniboard.datastore.document = new Array();
+    uniboard.datastore.document.key = function(index) {
+      var currentIndex = 0;
+      for(key in uniboard.datastore.document){
+        if (currentIndex == index){ return key;}
+        currentIndex++;
+      }
+      return '';
+    }
+    uniboard.datastore.document.getItem = function(key) {
+      return uniboard.datastore.document[key];
+    }
+    uniboard.datastore.document.setItem = function(key, value) {}
+    uniboard.datastore.document.removeItem = function(key) {}
+    uniboard.datastore.document.clear = function() {}
+    uniboard.setTool = function(tool){}
+    uniboard.setPenColor = function(color){}
+    uniboard.setMarkerColor = function(color){}
+    uniboard.pageThumbnail = function(pageNumber){
+      var nb;
+      if (pageNumber < 10) return 'page00' + pageNumber + '.thumbnail.jpg';
+      if (pageNumber < 100) return 'page0' + pageNumber + '.thumbnail.jpg';
+      return 'page' + pageNumber + '.thumbnail.jpg;'
+    }
+    uniboard.zoom = function(factor, x, y){}
+    uniboard.move = function(x, y){}
+    uniboard.move = function(x, y){}
+    uniboard.moveTo = function(x, y){}
+    uniboard.drawLineTo = function(x, y, width){}
+    uniboard.eraseLineTo = function(x, y, width){}
+    uniboard.clear = function(){}
+    uniboard.setBackground = function(dark, crossed){}
+    uniboard.addObject = function(url, width, height, x, y, background){}
+    uniboard.resize = function(width, height){window.resizeTo(width, height);}
+    uniboard.showMessage = function(message){alert(message);}
+    uniboard.centerOn = function(x, y){}
+    uniboard.addText = function(text, x, y){}
+    uniboard.setPreference = function(key, value){}
+    uniboard.preference = function(key, defValue){
+      var pref = widget.preferences[key];
+      if (pref == undefined) 
+        return defValue;
+      else 
+        return pref;
+    }
+    uniboard.preferenceKeys = function(){
+        var keys = new Array();
+        for(key in widget.preferences){
+            keys.push(key);
+        }
+        return keys;
+    }
+    uniboard.datastore.document.key = function(index) {
+        var currentIndex = 0;
+        for(key in uniboard.datastore.document){
+            if (currentIndex == index){ return key;}
+            currentIndex++;
+        }
+        return '';
+    }
+    uniboard.datastore.document.getItem = function(key) {
+        return uniboard.datastore.document[key];
+    }
+    uniboard.datastore.document.setItem = function(key, value) {}
+    uniboard.datastore.document.removeItem = function(key) {}
+    uniboard.datastore.document.clear = function() {}
+  </script>
+
+        <title>Flash Widget</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <style type="text/css">
+            html, body, #content    { height:100%; }
+            body                    { margin:0; padding:0; overflow:hidden; }
+        </style>
+		<script type="text/javascript">
+		window.onload = function(){
+			if (window.widget) {
+				window.widget.onremove = function(){
+					document.getElementById("content").innerHTML = "";
+				}
+			}
+		}
+		</script>
+    </head>
+    <body>
+        <div id="content">
+            <object type="application/x-shockwave-flash" data="5-continents.swf" width="100%" height="100%">
+                <param name="movie" value="5-continents.swf">
+                <param name="quality" value="high">
+                <param name="wmode" value="transparent">
+            </object>
+        </div>
+    </body>
+</html>

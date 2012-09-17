@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ub="http://uniboard.mnemis.com/document" xmlns:xhtml="http://www.w3.org/1999/xhtml" version="1.1" ub:version="4.5.0" ub:uuid="f5b653ed-3ff1-4457-b24d-224a523b79b8" viewBox="-690 -530 1380 1060" ub:nominal-size="1280x960" ub:dark-background="false" ub:crossed-background="false">
+    <rect fill="white" x="-690" y="-530" width="1380" height="1060"/>
+    <foreignObject ub:type="text" x="0" y="0" width="308" height="44" transform="matrix(1, 0, 0, 1, -419.038, -287.645)" ub:z-value="-9999999.000000" ub:background="false" ub:uuid="a94ee1e5-9529-49b8-ad9c-06bf9a336500" ub:layer="-1000" ub:editable="true" ub:width="308" ub:height="44" ub:fill-on-dark-background="#000000" ub:fill-on-light-background="#000000">
+        <itemTextContent>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Arial'; font-size:31pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Audios&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</itemTextContent>
+    </foreignObject>
+    <audio x="0" y="0" width="200" height="45" transform="matrix(1, 0, 0, 1, -395.364, -101.8)" ub:z-value="-9999998.000000" ub:background="false" ub:uuid="2ea31a6d-7357-4a4b-a4e9-d61d8a153982" ub:source="file:///Users/portable/Music/Sankore/adaptation.mp3" ub:layer="-1000" xlink:href="audios/{2ea31a6d-7357-4a4b-a4e9-d61d8a153982}.mp3"/>
+    <audio x="0" y="0" width="200" height="45" transform="matrix(1, 0, 0, 1, 14.2047, 132.577)" ub:z-value="-9999997.000000" ub:background="false" ub:uuid="2ba36edf-b9af-45c5-a972-3e957a7f9d8c" ub:source="http://planete.sankore.org/xwiki/bin/download/Coll_EvaPoret/Blancheur/blancheur.mp3" ub:layer="-1000" xlink:href="audios/{2ba36edf-b9af-45c5-a972-3e957a7f9d8c}.mp3"/>
+    <audio x="0" y="0" width="200" height="45" transform="matrix(1, 0, 0, 1, 118.372, -291.196)" ub:z-value="-9999996.000000" ub:background="false" ub:uuid="4b583940-2044-4784-8d0b-bafca339a946" ub:source="http://planete.sankore.org/xwiki/bin/download/Coll_EvaPoret/Anorak/anorak.mp3" ub:layer="-1000" xlink:href="audios/{4b583940-2044-4784-8d0b-bafca339a946}.mp3"/>
+</svg>

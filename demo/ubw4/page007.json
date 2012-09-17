@@ -1,0 +1,58 @@
+{
+  "scene": {
+    "x": -640,
+    "y": -480,
+    "width": 1280,
+    "height": 960
+  },
+  "widgets": [
+    {
+      "uuid": "6da50a3f-25f4-4750-8bdb-e214507ab0de",
+      "id": "http://uniboard.mnemis.com/widgets/GoogleMap",
+      "name": "Google Map",
+      "description": "",
+      "author": "Mnemis SA",
+      "authorEmail": "",
+      "authorHref": "http://www.getuniboard.com",
+      "version": "http://www.getuniboard.com",
+      "x": -236.646,
+      "y": -271.591,
+      "width": 655.781,
+      "height": 427.323,
+      "nominalWidth": 554,
+      "nominalHeight": 361,
+      "src": "widgets/{6da50a3f-25f4-4750-8bdb-e214507ab0de}.wgt",
+      "startFile": "index.html",
+      "preferences": {
+          "latitude": "48.877812415009195",
+          "longitude": "2.352447509765625",
+          "zoom": "11"
+      },
+      "datastore": {
+      }
+    }
+    ,
+    {
+      "uuid": "c7980a90-27c8-45ae-8de7-f9fe21cd1c53",
+      "id": "http://uniboard.mnemis.com/widgets/calculator",
+      "name": "Calculator",
+      "description": "",
+      "author": "",
+      "authorEmail": "",
+      "authorHref": "",
+      "version": "",
+      "x": -566.387,
+      "y": -261.137,
+      "width": 236.744,
+      "height": 349.197,
+      "nominalWidth": 200,
+      "nominalHeight": 295,
+      "src": "widgets/{c7980a90-27c8-45ae-8de7-f9fe21cd1c53}.wgt",
+      "startFile": "index.html",
+      "preferences": {
+      },
+      "datastore": {
+      }
+    }
+  ]
+}

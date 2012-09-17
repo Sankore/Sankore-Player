@@ -1,0 +1,150 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+  <script type="text/javascript">
+    var widget = {};
+    widget.id = 'http://www.njin.fr/sankore/apps/tableur';
+    widget.name = 'Tableur';
+    widget.description = '';
+    widget.author = 'njin';
+    widget.authorEmail = '';
+    widget.authorHref = 'http://www.njin.fr';
+    widget.version = '1.0';
+    widget.uuid = '5d83588f-9b3b-4817-b55b-420bea7dd2c8';
+    widget.width = 805;
+    widget.height = 624;
+    widget.openUrl = function(url) { window.open(url); }
+    widget.preferences = new Array()
+    widget.preferences.key = function(index) {
+      var currentIndex = 0;
+      for(key in widget.preferences){
+        if (currentIndex == index){ return key;}
+        currentIndex++;
+      }
+      return '';
+    }
+    widget.preferences.getItem = function(key) {
+      return widget.preferences[key];
+    }
+    widget.preferences.setItem = function(key, value) {}
+    widget.preferences.removeItem = function(key) {}
+    widget.preferences.clear = function() {}
+    var uniboard = {};
+    uniboard.pageCount = 12;
+    uniboard.currentPageNumber = 9;
+    uniboard.uuid = '5d83588f-9b3b-4817-b55b-420bea7dd2c8'
+    uniboard.lang = navigator.language;
+    uniboard.locale = function() {return navigator.language}
+    uniboard.messages = {}
+    uniboard.messages.subscribeToTopic = function(topicName){}
+    uniboard.messages.unsubscribeFromTopic = function(topicName){}
+    uniboard.messages.sendMessage = function(topicName, message){}
+    uniboard.datastore = {};
+    uniboard.datastore.document = new Array();
+    uniboard.datastore.document.key = function(index) {
+      var currentIndex = 0;
+      for(key in uniboard.datastore.document){
+        if (currentIndex == index){ return key;}
+        currentIndex++;
+      }
+      return '';
+    }
+    uniboard.datastore.document.getItem = function(key) {
+      return uniboard.datastore.document[key];
+    }
+    uniboard.datastore.document.setItem = function(key, value) {}
+    uniboard.datastore.document.removeItem = function(key) {}
+    uniboard.datastore.document.clear = function() {}
+    uniboard.setTool = function(tool){}
+    uniboard.setPenColor = function(color){}
+    uniboard.setMarkerColor = function(color){}
+    uniboard.pageThumbnail = function(pageNumber){
+      var nb;
+      if (pageNumber < 10) return 'page00' + pageNumber + '.thumbnail.jpg';
+      if (pageNumber < 100) return 'page0' + pageNumber + '.thumbnail.jpg';
+      return 'page' + pageNumber + '.thumbnail.jpg;'
+    }
+    uniboard.zoom = function(factor, x, y){}
+    uniboard.move = function(x, y){}
+    uniboard.move = function(x, y){}
+    uniboard.moveTo = function(x, y){}
+    uniboard.drawLineTo = function(x, y, width){}
+    uniboard.eraseLineTo = function(x, y, width){}
+    uniboard.clear = function(){}
+    uniboard.setBackground = function(dark, crossed){}
+    uniboard.addObject = function(url, width, height, x, y, background){}
+    uniboard.resize = function(width, height){window.resizeTo(width, height);}
+    uniboard.showMessage = function(message){alert(message);}
+    uniboard.centerOn = function(x, y){}
+    uniboard.addText = function(text, x, y){}
+    uniboard.setPreference = function(key, value){}
+    uniboard.preference = function(key, defValue){
+      var pref = widget.preferences[key];
+      if (pref == undefined) 
+        return defValue;
+      else 
+        return pref;
+    }
+    uniboard.preferenceKeys = function(){
+        var keys = new Array();
+        for(key in widget.preferences){
+            keys.push(key);
+        }
+        return keys;
+    }
+    uniboard.datastore.document.key = function(index) {
+        var currentIndex = 0;
+        for(key in uniboard.datastore.document){
+            if (currentIndex == index){ return key;}
+            currentIndex++;
+        }
+        return '';
+    }
+    uniboard.datastore.document.getItem = function(key) {
+        return uniboard.datastore.document[key];
+    }
+    uniboard.datastore.document.setItem = function(key, value) {}
+    uniboard.datastore.document.removeItem = function(key) {}
+    uniboard.datastore.document.clear = function() {}
+  </script>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<!--
+	<link rel="stylesheet" href="css/fonts/Lobster/stylesheet.css">
+	<link rel="stylesheet" href="css/fonts/SF-Toontime/stylesheet.css">	
+	-->
+	<link rel="stylesheet" href="css/ubw-main.css">
+    <link rel="stylesheet" href="css/main.css">
+
+	<script src="js/templates.js" type="text/javascript" charset="utf-8"></script>
+	
+	<script src="js/lib/modernizr.js" type="text/javascript"></script>
+	<script src="js/lib/jquery-1.7.1.min.js" type="text/javascript"></script>
+	<script src="js/lib/jquery.i18n.properties-min-1.0.9.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/lib/mustache.js" type="text/javascript"></script>
+	<script src="js/lib/ubw-main.js" type="text/javascript"></script>
+	<script src="js/main.js" type="text/javascript" charset="utf-8"></script>
+	
+</head>
+
+<body class="hasHelp">
+    <div id="ubwidget" data-operator="*" data-reste="true" data-row="10" data-col="10" data-themes="pad">
+		<div class="wrapper">
+			<div id="toolbar">
+			</div>
+			<div id="help">
+				<iframe src="help.html" width="100%" height="100%" frameborder="0"></iframe>
+			</div>
+			<div id="content">
+				<div id="parameters">
+				</div>
+				<div id="scene">
+				</div>
+			</div>
+		</div>
+    </div>
+</body>
+
+</html>

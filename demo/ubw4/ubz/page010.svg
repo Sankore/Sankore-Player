@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ub="http://uniboard.mnemis.com/document" xmlns:xhtml="http://www.w3.org/1999/xhtml" version="1.1" ub:version="4.5.0" ub:uuid="c68ec891-6547-4a7f-a688-0d51515ffb1c" viewBox="-690 -530 1380 1060" ub:nominal-size="1280x960" ub:dark-background="false" ub:crossed-background="false">
+    <rect fill="white" x="-690" y="-530" width="1380" height="1060"/>
+    <foreignObject ub:src="widgets/{cad04794-c039-4f8a-ac00-0c2a13881e90}.wgt" x="0" y="0" width="808" height="567" transform="matrix(1.18372, 0, 0, 1.18372, -366.402, -296.404)" ub:z-value="1.000000" ub:background="false" ub:uuid="cad04794-c039-4f8a-ac00-0c2a13881e90" ub:source="file:///Users/portable/Dropbox/Fichiers test Sankoré/Flash/Wildlife.swf" ub:layer="-1000">
+        <xhtml:iframe style="border: none" width="808" height="567" src="widgets/{cad04794-c039-4f8a-ac00-0c2a13881e90}.wgt/index.htm"/>
+    </foreignObject>
+    <foreignObject ub:type="text" x="0" y="0" width="308" height="44" transform="matrix(1, 0, 0, 1, -209.519, -357.485)" ub:z-value="2.000000" ub:background="false" ub:uuid="08506655-3281-4552-8c88-25ccd1a49bf1" ub:layer="-1000" ub:editable="true" ub:width="308" ub:height="44" ub:fill-on-dark-background="#000000" ub:fill-on-light-background="#000000">
+        <itemTextContent>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Arial'; font-size:31pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;swf&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</itemTextContent>
+    </foreignObject>
+</svg>

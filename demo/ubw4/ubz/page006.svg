@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ub="http://uniboard.mnemis.com/document" xmlns:xhtml="http://www.w3.org/1999/xhtml" version="1.1" ub:version="4.5.0" ub:uuid="498dd275-b7fd-4c2e-8db8-b28432ed9626" viewBox="-690 -530 1380 1060" ub:nominal-size="1280x960" ub:dark-background="false" ub:crossed-background="false">
+    <rect fill="white" x="-690" y="-530" width="1380" height="1060"/>
+    <foreignObject ub:type="text" x="0" y="0" width="308" height="44" transform="matrix(1, 0, 0, 1, -481.776, -351.566)" ub:z-value="-9999999.000000" ub:background="false" ub:uuid="d92f2d70-c4a7-47a1-ad48-daae456b6bc0" ub:layer="-1000" ub:editable="true" ub:width="308" ub:height="44" ub:fill-on-dark-background="#000000" ub:fill-on-light-background="#000000">
+        <itemTextContent>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Arial'; font-size:31pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Applications&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</itemTextContent>
+    </foreignObject>
+    <foreignObject ub:src="widgets/{9e4f60a8-1ced-4542-9c86-56da3dfbd951}.wgt" x="0" y="0" width="444" height="445" transform="matrix(1.18372, 0, 0, 1.18372, -579.18, -243.798)" ub:z-value="-9999998.000000" ub:background="false" ub:uuid="9e4f60a8-1ced-4542-9c86-56da3dfbd951" ub:source="file:///Applications/Open-Sankore 1.40/Open-Sankore.app/Contents/Resources/library/applications/Wikipedia.wgt" ub:layer="-1000">
+        <xhtml:iframe style="border: none" width="444" height="445" src="widgets/{9e4f60a8-1ced-4542-9c86-56da3dfbd951}.wgt/index.html"/>
+        <ub:preference key="historyIndex" value="0"/>
+        <ub:preference key="historyList" value="xwiki"/>
+        <ub:preference key="historyState" value="started"/>
+    </foreignObject>
+    <ub:ruler x="-400" y="-48" width="800" height="96" transform="matrix(1, 0, 0, 1, 22.4908, -415.487)" ub:z-value="10000100.000000" ub:uuid="c08d18c8-04fa-4127-9dea-6cb4ac021e7c"/>
+</svg>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ub="http://uniboard.mnemis.com/document" xmlns:xhtml="http://www.w3.org/1999/xhtml" version="1.1" ub:version="4.5.0" ub:uuid="7134c115-69f0-458b-8090-1703e903398a" viewBox="-690 -530 1380 1060" ub:nominal-size="1280x960" ub:dark-background="false" ub:crossed-background="false">
+    <rect fill="white" x="-690" y="-530" width="1380" height="1060"/>
+    <foreignObject ub:type="text" x="0" y="0" width="308" height="44" transform="matrix(1, 0, 0, 1, -460.469, -382.343)" ub:z-value="-9999999.000000" ub:background="false" ub:uuid="7b336fcf-a638-4b8d-80d9-d63a02f6780d" ub:layer="-1000" ub:editable="true" ub:width="308" ub:height="44" ub:fill-on-dark-background="#000000" ub:fill-on-light-background="#000000">
+        <itemTextContent>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Arial'; font-size:31pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Interactivités 2&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</itemTextContent>
+    </foreignObject>
+    <foreignObject ub:src="widgets/{5d83588f-9b3b-4817-b55b-420bea7dd2c8}.wgt" x="0" y="0" width="805" height="624" transform="matrix(1.18372, 0, 0, 1.18372, -570.589, -300.163)" ub:z-value="-9999998.000000" ub:background="false" ub:uuid="5d83588f-9b3b-4817-b55b-420bea7dd2c8" ub:source="file:///Applications/Open-Sankore 1.40/Open-Sankore.app/Contents/Resources/library/interactivities/Tables.wgt" ub:layer="-1000">
+        <xhtml:iframe style="border: none" width="805" height="624" src="widgets/{5d83588f-9b3b-4817-b55b-420bea7dd2c8}.wgt/index.html"/>
+    </foreignObject>
+</svg>
