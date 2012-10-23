@@ -1,0 +1,35 @@
+{
+  "scene": {
+    "x": -640,
+    "y": -480,
+    "width": 1280,
+    "height": 960
+  },
+  "widgets": [
+    {
+      "uuid": "6e8da326-2a55-46a9-9bd5-0e7bb62a3532",
+      "id": "http://uniboard.mnemis.com/widgets/webbrowser",
+      "name": "Web Browser",
+      "description": "",
+      "author": "Mnemis SA",
+      "authorEmail": "",
+      "authorHref": "http://www.getuniboard.com",
+      "version": "http://www.getuniboard.com",
+      "x": -514.874,
+      "y": -363.718,
+      "width": 981.946,
+      "height": 808.661,
+      "nominalWidth": 850,
+      "nominalHeight": 700,
+      "src": "widgets/{6e8da326-2a55-46a9-9bd5-0e7bb62a3532}.wgt",
+      "startFile": "index.html",
+      "preferences": {
+          "browserHistory": "http://www.sankore.org",
+          "browserIndex": "1",
+          "url": "www.sankore.org"
+      },
+      "datastore": {
+      }
+    }
+  ]
+}

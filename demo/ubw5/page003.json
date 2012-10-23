@@ -1,0 +1,32 @@
+{
+  "scene": {
+    "x": -640,
+    "y": -480,
+    "width": 1280,
+    "height": 960
+  },
+  "widgets": [
+    {
+      "uuid": "b1370662-c175-47f1-9883-42909c2ee6e6",
+      "id": "http://uniboard.mnemis.com/widgets/Clock",
+      "name": "iCell",
+      "description": "",
+      "author": "",
+      "authorEmail": "",
+      "authorHref": "",
+      "version": "",
+      "x": -211.877,
+      "y": -214.188,
+      "width": 577.615,
+      "height": 577.615,
+      "nominalWidth": 500,
+      "nominalHeight": 500,
+      "src": "widgets/{b1370662-c175-47f1-9883-42909c2ee6e6}.wgt",
+      "startFile": "widget.html",
+      "preferences": {
+      },
+      "datastore": {
+      }
+    }
+  ]
+}

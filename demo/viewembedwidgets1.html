@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../uniboard-player/stylesheets/ubloader.css" />
+<script type="text/javascript" src="../uniboard-player/scripts/jquery.min.js"></script>
+<script type="text/javascript" src="../uniboard-player/scripts/ubloader.js"></script>
+<script type="text/javascript">
+// This loads the player Javascript code available at ../uniboard-player from where the demo files are located
+// If the demo files are at http://server:port/player/demo/ the player files should be at http://server:port/player/uniboard-player/
+UbLoader.init('../uniboard-player/', 'fr');
+// This loads the UBW file available on http://server:port/player/demo/ubw4/
+// You can also specify an absolute URL
+UbLoader.launchPlayer('/player/demo/ubw4/', 12, "embed", "#sankore-view", 'fr');
+</script>
+</head>
+<body style="margin: 0; padding-top: 50px; width: 100%; text-align: center;">
+<center>
+<div id="sankore-view" style="border: 0px solid; width: 600px; height: 650px; margin: auto;"></div>
+</center>
+</body>
+</html>
