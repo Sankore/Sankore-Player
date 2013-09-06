@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ub="http://uniboard.mnemis.com/document" xmlns:xhtml="http://www.w3.org/1999/xhtml" version="1.1" ub:version="4.4.0" ub:uuid="d19edb5b-5659-4696-8507-0ea567c43558" viewBox="-690 -530 6063 1279" ub:nominal-size="1280x960" ub:dark-background="false" ub:crossed-background="false">
+    <rect fill="white" x="-690" y="-530" width="6063" height="1279"/>
+    <foreignObject ub:type="text" x="0" y="0" width="5554" height="768" transform="matrix(1, 0, 0, 1, -230.73, -68.6695)" ub:z-value="1.000000" ub:background="false" ub:uuid="cc652dc8-a1bc-435a-8d0e-2b5f964bbc98" ub:layer="-1000" ub:width="5554" ub:height="768" ub:fill-on-dark-background="#66c0ff" ub:fill-on-light-background="#004080">
+        <xhtml:body>
+            <xhtml:div>
+                <xhtml:font face="Arial" style="font-size: 681px; font-weight: normal; font-style: normal;" color="#004080">2</xhtml:font>
+            </xhtml:div>
+        </xhtml:body>
+    </foreignObject>
+</svg>

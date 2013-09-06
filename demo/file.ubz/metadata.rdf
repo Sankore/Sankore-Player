@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:ub="http://uniboard.mnemis.com/document">
+    <Description about="http://uniboard.mnemis.com/document/83a78a7d-7738-48dc-be9b-abc269538db0">
+        <dc:title>11/1/2011 3:06:19 PM</dc:title>
+        <dc:type></dc:type>
+        <dc:date>2011-11-01</dc:date>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:identifier>http://uniboard.mnemis.com/document/83a78a7d-7738-48dc-be9b-abc269538db0</dc:identifier>
+        <ub:version>4.4.0</ub:version>
+        <ub:size>1280x960</ub:size>
+        <ub:updated-at>2011-11-01T13:12:27Z</ub:updated-at>
+    </Description>
+</RDF>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:ub="http://uniboard.mnemis.com/document">
+    <Description about="http://uniboard.mnemis.com/document/b9dbca2a-9ca7-48b6-9386-b4fa047d4b8a">
+        <dc:title>31/10/2012 11:35:42</dc:title>
+        <dc:type></dc:type>
+        <dc:date>2012-10-31T10:35:42ZZ</dc:date>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:identifier>http://uniboard.mnemis.com/document/b9dbca2a-9ca7-48b6-9386-b4fa047d4b8a</dc:identifier>
+        <ub:version>4.6.0</ub:version>
+        <ub:size>1280x960</ub:size>
+        <ub:updated-at>2012-10-31T10:36:36ZZ</ub:updated-at>
+        <ub:sessionTitle></ub:sessionTitle>
+        <ub:sessionAuthors></ub:sessionAuthors>
+        <ub:sessionObjectives></ub:sessionObjectives>
+        <ub:sessionKeywords></ub:sessionKeywords>
+        <ub:sessionGradeLevel></ub:sessionGradeLevel>
+        <ub:sessionSubjects></ub:sessionSubjects>
+        <ub:sessionType></ub:sessionType>
+        <ub:sessionLicence>0</ub:sessionLicence>
+    </Description>
+</RDF>

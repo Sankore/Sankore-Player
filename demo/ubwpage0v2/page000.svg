@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ub="http://uniboard.mnemis.com/document" xmlns:xhtml="http://www.w3.org/1999/xhtml" version="1.1" ub:version="4.6.0" ub:uuid="00000000-0000-0000-0000-000000000000" viewBox="-713 -530 1403 1060" ub:nominal-size="1280x960" ub:dark-background="false" ub:crossed-background="true" pageDpi="96">
+    <rect fill="white" x="-713" y="-530" width="1403" height="1060"/>
+    <foreignObject ub:src="widgets/{2268c425-7b29-4558-acc8-023cc4eae8a3}.wgt" x="0" y="0" width="600" height="400" transform="matrix(1.37339, 0, 0, 1.37339, -662.575, -346.953)" ub:z-value="-9999999.000000" ub:background="false" ub:uuid="2268c425-7b29-4558-acc8-023cc4eae8a3" ub:source="file:///C:/Program Files/Sankore 3.1_2.0.b.6/library/interactivities/Calcul2.wgt" ub:layer="-1000">
+        <xhtml:iframe style="border: none" width="600" height="400" src="widgets/{2268c425-7b29-4558-acc8-023cc4eae8a3}.wgt/index.html"/>
+    </foreignObject>
+    <teacherGuide version="2.00"/>
+</svg>
